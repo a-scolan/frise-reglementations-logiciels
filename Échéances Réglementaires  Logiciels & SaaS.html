@@ -16,7 +16,7 @@
   }
 
   h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
-  p.subtitle { text-align: center; font-style: italic; margin-bottom: 40px; color: #7f8c8d; }
+  p.subtitle { text-align: center; font-style: italic; margin-bottom: 20px; color: #7f8c8d; }
 
   /* --- COULEURS CIBLES (Categories) --- */
   /* Universel : Tout logiciel, ESN, Dev */
@@ -32,11 +32,11 @@
 
   /* --- LÉGENDE / PANNEAU DE FILTRAGE FLOTTANT --- */
  .legend-container {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1001;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -147,7 +147,7 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 100px; /* Espace pour le panneau flottant */
+    margin-top: 20px; /* Réduit car le panneau n'est plus fixe en haut */
   }
 
   /* Ligne verticale */
@@ -342,17 +342,21 @@
 
   /* --- SOMMAIRE FLOTTANT --- */
  .toc-container {
-    position: fixed;
-    top: 120px;
+    position: sticky;
+    top: 70px;
     right: 20px;
     width: 280px;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 150px);
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    z-index: 999;
+    z-index: 998;
     transition: all 0.3s ease;
     overflow: hidden;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
   }
  .toc-container.collapsed {
     width: auto;

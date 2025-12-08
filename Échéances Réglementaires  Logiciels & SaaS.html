@@ -164,14 +164,24 @@
   }
 
   /* Conteneur */
- .container {
-    padding: 10px 40px;
-    position: relative;
-    background-color: inherit;
-    width: 50%;
-  }
+    .container {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
 
-  /* Cercles sur la ligne */
+    .container.left {
+      margin-top: -30px;
+    }
+
+    .container.right {
+      margin-top: -30px;
+    }
+
+    .container:first-child {
+      margin-top: 0;
+    }  /* Cercles sur la ligne */
  .container::after {
     content: '';
     position: absolute;
@@ -216,7 +226,7 @@
 
   /* Carte de contenu */
  .content {
-    padding: 20px 25px;
+    padding: 20px 25px 10px 25px;
     background-color: white;
     position: relative;
     border-radius: 8px;
@@ -442,6 +452,144 @@
     display: none;
   }
 
+  /* --- BOUTON MES OBLIGATIONS (CENTRÉ) --- */
+    .obligations-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      display: block;
+      margin: 25px auto 15px auto;
+      z-index: 10;
+    }
+
+    .obligations-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .obligations-btn:active {
+      transform: translateY(0);
+    }
+
+  /* --- POPUP MODALE OBLIGATIONS --- */
+ .obligations-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+  }
+ .obligations-modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+ @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+ .obligations-modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+    position: relative;
+  }
+ @keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+ .obligations-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ .obligations-modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+ .obligations-modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-weight: 300;
+    line-height: 1;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+ .obligations-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+  }
+ .obligations-modal-body {
+    padding: 25px;
+  }
+ .obligations-modal-body h4 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ .obligations-modal-body ul {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.8;
+  }
+ .obligations-modal-body li {
+    margin-bottom: 12px;
+    color: #555;
+    font-size: 0.9rem;
+  }
+ .obligations-modal-body li strong {
+    color: #2c3e50;
+    font-weight: 600;
+  }
+ .obligations-highlight {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #856404;
+  }
+ .obligations-highlight strong {
+    color: #533f03;
+  }
+
   /* --- APPLICATION DES THÈMES AUX CARTES --- */
  .card-universal { border-left-color: #34495e; }
  .card-universal.date-badge { background-color: #34495e; }
@@ -487,7 +635,14 @@
   /* --- RESPONSIVE --- */
   @media screen and (max-width: 768px) {
    .timeline::after { left: 31px; }
-   .container { width: 100%; padding-left: 70px; padding-right: 25px; }
+   .container { 
+     width: 100%; 
+     padding-left: 70px; 
+     padding-right: 25px;
+     padding-top: 15px;
+     padding-bottom: 15px;
+     margin-top: 0 !important;
+   }
    .container::before { left: 60px; border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent white transparent transparent; }
    .left::after,.right::after { left: 21px; }
    .right { left: 0%; }
@@ -691,6 +846,39 @@
       <span class="target-tag">Cible : Tout Logiciel / Tout Traitement de Données</span>
       <p>Protection des données personnelles : privacy by design et by default, droit à l'oubli, portabilité des données. Sanctions jusqu'à 20M€ ou 4% du CA mondial annuel. 6 bases légales exclusives : consentement explicite (opt-in révocable), exécution contrat, obligation légale, sauvegarde intérêts vitaux, mission intérêt public, intérêt légitime (balancé avec droits utilisateur). DPO obligatoire si traitement grande échelle ou données sensibles. Registre traitements obligatoire. Notification violations CNIL sous 72h. AIPD obligatoire si risque élevé.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2016/679</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-rgpd')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal RGPD -->
+  <div class="obligations-modal" id="modal-rgpd">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - RGPD</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-rgpd')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Obligations Immédiates</h4>
+        <ul>
+          <li><strong>Identifier la base légale</strong> pour chaque traitement de données (consentement, contrat, intérêt légitime, obligation légale...)</li>
+          <li><strong>Tenir un registre des traitements</strong> détaillant : finalités, catégories de données, destinataires, durées de conservation, mesures de sécurité</li>
+          <li><strong>Mettre en œuvre la privacy by design</strong> : minimisation des données, pseudonymisation, chiffrement</li>
+          <li><strong>Informer les utilisateurs</strong> : politique de confidentialité claire, accessible, mentionnant tous les droits (accès, rectification, effacement, portabilité, opposition)</li>
+          <li><strong>Sécuriser les données</strong> : contrôles d'accès, chiffrement en transit et au repos, sauvegardes, journalisation</li>
+          <li><strong>Nommer un DPO</strong> (Délégué à la Protection des Données) si traitement à grande échelle, données sensibles ou organisme public</li>
+          <li><strong>Notifier la CNIL sous 72h</strong> en cas de violation de données (avec description, impact, mesures prises)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 20M€ ou 4% du CA mondial annuel selon gravité. La CNIL peut aussi ordonner la suspension des traitements.
+        </div>
+        <h4>📊 Si Traitement à Risque Élevé</h4>
+        <ul>
+          <li><strong>Réaliser une AIPD</strong> (Analyse d'Impact sur la Protection des Données) documentée</li>
+          <li><strong>Consulter la CNIL</strong> avant mise en œuvre si risque résiduel élevé malgré mesures</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -704,6 +892,41 @@
       <span class="target-tag">Cible : Tous Sites Web & Apps</span>
       <p>Consentement explicite requis avant tout cookie non essentiel (marketing, analytics, publicité). Bandeau cookie obligatoire avec refus aussi facile qu'acceptation (même nombre de clics). Interdiction des "cookie walls" abusifs (bloquer l'accès sans consentement). En France, appliqué strictement par la CNIL depuis 2020 (lignes directrices). Durée conservation consentement : 13 mois max. Preuve consentement obligatoire (logs horodatés).</p>
       <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32002L0058" target="_blank" class="reg-link">📄 Directive 2002/58/CE</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-eprivacy')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal ePrivacy -->
+  <div class="obligations-modal" id="modal-eprivacy">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - ePrivacy / Cookies</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-eprivacy')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Obligations sur Tous Sites Web/Apps</h4>
+        <ul>
+          <li><strong>Afficher un bandeau cookie</strong> avant tout dépôt de cookie non essentiel</li>
+          <li><strong>Permettre le refus facile</strong> : bouton "Tout refuser" aussi visible que "Tout accepter", même nombre de clics</li>
+          <li><strong>Ne déposer QUE les cookies essentiels</strong> avant consentement (authentification, panier, sécurité, préférences d'affichage basiques)</li>
+          <li><strong>Lister tous les cookies</strong> avec finalité, durée, tiers concernés dans la politique cookies</li>
+          <li><strong>Conserver la preuve du consentement</strong> : logs horodatés avec choix utilisateur, version bandeau, IP (pseudonymisée)</li>
+          <li><strong>Limiter la durée</strong> : consentement valable 13 mois maximum, puis redemander</li>
+          <li><strong>Respecter le choix</strong> : ne pas recharger cookies refusés à chaque visite (pas de cookie wall abusif)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Amendes CNIL jusqu'à 20M€ ou 4% CA (cumul possible avec RGPD). Nombreuses condamnations en 2023-2024.
+        </div>
+        <h4>🍪 Cookies Exemptés (Pas de Consentement)</h4>
+        <ul>
+          <li>Authentification utilisateur (session)</li>
+          <li>Panier e-commerce</li>
+          <li>Préférences interface (langue, accessibilité)</li>
+          <li>Équilibrage charge serveurs</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -717,6 +940,45 @@
       <span class="target-tag">Cible : Logiciels de Caisse & Encaissement</span>
       <p>Obligation de certification NF 525 pour tout logiciel de caisse ou système d'encaissement. Conditions : inaltérabilité, sécurisation, conservation et archivage des données. Attestation obligatoire à présenter en cas de contrôle fiscal. Sanctions : amende 7500€ par logiciel non conforme. Concerne points de vente, e-commerce avec caisse intégrée, apps mobiles encaissement.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2015/12/29/2015-1785/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2015-1785 (Art. 88)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-antifraude')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Anti-Fraude TVA -->
+  <div class="obligations-modal" id="modal-antifraude">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Certification Caisse NF 525</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-antifraude')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Éditeurs de Logiciels de Caisse</h4>
+        <ul>
+          <li><strong>Obtenir la certification NF 525</strong> auprès d'un organisme accrédité (LNE, INFOCERT...)</li>
+          <li><strong>Garantir l'inaltérabilité</strong> : données de caisse non modifiables a posteriori, scellement cryptographique</li>
+          <li><strong>Sécuriser</strong> : clôtures journalières, numérotation continue tickets, traçabilité modifications</li>
+          <li><strong>Archiver</strong> : conservation sécurisée des données 6 ans minimum, exports aux formats réglementaires</li>
+          <li><strong>Fournir une attestation</strong> au commerçant utilisateur (certificat de conformité individuel)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> 7 500€ d'amende par logiciel/caisse non conforme. Contrôles fiscaux renforcés depuis 2018.
+        </div>
+        <h4>🛒 Logiciels Concernés</h4>
+        <ul>
+          <li>Logiciels de caisse points de vente (retail, restauration...)</li>
+          <li>Applications mobiles d'encaissement (mPOS)</li>
+          <li>Systèmes e-commerce avec module caisse intégré</li>
+          <li>Systèmes de gestion commerciale avec facturation/encaissement</li>
+        </ul>
+        <h4>📄 Pour Commerçants Utilisateurs</h4>
+        <ul>
+          <li><strong>Vérifier la certification NF 525</strong> du logiciel utilisé</li>
+          <li><strong>Conserver l'attestation</strong> de conformité fournie par l'éditeur</li>
+          <li><strong>Présenter l'attestation</strong> en cas de contrôle fiscal</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -730,6 +992,40 @@
       <span class="target-tag">Cible : SaaS utilisant hébergeurs US</span>
       <p>Invalidation du Privacy Shield. Transferts de données hors UE nécessitent clauses contractuelles types (CCT) et analyse d'impact obligatoire (TIA - Transfer Impact Assessment). Risque accru avec hébergeurs soumis au CLOUD Act (AWS, Azure, GCP). Obligation d'évaluer les lois du pays tiers (surveillance gouvernementale). Mesures supplémentaires requises : chiffrement bout-en-bout, clés gestion UE, pseudonymisation. Solutions émergentes : Data Clean Rooms, Confidential Computing (enclaves sécurisées). Alternative : hébergement 100% UE souverain.</p>
       <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-schrems')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Schrems II -->
+  <div class="obligations-modal" id="modal-schrems">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Schrems II / Transferts Hors UE</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-schrems')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Si Transfert Données Hors UE</h4>
+        <ul>
+          <li><strong>Réaliser une TIA</strong> (Transfer Impact Assessment) : évaluer les lois du pays destinataire (surveillance, accès gouvernemental)</li>
+          <li><strong>Signer des CCT</strong> (Clauses Contractuelles Types) avec le sous-traitant/partenaire</li>
+          <li><strong>Documenter les garanties</strong> supplémentaires mises en place (chiffrement, gestion clés UE, pseudonymisation)</li>
+          <li><strong>Informer les utilisateurs</strong> des transferts dans la politique de confidentialité</li>
+          <li><strong>Prévoir des alternatives UE</strong> si risque trop élevé (Cloud Act, FISA 702...)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Risque :</strong> Hébergeurs US (AWS, Azure, GCP) soumis au CLOUD Act. Privacy Shield invalide depuis 2020.
+        </div>
+        <h4>🔐 Mesures Techniques Supplémentaires</h4>
+        <ul>
+          <li>Chiffrement bout-en-bout avec clés gérées uniquement en UE</li>
+          <li>Pseudonymisation ou anonymisation des données transférées</li>
+          <li>Data Clean Rooms (traitement en environnement sécurisé sans accès direct)</li>
+          <li>Confidential Computing (enclaves TEE, attestation distance)</li>
+          <li>Alternative : hébergement 100% UE souverain (OVHcloud, Scaleway, Outscale...)</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -743,6 +1039,42 @@
       <span class="target-tag">Cible : Sites publics & grandes entreprises</span>
       <p>Obligation de conformité RGAA (Référentiel Général d'Amélioration de l'Accessibilité) pour les sites web et applications mobiles des organismes publics et entreprises >250M€ CA. Niveau minimum : AA (WCAG 2.1). Déclaration d'accessibilité obligatoire. Schéma pluriannuel de mise en conformité. Sanctions : jusqu'à 20 000€ par site non conforme. Concerné : lecteurs écran, navigation clavier, contraste couleurs, sous-titres vidéo.</p>
       <a href="https://www.legifrance.gouv.fr/eli/decret/2019/7/24/2019-768/jo/texte" target="_blank" class="reg-link">📄 Décret n° 2019-768</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-rgaa')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal RGAA -->
+  <div class="obligations-modal" id="modal-rgaa">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - RGAA / Accessibilité Numérique</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-rgaa')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Organismes Publics</h4>
+        <ul>
+          <li><strong>Conformité RGAA niveau AA minimum</strong> (WCAG 2.1)</li>
+          <li><strong>Publier déclaration d'accessibilité</strong> sur chaque site/app</li>
+          <li><strong>Établir schéma pluriannuel</strong> (3 ans max) + plan d'action annuel</li>
+          <li><strong>Moyen de contact</strong> pour signaler problèmes accessibilité</li>
+        </ul>
+        <h4>🏢 Pour Entreprises >250M€ CA</h4>
+        <ul>
+          <li>Mêmes obligations pour sites/apps générant >250M€ CA annuel France</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 20 000€ par site après mise en demeure.
+        </div>
+        <h4>♿ Critères Clés</h4>
+        <ul>
+          <li>Navigation clavier complète</li>
+          <li>Compatibilité lecteurs écran</li>
+          <li>Contraste 4.5:1 minimum</li>
+          <li>Sous-titres vidéos, alt images</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -756,6 +1088,44 @@
       <span class="target-tag">Cible : OS, Logiciels embarqués</span>
       <p>Le calcul de la réparabilité des équipements inclut désormais la durée de disponibilité des mises à jour logicielles. Impact sur smartphones, tablettes, ordinateurs portables. Obligation d'affichage en magasin et en ligne (note sur 10).</p>
       <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000041553759" target="_blank" class="reg-link">📄 Loi n° 2020-105 (AGEC)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-agec')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal AGEC -->
+  <div class="obligations-modal" id="modal-agec">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - AGEC / Indice Réparabilité</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-agec')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Fabricants Équipements Électroniques</h4>
+        <ul>
+          <li><strong>Calculer l'indice de réparabilité</strong> selon grille officielle (note /10)</li>
+          <li><strong>Intégrer la durée support logiciel</strong> : nombre d'années de mises à jour garanties (OS, firmware, correctifs sécu)</li>
+          <li><strong>Afficher l'indice</strong> : point de vente physique + fiche produit en ligne (obligatoire)</li>
+          <li><strong>Publier la grille de calcul</strong> détaillée en ligne (site fabricant)</li>
+        </ul>
+        <h4>📱 Équipements Concernés</h4>
+        <ul>
+          <li>Smartphones et tablettes</li>
+          <li>Ordinateurs portables</li>
+          <li>Téléviseurs</li>
+          <li>Lave-linge, tondeuses à gazon (élargissement progressif)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>📊 Impact logiciel :</strong> La durée de disponibilité des mises à jour (OS, sécurité) compte pour 20% de la note finale.
+        </div>
+        <h4>🛠️ Pour Éditeurs OS/Firmware Embarqués</h4>
+        <ul>
+          <li><strong>Annoncer publiquement</strong> la durée de support (ex: "5 ans de mises à jour")</li>
+          <li><strong>Respecter l'engagement</strong> : fournir mises à jour sécurité + correctifs critiques</li>
+          <li><strong>Informer en cas d'arrêt</strong> du support (fin de vie produit)</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -770,6 +1140,46 @@
       <p>Obligation de fournir les mises à jour nécessaires au maintien de la conformité pendant 2 ans minimum pour les produits et services numériques vendus aux consommateurs. Transposition de la directive européenne sur les contenus et services numériques. Le consommateur peut demander réparation, remplacement ou remboursement en cas de défaut.</p>
       <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000043884445" target="_blank" class="reg-link">📄 Ordonnance n° 2021-1247</a>
       <a href="https://eur-lex.europa.eu/eli/dir/2019/770/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/770</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-conformite')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Garantie Conformité -->
+  <div class="obligations-modal" id="modal-conformite">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Garantie Conformité Numérique</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-conformite')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Éditeurs B2C (Vente Consommateurs)</h4>
+        <ul>
+          <li><strong>Fournir mises à jour</strong> nécessaires au maintien de la conformité pendant <strong>2 ans minimum</strong></li>
+          <li><strong>Informer le consommateur</strong> des mises à jour disponibles (notifications, emails)</li>
+          <li><strong>Garantir les fonctionnalités</strong> annoncées à la vente (description, publicité, démo)</li>
+          <li><strong>Assurer la sécurité</strong> : correctifs vulnérabilités critiques pendant 2 ans</li>
+          <li><strong>Compatibilité</strong> : si intégration matériel, garantir fonctionnement avec versions OS standard</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Défaut de conformité :</strong> Consommateur peut exiger réparation (correctif), remplacement ou remboursement (résolution contrat).
+        </div>
+        <h4>📱 Produits/Services Concernés</h4>
+        <ul>
+          <li>Applications mobiles vendues (Android, iOS)</li>
+          <li>Logiciels PC/Mac vendus aux particuliers</li>
+          <li>Jeux vidéo (hors contenu purement en ligne multijoueur)</li>
+          <li>SaaS B2C avec abonnement consommateur</li>
+          <li>Contenus numériques (ebooks avec DRM, vidéos, musique)</li>
+        </ul>
+        <h4>🕒 Durée Garantie</h4>
+        <ul>
+          <li><strong>2 ans minimum</strong> à compter de la fourniture initiale</li>
+          <li>Sauf si durée plus longue annoncée contractuellement</li>
+          <li>Pour abonnements : pendant toute la durée + 2 ans après résiliation si achat unique</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -783,6 +1193,9 @@
       <span class="target-tag">Cible : Plateformes UGC, Réseaux Sociaux</span>
       <p>Obligation de filtrage automatique des contenus protégés par droits d'auteur uploadés par utilisateurs (Article 17). Filtres anti-contrefaçon obligatoires pour plateformes >5M users. Accords de licence préalables avec ayants-droit requis. Procédure contestation utilisateur obligatoire. Concerne YouTube, TikTok, Dailymotion, plateformes partage vidéo/musique. Exemptions : startups <3 ans, <10M€ CA.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2019/790/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/790 (DSM)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-copyright')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
@@ -796,10 +1209,13 @@
       <span class="target-tag">Cible : Réseaux Sociaux, Plateformes</span>
       <p>Obligation technique d'afficher un bouton de signalement des contenus illicites et de traiter prioritairement les notifications des signaleurs de confiance. Encadrement strict de la promotion de certains produits (chirurgie esthétique, paris). Interdiction publicité pour enfants de moins de 16 ans sans consentement parental.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2023/6/9/2023-451/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2023-451 (Influenceurs)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-influenceurs')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">20 Sept 2023</span>
@@ -809,10 +1225,13 @@
       <span class="target-tag">Cible : Tout Service en Ligne, SSO, Auth</span>
       <p>Création du Portefeuille Européen d'Identité Numérique (EUDI Wallet) accessible à tous les citoyens UE. Obligation pour services publics d'accepter l'authentification via wallet UE. Services privés fortement encouragés (adoption volontaire). Permet stockage identité, permis, diplômes, prescriptions médicales. Signature électronique qualifiée intégrée. Impact majeur sur SSO/OAuth : interopérabilité paneuropéenne obligatoire.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1183 (eIDAS 2)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-eidas')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">2 Mars 2024</span>
@@ -822,10 +1241,13 @@
       <span class="target-tag">Cible : Gatekeepers (Apple, Google, Meta...)</span>
       <p>Obligation d'interopérabilité pour les "contrôleurs d'accès" (>45M users UE mensuels, >75M€ CA UE). Messageries instantanées doivent s'ouvrir (WhatsApp, iMessage). App Stores : autorisation side-loading, stores tiers, moteurs paiement alternatifs. Interdiction auto-préférence (favoriser ses propres services dans classements). Accès aux données plateforme pour tiers. Portabilité données en temps réel. Sanctions : jusqu'à 10% CA mondial, 20% en récidive.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/1925/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/1925 (DMA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dma')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">17 Fév 2024</span>
@@ -835,10 +1257,13 @@
       <span class="target-tag">Cible : Marketplaces, Hébergeurs</span>
       <p>Système de "Notice & Action" obligatoire (signalement + retrait contenus illicites). Traçabilité des vendeurs pro (KYBC) obligatoire pour les places de marché. Très grandes plateformes (>45M users UE) : audit annuel, analyse risques systémiques, transparence algorithmes. Point de contact unique UE obligatoire.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2065/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2065 (DSA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dsa')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">22 Mai 2024</span>
@@ -848,10 +1273,13 @@
       <span class="target-tag">Cible : Cloud, Sites Adultes</span>
       <p>Encadrement des crédits cloud (durée limitée à 12 mois, remboursement obligatoire). Obligation de vérification d'âge stricte pour les sites pornographiques (double anonymat). Blocage DNS possible ordonné par Arcom. Renforcement lutte contre arnaques en ligne et contrefaçons. Obligation hébergeurs : contact France, représentant légal UE.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2024/5/21/2024-449/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2024-449 (SREN)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-sren')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-regulated">
       <div class="header-row">
         <span class="date-badge">17 Jan 2025</span>
@@ -861,10 +1289,13 @@
       <span class="target-tag">Cible : Fintech, SaaS Bancaire</span>
       <p>Contrats de résilience informatique obligatoires avec les clients financiers. Surveillance directe des prestataires TIC critiques par l'UE (ESA). Tests de résilience obligatoires (TLPT - Threat-Led Penetration Testing tous les 3 ans). Notification incidents sous 4h (initial) puis rapports détaillés. Registre des risques TIC. Due diligence fournisseurs renforcée. En France : qualification SecNumCloud ANSSI ou équivalent fortement recommandée pour hébergeurs de données financières sensibles.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2554 (DORA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dora')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">2 Fév 2025</span>
@@ -874,10 +1305,13 @@
       <span class="target-tag">Cible : Tous Développeurs IA</span>
       <p>Interdiction de mise sur le marché d'IA aux pratiques inacceptables (notation sociale, police prédictive, reconnaissance émotionnelle au travail, manipulation comportementale). IA à haut risque (recrutement, crédit, justice) : évaluation conformité obligatoire, supervision humaine. IA générative (GPAI - General Purpose AI) : transparence (watermarking, mention "généré par IA"), documentation technique, résumé données entraînement. Modèles à risque systémique (>10^25 FLOPS) : tests adversaires obligatoires. Sanctions jusqu'à 35M€ ou 7% CA.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-aiact')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-iot">
       <div class="header-row">
         <span class="date-badge">12 Sept 2025</span>
@@ -887,10 +1321,13 @@
       <span class="target-tag">Cible : SaaS IoT, Industrie</span>
       <p>Obligation de fournir aux utilisateurs l'accès aux données brutes générées par leurs objets connectés. Droit de partager ces données avec des tiers (réparateurs, services après-vente). API standardisées obligatoires. Interdiction des clauses contractuelles bloquant l'accès aux données. Délai de mise à disposition : sans retard injustifié.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2023/2854 (Data Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dataact-iot')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">18 Oct 2024</span>
@@ -900,10 +1337,13 @@
       <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN</span>
       <p>Transposition française effective. Obligation d'auto-recensement ANSSI pour entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.). Notification incidents majeurs sous 24h. Mesures cybersécurité obligatoires : MFA, chiffrement, sauvegardes, gestion correctifs, analyse risques annuelle. Sanctions : jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-iot">
       <div class="header-row">
         <span class="date-badge">Juil 2026</span>
@@ -913,10 +1353,13 @@
       <span class="target-tag">Cible : ERP, PLM, Supply Chain</span>
       <p>Mise en place du registre pour le Passeport Numérique Produit (DPP). Impact fort sur les logiciels de gestion de production (Textile/Batteries). Traçabilité complète obligatoire : composition, réparabilité, empreinte carbone, recyclabilité. QR code ou RFID sur produits. Les logiciels doivent intégrer capacité de génération et stockage DPP.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1781/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1781 (ESPR)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-espr')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">1 Sept 2026</span>
@@ -926,10 +1369,13 @@
       <span class="target-tag">Cible : Logiciels de Gestion / Compta</span>
       <p>Capacité de <strong>réception</strong> obligatoire pour toutes les entreprises. <strong>Émission</strong> obligatoire pour les Grandes Entreprises et ETI. Formats : Factur-X (hybride PDF/XML) ou UBL. Transmission via plateformes de dématérialisation partenaires (PDP) ou portail public (PPF). e-Reporting des transactions B2C/export simultané. Certification NF 203 recommandée.</p>
       <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-facture-v1')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">Sept 2026</span>
@@ -939,10 +1385,13 @@
       <span class="target-tag">Cible : Tout Editeur Logiciel</span>
       <p>Obligation de signaler les vulnérabilités activement exploitées à l'ENISA et au CSIRT national sous 24 heures. Vulnérabilités non exploitées : notification sous 72h après découverte. Publication coordonnée (CVD) recommandée. Base EUDB centralisée. Premiers éditeurs concernés : logiciels avec connexion réseau ou traitement de données sensibles.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-cra-reporting')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">12 Jan 2027</span>
@@ -952,10 +1401,13 @@
       <span class="target-tag">Cible : Fournisseurs Cloud / IaaS / PaaS</span>
       <p>Interdiction totale de facturer des frais de sortie (Egress fees) ou de changement de fournisseur. Délai maximal de migration : 30 jours (données) + 30 jours (assistance technique). Export des données dans format structuré et machine-readable obligatoire. Clauses contractuelles abusives interdites (pénalités dissuasives, verrouillage technique). Concerne IaaS, PaaS, SaaS avec stockage important.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2023/2854 (Data Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dataact-cloud')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">1 Sept 2027</span>
@@ -965,10 +1417,13 @@
       <span class="target-tag">Cible : Logiciels pour PME/TPE</span>
       <p>Généralisation : L'émission de factures électroniques structurées devient obligatoire pour les PME et TPE. Fin du papier et PDF simple pour B2B. Tous les logiciels de facturation/compta/ERP/CRM doivent intégrer connexion à une PDP ou au PPF. Archivage électronique 10 ans obligatoire. Contrôles fiscaux automatisés accrus (TVA, détection fraude).</p>
       <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-facture-v2')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">Déc 2027</span>
@@ -978,10 +1433,13 @@
       <span class="target-tag">Cible : Tout Logiciel Commercial</span>
       <p>Marquage CE obligatoire. Security by Design, livraison de SBOM (liste composants) et support de sécurité garanti 5 ans minimum. Produits "critiques" : Classe I (OS, antivirus, VPN, gestionnaires mots de passe) et Classe II (systèmes industriels critiques, firewalls) nécessitent certification tierce obligatoire. Documentation technique complète : analyse risques, tests sécurité, instructions utilisateurs. Logiciels open-source commercialisés inclus. Sanctions : jusqu'à 15M€ ou 2.5% CA. Exemptions : SaaS pur sans composant téléchargé/installé côté client.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-cra-total')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-regulated">
       <div class="header-row">
         <span class="date-badge">2027 (Est.)</span>
@@ -991,10 +1449,13 @@
       <span class="target-tag">Cible : Fintech, E-commerce, PSP</span>
       <p>Vérification obligatoire IBAN/Nom du bénéficiaire pour tous les virements (lutte fraude). Renforcement APIs Open Banking : accès temps réel, dashboards unifiés, initiation paiement facilitée. Autorisation paiements instantanés paneuropéens obligatoires. Obligation banques : APIs standardisées gratuites. Nouveau régime agrément PSP simplifié. SaaS étrangers avec clients FR concernés.</p>
       <a href="https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/payment-services-directive-psd2_en" target="_blank" class="reg-link">📄 PSR - Proposition COM/2023</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dsp3')">
+        📋 Mes obligations
+      </button>
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-regulated">
       <div class="header-row">
         <span class="date-badge">2028 (Est.)</span>
@@ -1004,6 +1465,531 @@
       <span class="target-tag">Cible : Logiciels Santé (DPI, Imagerie)</span>
       <p>Obligation d'interopérabilité européenne pour dossiers patients (résumé patient, e-prescription) selon format EEHRxF. Accès transfrontalier aux données santé pour soins. Consentement patient centralisé. Espace européen données santé pour recherche (usage secondaire). Logiciels DPI, imagerie, labo concernés. Certification produits santé numériques renforcée. Pilotes nationaux dès 2026.</p>
       <a href="https://health.ec.europa.eu/publications/proposal-regulation-european-health-data-space_en" target="_blank" class="reg-link">📄 EHDS - Proposition COM/2022</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-ehds')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Directive Copyright -->
+  <div class="obligations-modal" id="modal-copyright">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Directive Copyright / Upload Filters</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-copyright')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Plateformes UGC >5M Users</h4>
+        <ul>
+          <li><strong>Filtrage automatique</strong> contenus protégés (Article 17) avant publication</li>
+          <li><strong>Négocier licences</strong> avec ayants-droit (SACEM, SACD, éditeurs...)</li>
+          <li><strong>Procédure contestation</strong> utilisateur (recours si faux positif)</li>
+          <li><strong>Analyse contenus</strong> : empreintes numériques (fingerprinting vidéo/audio)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Exemption :</strong> Startups <3 ans ET <10M€ CA exemptées temporairement.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Loi Influenceurs -->
+  <div class="obligations-modal" id="modal-influenceurs">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Loi Influenceurs</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-influenceurs')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Plateformes/Réseaux Sociaux</h4>
+        <ul>
+          <li><strong>Bouton signalement</strong> contenus illicites visible</li>
+          <li><strong>Traitement prioritaire</strong> signalements de confiance</li>
+          <li><strong>Blocage publicité</strong> produits interdits (chirurgie esthétique, paris sportifs)</li>
+          <li><strong>Vérification âge</strong> pour publicité ciblant -16 ans</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal eIDAS 2.0 -->
+  <div class="obligations-modal" id="modal-eidas">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - eIDAS 2.0 / Wallet Européen</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-eidas')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Services Publics (Obligatoire)</h4>
+        <ul>
+          <li><strong>Accepter authentification</strong> via EUDI Wallet</li>
+          <li><strong>Intégration SSO</strong> compatible wallet UE</li>
+        </ul>
+        <h4>💡 Pour Services Privés (Recommandé)</h4>
+        <ul>
+          <li><strong>Adoption volontaire</strong> fortement encouragée</li>
+          <li><strong>Interopérabilité OAuth/OpenID</strong> avec wallet UE</li>
+          <li>Permet authentification unifiée citoyens UE</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal DMA -->
+  <div class="obligations-modal" id="modal-dma">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - DMA / Gatekeepers</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dma')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Si Gatekeeper (>45M Users UE, >75M€ CA)</h4>
+        <ul>
+          <li><strong>Interopérabilité</strong> : ouvrir messageries (WhatsApp, iMessage)</li>
+          <li><strong>App Stores</strong> : autoriser side-loading, stores tiers, moteurs paiement alternatifs</li>
+          <li><strong>Interdiction auto-préférence</strong> : ne pas favoriser ses services dans classements</li>
+          <li><strong>Portabilité données</strong> temps réel pour utilisateurs</li>
+          <li><strong>Accès données</strong> pour développeurs tiers (APIs)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 10% CA mondial, 20% récidive.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal DSA -->
+  <div class="obligations-modal" id="modal-dsa">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - DSA</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dsa')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Toutes Plateformes/Hébergeurs</h4>
+        <ul>
+          <li><strong>Système "Notice & Action"</strong> : signalement + retrait contenus illicites</li>
+          <li><strong>Point de contact UE</strong> obligatoire</li>
+        </ul>
+        <h4>🏪 Pour Marketplaces</h4>
+        <ul>
+          <li><strong>KYBC (Know Your Business Customer)</strong> : traçabilité vendeurs professionnels</li>
+          <li>Vérification identité, SIRET, coordonnées bancaires</li>
+        </ul>
+        <h4>🏢 Si Très Grande Plateforme (>45M Users UE)</h4>
+        <ul>
+          <li><strong>Audit indépendant annuel</strong></li>
+          <li><strong>Analyse risques systémiques</strong> (désinformation, manipulation...)</li>
+          <li><strong>Transparence algorithmes</strong> recommandation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal SREN -->
+  <div class="obligations-modal" id="modal-sren">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Loi SREN</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-sren')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>☁️ Pour Fournisseurs Cloud</h4>
+        <ul>
+          <li><strong>Crédits cloud</strong> : durée max 12 mois, remboursement non utilisé obligatoire</li>
+          <li><strong>Représentant légal UE</strong> et contact France</li>
+        </ul>
+        <h4>🔞 Pour Sites Adultes</h4>
+        <ul>
+          <li><strong>Vérification âge stricte</strong> avec double anonymat (pas de traçabilité)</li>
+          <li>Solutions certifiées (FranceConnect+, tiers certificateurs)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Blocage DNS administratif possible par Arcom sans juge.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal DORA -->
+  <div class="obligations-modal" id="modal-dora">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - DORA (Depuis 17 Jan 2025)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dora')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Prestataires TIC Secteur Financier</h4>
+        <ul>
+          <li><strong>Contrats résilience</strong> avec clauses obligations cyber précises</li>
+          <li><strong>Notification incidents</strong> sous 4h (initial) + rapports détaillés</li>
+          <li><strong>Tests résilience TLPT</strong> (Threat-Led Penetration Testing) tous les 3 ans</li>
+          <li><strong>Registre risques TIC</strong> documenté et à jour</li>
+          <li><strong>Due diligence fournisseurs</strong> sous-traitants</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🇫🇷 France :</strong> SecNumCloud ANSSI fortement recommandé pour hébergement données financières sensibles.
+        </div>
+        <h4>🎯 Si Prestataire TIC Critique</h4>
+        <ul>
+          <li><strong>Surveillance directe ESA</strong> (autorités européennes)</li>
+          <li>Audits réguliers imposés</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal AI Act -->
+  <div class="obligations-modal" id="modal-aiact">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - AI Act (Depuis 2 Fév 2025)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-aiact')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>🚫 Interdictions Immédiates</h4>
+        <ul>
+          <li>Notation sociale (type crédit social chinois)</li>
+          <li>Police prédictive basée profils</li>
+          <li>Reconnaissance émotionnelle au travail/écoles</li>
+          <li>Manipulation comportementale subliminale</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 35M€ ou 7% CA pour pratiques interdites.
+        </div>
+        <h4>⚠️ Si IA Haut Risque (Recrutement, Crédit, Justice...)</h4>
+        <ul>
+          <li><strong>Évaluation conformité</strong> avant mise sur marché</li>
+          <li><strong>Supervision humaine</strong> obligatoire</li>
+          <li><strong>Documentation technique</strong> complète</li>
+          <li><strong>Tests robustesse</strong> et biais</li>
+        </ul>
+        <h4>🤖 Si IA Générative (GPAI)</h4>
+        <ul>
+          <li><strong>Watermarking</strong> contenus générés</li>
+          <li><strong>Mention "généré par IA"</strong> obligatoire</li>
+          <li><strong>Résumé données entraînement</strong> publié</li>
+          <li>Si >10^25 FLOPS : tests adversaires obligatoires</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Data Act IoT -->
+  <div class="obligations-modal" id="modal-dataact-iot">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Data Act / Accès Données IoT (Depuis 12 Sept 2025)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dataact-iot')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Fabricants/Éditeurs IoT</h4>
+        <ul>
+          <li><strong>Fournir accès données brutes</strong> générées par objets connectés aux utilisateurs</li>
+          <li><strong>API standardisées</strong> pour export données</li>
+          <li><strong>Autoriser partage tiers</strong> (réparateurs, SAV, services tiers)</li>
+          <li><strong>Délai mise à disposition</strong> : sans retard injustifié (temps réel ou quasi)</li>
+          <li><strong>Interdiction clauses bloquantes</strong> dans CGV (accès exclusif éditeur)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🎯 Objectif :</strong> Droit de réparation et liberté choix services pour utilisateurs finaux.
+        </div>
+        <h4>📊 Données Concernées</h4>
+        <ul>
+          <li>Capteurs IoT (température, géolocalisation, consommation...)</li>
+          <li>Logs équipements industriels</li>
+          <li>Télémétrie véhicules connectés</li>
+          <li>Historiques usage appareils domestiques</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal NIS 2 -->
+  <div class="obligations-modal" id="modal-nis2">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - NIS 2 (Depuis 18 Oct 2024)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-nis2')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Entités Essentielles (>250 sal. OU >50M€ CA)</h4>
+        <ul>
+          <li><strong>Auto-recensement ANSSI</strong> via plateforme dédiée</li>
+          <li><strong>Notification incidents</strong> cyber majeurs sous 24h</li>
+          <li><strong>Mesures cybersécurité</strong> : MFA, chiffrement, sauvegardes 3-2-1, gestion correctifs</li>
+          <li><strong>Analyse risques annuelle</strong> documentée</li>
+          <li><strong>Plan continuité activité</strong> (PCA/PRA) testé</li>
+          <li><strong>Formation personnel</strong> cybersécurité</li>
+        </ul>
+        <h4>✅ Pour Entités Importantes (>50 sal.)</h4>
+        <ul>
+          <li>Mêmes obligations mais surveillance moins stricte</li>
+          <li>Auto-recensement ANSSI requis</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.
+        </div>
+        <h4>🎯 Secteurs Concernés</h4>
+        <ul>
+          <li>SaaS B2B, ESN, Cloud providers</li>
+          <li>Services numériques (>50 salariés)</li>
+          <li>Santé, énergie, transports, finance (essentiels)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal ESPR -->
+  <div class="obligations-modal" id="modal-espr">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - ESPR / Passeport Numérique Produit (Juil 2026)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-espr')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Éditeurs ERP/PLM/Supply Chain</h4>
+        <ul>
+          <li><strong>Intégrer module DPP</strong> (Digital Product Passport) dans logiciel</li>
+          <li><strong>Générer QR codes/RFID</strong> pour chaque produit</li>
+          <li><strong>Stocker données traçabilité</strong> : composition, origine, réparabilité, empreinte carbone</li>
+          <li><strong>API export vers registre UE</strong></li>
+        </ul>
+        <h4>🏭 Secteurs Prioritaires (2026)</h4>
+        <ul>
+          <li>Textile & habillement</li>
+          <li>Batteries (véhicules électriques)</li>
+          <li>Électronique (2027)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>📊 Impact :</strong> Logiciels de gestion production doivent capturer et stocker données durabilité dès conception.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Facturation Électronique V1 -->
+  <div class="obligations-modal" id="modal-facture-v1">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Facturation Électronique V1 (1 Sept 2026)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-facture-v1')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour TOUTES Entreprises</h4>
+        <ul>
+          <li><strong>Capacité réception</strong> factures électroniques structurées obligatoire</li>
+          <li>Formats : Factur-X (PDF/XML hybride) ou UBL</li>
+          <li>Via PDP (Plateforme Dématérialisation Partenaire) ou PPF (Portail Public)</li>
+        </ul>
+        <h4>📤 Pour Grandes Entreprises & ETI (Émission)</h4>
+        <ul>
+          <li><strong>Émission obligatoire</strong> factures B2B structurées</li>
+          <li><strong>e-Reporting</strong> : déclaration transactions B2C et exports</li>
+          <li><strong>Connexion PDP/PPF</strong> intégrée au logiciel</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🇫🇷 Certification NF 203</strong> recommandée pour logiciels de facturation.
+        </div>
+        <h4>💻 Pour Éditeurs Logiciels</h4>
+        <ul>
+          <li><strong>Intégrer connecteurs</strong> PDP certifiées ou API PPF</li>
+          <li><strong>Génération Factur-X/UBL</strong></li>
+          <li><strong>Archivage 10 ans</strong> conforme</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal CRA Reporting -->
+  <div class="obligations-modal" id="modal-cra-reporting">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - CRA Reporting Vulnérabilités (Sept 2026)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-cra-reporting')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Tous Éditeurs Logiciels</h4>
+        <ul>
+          <li><strong>Notifier ENISA + CSIRT national</strong> sous 24h si vulnérabilité activement exploitée</li>
+          <li><strong>Notifier sous 72h</strong> si vulnérabilité découverte non exploitée</li>
+          <li><strong>Enregistrement base EUDB</strong> centralisée européenne</li>
+          <li><strong>CVD (Coordinated Vulnerability Disclosure)</strong> : publication coordonnée après correctif</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🎯 Concernés dès 2026 :</strong> Logiciels avec connexion réseau ou traitement données sensibles.
+        </div>
+        <h4>📋 Informations à Fournir</h4>
+        <ul>
+          <li>Description technique vulnérabilité (CVE)</li>
+          <li>Versions affectées</li>
+          <li>Criticité (CVSS score)</li>
+          <li>Correctif disponible ou workaround</li>
+          <li>Exploitation constatée (IoC)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Data Act Cloud Switching -->
+  <div class="obligations-modal" id="modal-dataact-cloud">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Data Act / Cloud Switching (12 Jan 2027)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dataact-cloud')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Fournisseurs IaaS/PaaS/SaaS</h4>
+        <ul>
+          <li><strong>Interdiction frais sortie</strong> (egress fees) totale</li>
+          <li><strong>Interdiction frais changement</strong> fournisseur</li>
+          <li><strong>Délai migration max</strong> : 30 jours données + 30 jours assistance technique</li>
+          <li><strong>Export format structuré</strong> machine-readable obligatoire</li>
+          <li><strong>Interdiction clauses abusives</strong> : pénalités dissuasives, verrouillage technique</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>💰 Impact :</strong> Fin des revenus egress (AWS, Azure, GCP). Portabilité totale clients.
+        </div>
+        <h4>📤 Obligations Techniques</h4>
+        <ul>
+          <li>API export complète (données + configs)</li>
+          <li>Formats standards (JSON, CSV, SQL...)</li>
+          <li>Assistance migration gratuite (30j)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Facturation Électronique V2 -->
+  <div class="obligations-modal" id="modal-facture-v2">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - Facturation Électronique V2 (1 Sept 2027)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-facture-v2')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour PME & TPE (Émission Obligatoire)</h4>
+        <ul>
+          <li><strong>Émission factures structurées</strong> B2B obligatoire (Factur-X ou UBL)</li>
+          <li><strong>Fin PDF simple</strong> et papier pour B2B</li>
+          <li><strong>Connexion PDP/PPF</strong> : tous logiciels compta/ERP/CRM doivent intégrer</li>
+          <li><strong>e-Reporting</strong> transactions B2C/export obligatoire</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🚨 Généralisation totale :</strong> Toutes entreprises françaises B2B concernées.
+        </div>
+        <h4>💻 Pour Éditeurs Logiciels PME/TPE</h4>
+        <ul>
+          <li><strong>Mise à jour obligatoire</strong> : intégration connecteurs facture électronique</li>
+          <li><strong>Interface utilisateur</strong> simplifiée pour TPE</li>
+          <li><strong>Archivage 10 ans</strong> conforme fiscal</li>
+        </ul>
+        <h4>📊 Impact Fiscal</h4>
+        <ul>
+          <li>Pré-remplissage TVA automatique</li>
+          <li>Contrôles fiscaux automatisés accrus</li>
+          <li>Détection fraude temps réel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal CRA Total -->
+  <div class="obligations-modal" id="modal-cra-total">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - CRA Complet (Déc 2027)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-cra-total')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Tous Logiciels Commerciaux</h4>
+        <ul>
+          <li><strong>Marquage CE obligatoire</strong></li>
+          <li><strong>Security by Design</strong> : analyse risques dès conception</li>
+          <li><strong>SBOM (Software Bill of Materials)</strong> : liste tous composants/dépendances</li>
+          <li><strong>Support sécurité 5 ans minimum</strong> : correctifs vulnérabilités critiques</li>
+          <li><strong>Documentation technique</strong> : tests sécurité, instructions utilisateur</li>
+        </ul>
+        <h4>🔴 Si Classe I (Critiques)</h4>
+        <ul>
+          <li>OS, antivirus, VPN, gestionnaires mots de passe</li>
+          <li><strong>Certification tierce obligatoire</strong></li>
+        </ul>
+        <h4>🔴 Si Classe II (Industrie Critique)</h4>
+        <ul>
+          <li>Systèmes industriels, SCADA, firewalls</li>
+          <li><strong>Certification tierce obligatoire</strong></li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>✅ Exemption :</strong> SaaS pur sans composant téléchargé/installé côté client.
+        </div>
+        <h4>⚠️ Sanctions</h4>
+        <ul>
+          <li>Jusqu'à 15M€ ou 2.5% CA</li>
+          <li>Retrait marché possible</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal DSP3 / PSR -->
+  <div class="obligations-modal" id="modal-dsp3">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - DSP3 / PSR (2027 Est.)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-dsp3')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Fintech & PSP</h4>
+        <ul>
+          <li><strong>Vérification IBAN/Nom</strong> bénéficiaire obligatoire (lutte fraude)</li>
+          <li><strong>Support paiements instantanés</strong> paneuropéens</li>
+          <li><strong>APIs Open Banking renforcées</strong> : accès temps réel données bancaires</li>
+        </ul>
+        <h4>🏦 Pour Banques</h4>
+        <ul>
+          <li><strong>APIs standardisées gratuites</strong> pour PSP tiers</li>
+          <li><strong>Dashboards unifiés</strong> multi-comptes</li>
+          <li><strong>Initiation paiement facilitée</strong> via API</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🌍 Impact :</strong> SaaS étrangers avec clients FR concernés par vérification IBAN/Nom.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal EHDS -->
+  <div class="obligations-modal" id="modal-ehds">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - EHDS / Santé (2028 Est.)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-ehds')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Éditeurs Logiciels Santé</h4>
+        <ul>
+          <li><strong>Interopérabilité format EEHRxF</strong> (European Electronic Health Record)</li>
+          <li><strong>Export résumé patient</strong> standardisé transfrontalier</li>
+          <li><strong>e-Prescription européenne</strong> compatible</li>
+          <li><strong>Consentement patient centralisé</strong> : gestion droits accès unifié</li>
+        </ul>
+        <h4>🏥 Logiciels Concernés</h4>
+        <ul>
+          <li>DPI (Dossiers Patients Informatisés)</li>
+          <li>Logiciels imagerie médicale (PACS)</li>
+          <li>Laboratoires (LIS)</li>
+          <li>Pharmacie (e-prescription)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🎯 Pilotes 2026 :</strong> Tests nationaux avant généralisation 2028.
+        </div>
+        <h4>🔬 Usage Secondaire (Recherche)</h4>
+        <ul>
+          <li>Accès données pseudonymisées pour recherche</li>
+          <li>Consentement opt-in requis</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -1364,6 +2350,46 @@ document.addEventListener('DOMContentLoaded', function() {
     originalApplyFilters();
     generateTOC();
   };
+
+  // === GESTION DES POPUPS OBLIGATIONS ===
+  function openObligationsModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden'; // Bloquer le scroll
+    }
+  }
+
+  function closeObligationsModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = ''; // Restaurer le scroll
+    }
+  }
+
+  // Fermer la popup en cliquant sur le fond
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('obligations-modal')) {
+      e.target.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Fermer avec la touche Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const openModal = document.querySelector('.obligations-modal.show');
+      if (openModal) {
+        openModal.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Exposer les fonctions globalement pour les boutons
+  window.openObligationsModal = openObligationsModal;
+  window.closeObligationsModal = closeObligationsModal;
 });
 </script>
 

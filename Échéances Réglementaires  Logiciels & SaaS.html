@@ -8,7 +8,7 @@
   /* --- RESET ET POLICES --- */
   * { box-sizing: border-box; }
   body {
-    background-color: #f4f7f6;
+    background-color: #e8eceb;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     margin: 0;
@@ -359,10 +359,10 @@
   /* --- SOMMAIRE FLOTTANT --- */
  .toc-container {
     position: sticky;
-    top: 70px;
+    top: 120px;
     right: 20px;
     width: 280px;
-    max-height: calc(100vh - 150px);
+    max-height: calc(100vh - 200px);
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
@@ -2269,8 +2269,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const newClosest = newClosestFuture || newClosestPast;
     if (newClosest) {
       closestContainer = newClosest;
-      // Repositionner le marqueur
-      currentMarker.style.top = (closestContainer.offsetTop - 50) + 'px';
+      // Attendre que le DOM soit mis à jour avant de repositionner
+      setTimeout(() => {
+        currentMarker.style.top = (closestContainer.offsetTop - 50) + 'px';
+      }, 50);
     }
   }
 
@@ -2299,8 +2301,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Réorganiser l'alternance après filtrage
     reorderContainers();
     
-    // Repositionner le marqueur "Aujourd'hui"
-    repositionTodayMarker();
+    // Repositionner le marqueur "Aujourd'hui" après un délai pour laisser le DOM se stabiliser
+    setTimeout(() => {
+      repositionTodayMarker();
+    }, 100);
   }
 
   // Gestion des clics sur les items de légende (filtres)

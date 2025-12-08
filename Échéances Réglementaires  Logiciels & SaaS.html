@@ -153,7 +153,7 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 20px; /* Réduit car le panneau n'est plus fixe en haut */
+    margin-top: 20px;
   }
 
   /* Ligne verticale */
@@ -185,8 +185,9 @@
       margin-top: -120px;
     }
 
-    .container:first-child {
-      margin-top: 0;
+    .container:first-child,
+    .container:not(.hidden):first-of-type {
+      margin-top: 0 !important;
     }  /* Cercles sur la ligne */
  .container::after {
     content: '';
@@ -2252,6 +2253,13 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         container.classList.remove('left');
         container.classList.add('right');
+      }
+      
+      // Le premier visible ne doit pas avoir de margin négatif
+      if (index === 0) {
+        container.style.marginTop = '0';
+      } else {
+        container.style.marginTop = '';
       }
     });
   }

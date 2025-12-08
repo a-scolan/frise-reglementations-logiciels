@@ -29,6 +29,8 @@
  .theme-iot { --main-color: #27ae60; --bg-light: #d5f5e3; }
   /* Secteurs Régulés : Banque, Santé, Public */
  .theme-regulated { --main-color: #c0392b; --bg-light: #fadbd8; }
+  /* ESN : Entreprises Services Numérique */
+ .theme-esn { --main-color: #e67e22; --bg-light: #fdebd0; }
 
   /* --- LÉGENDE / PANNEAU DE FILTRAGE FLOTTANT --- */
  .legend-container {
@@ -131,6 +133,10 @@
  .leg-regulated { background-color: #fadbd8; color: #c0392b; border-color: #c0392b; }
  .leg-regulated.dot { background-color: #c0392b; }
  .leg-regulated.inactive { border-color: #bdc3c7; color: #7f8c8d; }
+
+ .leg-esn { background-color: #fdebd0; color: #e67e22; border-color: #e67e22; }
+ .leg-esn.dot { background-color: #e67e22; }
+ .leg-esn.inactive { border-color: #bdc3c7; color: #7f8c8d; }
  
  /* Compteur sur les items de légende */
  .legend-count {
@@ -610,6 +616,24 @@
  .card-regulated.date-badge { background-color: #c0392b; }
  .card-regulated.target-tag { color: #c0392b; }
 
+  /* ESN-specific info tag */
+ .esn-info {
+    display: block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: #fdebd0;
+    color: #e67e22;
+    border: 1px solid #e67e22;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    transition: opacity 0.3s ease;
+    width: fit-content;
+  }
+ .esn-info.hidden {
+    display: none;
+  }
+
   /* Footer */
  .footer {
     text-align: center;
@@ -651,9 +675,14 @@
      padding: 0;
      gap: 0;
      max-height: 50px;
+     overflow: hidden;
+     width: 100%;
+     left: 0;
+     right: 0;
    }
    .legend-container.expanded {
-     max-height: 300px;
+     max-height: 500px;
+     overflow-y: auto;
    }
    .legend-toggle-btn {
      display: block;
@@ -678,6 +707,7 @@
      display: none;
      flex-direction: column;
      gap: 6px;
+     width: 100%;
    }
    .legend-container.expanded .legend-items-wrapper {
      display: flex;
@@ -690,12 +720,15 @@
      padding: 6px 8px;
      width: 100%;
      justify-content: space-between;
+     flex-wrap: nowrap;
    }
    .legend-item .dot {
      margin-right: 6px;
+     flex-shrink: 0;
    }
    .legend-count {
      margin-left: auto;
+     flex-shrink: 0;
    }
    .timeline { margin-top: 80px; }
    .current-date-marker { 
@@ -812,6 +845,10 @@
       <span class="dot"></span>Secteurs Régulés (Finance, Santé, Public)
       <span class="legend-count" id="count-regulated">0</span>
     </div>
+    <div class="legend-item leg-esn inactive" data-category="esn">
+      <span class="dot"></span>ESN & Prestataires IT
+      <span class="legend-count" id="count-esn">0</span>
+    </div>
   </div>
 </div>
 
@@ -836,13 +873,13 @@
 <div class="timeline">
 
   <div class="container right">
-    <div class="content card-universal">
+    <div class="content card-universal card-esn">
       <div class="header-row">
         <span class="date-badge">25 Mai 2018</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>RGPD (Règlement Général sur la Protection des Données)</h2>
-      <span class="target-tag">Cible : Tout Logiciel / Tout Traitement de Données</span>
+      <span class="target-tag">Cible : Tout Logiciel / Tout Traitement de Données<span class="esn-info">ESN : DPO obligatoire si traitement grande échelle</span></span>
       <p>Protection des données personnelles : privacy by design et by default, droit à l'oubli, portabilité des données. Sanctions jusqu'à 20M€ ou 4% du CA mondial annuel. 6 bases légales exclusives : consentement explicite (opt-in révocable), exécution contrat, obligation légale, sauvegarde intérêts vitaux, mission intérêt public, intérêt légitime (balancé avec droits utilisateur). DPO obligatoire si traitement grande échelle ou données sensibles. Registre traitements obligatoire. Notification violations CNIL sous 72h. AIPD obligatoire si risque élevé.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2016/679</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-rgpd')">
@@ -882,13 +919,13 @@
   </div>
 
   <div class="container left">
-    <div class="content card-universal">
+    <div class="content card-universal card-esn">
       <div class="header-row">
         <span class="date-badge">25 Mai 2018</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>ePrivacy (Directive Cookie)</h2>
-      <span class="target-tag">Cible : Tous Sites Web & Apps</span>
+      <span class="target-tag">Cible : Tous Sites Web & Apps<span class="esn-info">ESN : Si site web/app propre ou client</span></span>
       <p>Consentement explicite requis avant tout cookie non essentiel (marketing, analytics, publicité). Bandeau cookie obligatoire avec refus aussi facile qu'acceptation (même nombre de clics). Interdiction des "cookie walls" abusifs (bloquer l'accès sans consentement). En France, appliqué strictement par la CNIL depuis 2020 (lignes directrices). Durée conservation consentement : 13 mois max. Preuve consentement obligatoire (logs horodatés).</p>
       <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32002L0058" target="_blank" class="reg-link">📄 Directive 2002/58/CE</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-eprivacy')">
@@ -982,13 +1019,13 @@
   </div>
 
   <div class="container left">
-    <div class="content card-b2c">
+    <div class="content card-b2c card-esn">
       <div class="header-row">
         <span class="date-badge">12 Juil 2020</span>
         <span class="origin-badge origin-eu">Europe (Arrêt)</span>
       </div>
       <h2>Schrems II (Transferts UE-USA)</h2>
-      <span class="target-tag">Cible : SaaS utilisant hébergeurs US</span>
+      <span class="target-tag">Cible : SaaS utilisant hébergeurs US<span class="esn-info">ESN : Si utilisation AWS/Azure/GCP - TIA obligatoire</span></span>
       <p>Invalidation du Privacy Shield. Transferts de données hors UE nécessitent clauses contractuelles types (CCT) et analyse d'impact obligatoire (TIA - Transfer Impact Assessment). Risque accru avec hébergeurs soumis au CLOUD Act (AWS, Azure, GCP). Obligation d'évaluer les lois du pays tiers (surveillance gouvernementale). Mesures supplémentaires requises : chiffrement bout-en-bout, clés gestion UE, pseudonymisation. Solutions émergentes : Data Clean Rooms, Confidential Computing (enclaves sécurisées). Alternative : hébergement 100% UE souverain.</p>
       <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-schrems')">
@@ -1279,13 +1316,13 @@
   </div>
 
   <div class="container left">
-    <div class="content card-b2b">
+    <div class="content card-b2b card-esn">
       <div class="header-row">
         <span class="date-badge">18 Oct 2024</span>
         <span class="origin-badge origin-fr">France (Transpo UE)</span>
       </div>
       <h2>NIS 2 (Cybersécurité Renforcée)</h2>
-      <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN</span>
+      <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN<span class="esn-info">ESN : >50 sal. Important / >250 sal. ou >50M€ Essentiel</span></span>
       <p>Transposition française effective. Obligation d'auto-recensement ANSSI pour entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.). Notification incidents majeurs sous 24h. Mesures cybersécurité obligatoires : MFA, chiffrement, sauvegardes, gestion correctifs, analyse risques annuelle. Sanctions : jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
@@ -1295,13 +1332,13 @@
   </div>
 
   <div class="container right">
-    <div class="content card-regulated">
+    <div class="content card-regulated card-esn">
       <div class="header-row">
         <span class="date-badge">17 Jan 2025</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>DORA (Entrée en vigueur)</h2>
-      <span class="target-tag">Cible : Fintech, SaaS Bancaire</span>
+      <span class="target-tag">Cible : Fintech, SaaS Bancaire<span class="esn-info">ESN : Si prestataire TIC pour secteur financier</span></span>
       <p>Contrats de résilience informatique obligatoires avec les clients financiers. Surveillance directe des prestataires TIC critiques par l'UE (ESA). Tests de résilience obligatoires (TLPT - Threat-Led Penetration Testing tous les 3 ans). Notification incidents sous 4h (initial) puis rapports détaillés. Registre des risques TIC. Due diligence fournisseurs renforcée. En France : qualification SecNumCloud ANSSI ou équivalent fortement recommandée pour hébergeurs de données financières sensibles.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2554 (DORA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dora')">
@@ -1311,13 +1348,13 @@
   </div>
 
   <div class="container left">
-    <div class="content card-universal">
+    <div class="content card-universal card-esn">
       <div class="header-row">
         <span class="date-badge">2 Fév 2025</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>AI Act (Interdictions)</h2>
-      <span class="target-tag">Cible : Tous Développeurs IA</span>
+      <span class="target-tag">Cible : Tous Développeurs IA<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
       <p>Interdiction de mise sur le marché d'IA aux pratiques inacceptables (notation sociale, police prédictive, reconnaissance émotionnelle au travail, manipulation comportementale). IA à haut risque (recrutement, crédit, justice) : évaluation conformité obligatoire, supervision humaine. IA générative (GPAI - General Purpose AI) : transparence (watermarking, mention "généré par IA"), documentation technique, résumé données entraînement. Modèles à risque systémique (>10^25 FLOPS) : tests adversaires obligatoires. Sanctions jusqu'à 35M€ ou 7% CA.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-aiact')">
@@ -1375,13 +1412,13 @@
   </div>
 
   <div class="container left">
-    <div class="content card-universal">
+    <div class="content card-universal card-esn">
       <div class="header-row">
         <span class="date-badge">Sept 2026</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>Cyber Resilience Act (Reporting)</h2>
-      <span class="target-tag">Cible : Tout Editeur Logiciel</span>
+      <span class="target-tag">Cible : Tout Editeur Logiciel<span class="esn-info">ESN : Si édition logiciels commerciaux</span></span>
       <p>Obligation de signaler les vulnérabilités activement exploitées à l'ENISA et au CSIRT national sous 24 heures. Vulnérabilités non exploitées : notification sous 72h après découverte. Publication coordonnée (CVD) recommandée. Base EUDB centralisée. Premiers éditeurs concernés : logiciels avec connexion réseau ou traitement de données sensibles.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-cra-reporting')">
@@ -1423,13 +1460,13 @@
   </div>
 
   <div class="container right">
-    <div class="content card-universal">
+    <div class="content card-universal card-esn">
       <div class="header-row">
         <span class="date-badge">Déc 2027</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
       <h2>Cyber Resilience Act (Total)</h2>
-      <span class="target-tag">Cible : Tout Logiciel Commercial</span>
+      <span class="target-tag">Cible : Tout Logiciel Commercial<span class="esn-info">ESN : Marquage CE + SBOM si édition logiciel</span></span>
       <p>Marquage CE obligatoire. Security by Design, livraison de SBOM (liste composants) et support de sécurité garanti 5 ans minimum. Produits "critiques" : Classe I (OS, antivirus, VPN, gestionnaires mots de passe) et Classe II (systèmes industriels critiques, firewalls) nécessitent certification tierce obligatoire. Documentation technique complète : analyse risques, tests sécurité, instructions utilisateurs. Logiciels open-source commercialisés inclus. Sanctions : jusqu'à 15M€ ou 2.5% CA. Exemptions : SaaS pur sans composant téléchargé/installé côté client.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-cra-total')">
@@ -2139,7 +2176,8 @@ document.addEventListener('DOMContentLoaded', function() {
     b2b: true,
     b2c: true,
     iot: true,
-    regulated: true
+    regulated: true,
+    esn: false
   };
 
   // Compter les éléments par catégorie
@@ -2149,7 +2187,8 @@ document.addEventListener('DOMContentLoaded', function() {
       b2b: 0,
       b2c: 0,
       iot: 0,
-      regulated: 0
+      regulated: 0,
+      esn: 0
     };
 
     containers.forEach(container => {
@@ -2159,6 +2198,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (content.classList.contains('card-b2c')) counts.b2c++;
       if (content.classList.contains('card-iot')) counts.iot++;
       if (content.classList.contains('card-regulated')) counts.regulated++;
+      if (content.classList.contains('card-esn')) counts.esn++;
     });
 
     // Mettre à jour l'affichage
@@ -2246,6 +2286,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (filterState.b2c && content.classList.contains('card-b2c')) shouldShow = true;
       if (filterState.iot && content.classList.contains('card-iot')) shouldShow = true;
       if (filterState.regulated && content.classList.contains('card-regulated')) shouldShow = true;
+      if (filterState.esn && content.classList.contains('card-esn')) shouldShow = true;
 
       // Appliquer le masquage
       if (shouldShow) {
@@ -2280,8 +2321,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       applyFilters();
+      updateEsnInfoVisibility();
     });
   });
+
+  // Fonction pour afficher/masquer les infos ESN
+  function updateEsnInfoVisibility() {
+    const esnInfoTags = document.querySelectorAll('.esn-info');
+    esnInfoTags.forEach(tag => {
+      if (filterState.esn) {
+        tag.classList.remove('hidden');
+      } else {
+        tag.classList.add('hidden');
+      }
+    });
+  }
+
+  // Initialiser la visibilité des infos ESN
+  updateEsnInfoVisibility();
 
   // Initialisation
   updateCounts();

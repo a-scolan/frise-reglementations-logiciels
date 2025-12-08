@@ -172,11 +172,11 @@
     }
 
     .container.left {
-      margin-top: -30px;
+      margin-top: -120px;
     }
 
     .container.right {
-      margin-top: -30px;
+      margin-top: -120px;
     }
 
     .container:first-child {
@@ -564,12 +564,11 @@
     gap: 8px;
   }
  .obligations-modal-body ul {
-    margin: 0;
+    margin-bottom: 12px;
     padding-left: 20px;
     line-height: 1.8;
   }
  .obligations-modal-body li {
-    margin-bottom: 12px;
     color: #555;
     font-size: 0.9rem;
   }
@@ -1132,6 +1131,22 @@
   <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
+        <span class="date-badge">7 Sept 2021</span>
+        <span class="origin-badge origin-eu">Europe</span>
+      </div>
+      <h2>Directive Copyright (Upload Filters)</h2>
+      <span class="target-tag">Cible : Plateformes UGC, Réseaux Sociaux</span>
+      <p>Obligation de filtrage automatique des contenus protégés par droits d'auteur uploadés par utilisateurs (Article 17). Filtres anti-contrefaçon obligatoires pour plateformes >5M users. Accords de licence préalables avec ayants-droit requis. Procédure contestation utilisateur obligatoire. Concerne YouTube, TikTok, Dailymotion, plateformes partage vidéo/musique. Exemptions : startups <3 ans, <10M€ CA.</p>
+      <a href="https://eur-lex.europa.eu/eli/dir/2019/790/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/790 (DSM)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-copyright')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container left">
+    <div class="content card-b2c">
+      <div class="header-row">
         <span class="date-badge">1 Jan 2022</span>
         <span class="origin-badge origin-fr">France (Transpo UE)</span>
       </div>
@@ -1183,22 +1198,6 @@
     </div>
   </div>
 
-  <div class="container left">
-    <div class="content card-b2c">
-      <div class="header-row">
-        <span class="date-badge">7 Sept 2021</span>
-        <span class="origin-badge origin-eu">Europe</span>
-      </div>
-      <h2>Directive Copyright (Upload Filters)</h2>
-      <span class="target-tag">Cible : Plateformes UGC, Réseaux Sociaux</span>
-      <p>Obligation de filtrage automatique des contenus protégés par droits d'auteur uploadés par utilisateurs (Article 17). Filtres anti-contrefaçon obligatoires pour plateformes >5M users. Accords de licence préalables avec ayants-droit requis. Procédure contestation utilisateur obligatoire. Concerne YouTube, TikTok, Dailymotion, plateformes partage vidéo/musique. Exemptions : startups <3 ans, <10M€ CA.</p>
-      <a href="https://eur-lex.europa.eu/eli/dir/2019/790/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/790 (DSM)</a>
-      <button class="obligations-btn" onclick="openObligationsModal('modal-copyright')">
-        📋 Mes obligations
-      </button>
-    </div>
-  </div>
-
   <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
@@ -1234,22 +1233,6 @@
   <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
-        <span class="date-badge">2 Mars 2024</span>
-        <span class="origin-badge origin-eu">Europe</span>
-      </div>
-      <h2>DMA (Digital Markets Act)</h2>
-      <span class="target-tag">Cible : Gatekeepers (Apple, Google, Meta...)</span>
-      <p>Obligation d'interopérabilité pour les "contrôleurs d'accès" (>45M users UE mensuels, >75M€ CA UE). Messageries instantanées doivent s'ouvrir (WhatsApp, iMessage). App Stores : autorisation side-loading, stores tiers, moteurs paiement alternatifs. Interdiction auto-préférence (favoriser ses propres services dans classements). Accès aux données plateforme pour tiers. Portabilité données en temps réel. Sanctions : jusqu'à 10% CA mondial, 20% en récidive.</p>
-      <a href="https://eur-lex.europa.eu/eli/reg/2022/1925/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/1925 (DMA)</a>
-      <button class="obligations-btn" onclick="openObligationsModal('modal-dma')">
-        📋 Mes obligations
-      </button>
-    </div>
-  </div>
-
-  <div class="container left">
-    <div class="content card-b2c">
-      <div class="header-row">
         <span class="date-badge">17 Fév 2024</span>
         <span class="origin-badge origin-eu">Europe</span>
       </div>
@@ -1258,6 +1241,22 @@
       <p>Système de "Notice & Action" obligatoire (signalement + retrait contenus illicites). Traçabilité des vendeurs pro (KYBC) obligatoire pour les places de marché. Très grandes plateformes (>45M users UE) : audit annuel, analyse risques systémiques, transparence algorithmes. Point de contact unique UE obligatoire.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2065/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2065 (DSA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dsa')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container left">
+    <div class="content card-b2c">
+      <div class="header-row">
+        <span class="date-badge">2 Mars 2024</span>
+        <span class="origin-badge origin-eu">Europe</span>
+      </div>
+      <h2>DMA (Digital Markets Act)</h2>
+      <span class="target-tag">Cible : Gatekeepers (Apple, Google, Meta...)</span>
+      <p>Obligation d'interopérabilité pour les "contrôleurs d'accès" (>45M users UE mensuels, >75M€ CA UE). Messageries instantanées doivent s'ouvrir (WhatsApp, iMessage). App Stores : autorisation side-loading, stores tiers, moteurs paiement alternatifs. Interdiction auto-préférence (favoriser ses propres services dans classements). Accès aux données plateforme pour tiers. Portabilité données en temps réel. Sanctions : jusqu'à 10% CA mondial, 20% en récidive.</p>
+      <a href="https://eur-lex.europa.eu/eli/reg/2022/1925/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/1925 (DMA)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dma')">
         📋 Mes obligations
       </button>
     </div>
@@ -1280,6 +1279,22 @@
   </div>
 
   <div class="container left">
+    <div class="content card-b2b">
+      <div class="header-row">
+        <span class="date-badge">18 Oct 2024</span>
+        <span class="origin-badge origin-fr">France (Transpo UE)</span>
+      </div>
+      <h2>NIS 2 (Cybersécurité Renforcée)</h2>
+      <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN</span>
+      <p>Transposition française effective. Obligation d'auto-recensement ANSSI pour entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.). Notification incidents majeurs sous 24h. Mesures cybersécurité obligatoires : MFA, chiffrement, sauvegardes, gestion correctifs, analyse risques annuelle. Sanctions : jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.</p>
+      <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container right">
     <div class="content card-regulated">
       <div class="header-row">
         <span class="date-badge">17 Jan 2025</span>
@@ -1295,7 +1310,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">2 Fév 2025</span>
@@ -1311,7 +1326,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-iot">
       <div class="header-row">
         <span class="date-badge">12 Sept 2025</span>
@@ -1322,22 +1337,6 @@
       <p>Obligation de fournir aux utilisateurs l'accès aux données brutes générées par leurs objets connectés. Droit de partager ces données avec des tiers (réparateurs, services après-vente). API standardisées obligatoires. Interdiction des clauses contractuelles bloquant l'accès aux données. Délai de mise à disposition : sans retard injustifié.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2023/2854 (Data Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dataact-iot')">
-        📋 Mes obligations
-      </button>
-    </div>
-  </div>
-
-  <div class="container right">
-    <div class="content card-b2b">
-      <div class="header-row">
-        <span class="date-badge">18 Oct 2024</span>
-        <span class="origin-badge origin-fr">France (Transpo UE)</span>
-      </div>
-      <h2>NIS 2 (Cybersécurité Renforcée)</h2>
-      <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN</span>
-      <p>Transposition française effective. Obligation d'auto-recensement ANSSI pour entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.). Notification incidents majeurs sous 24h. Mesures cybersécurité obligatoires : MFA, chiffrement, sauvegardes, gestion correctifs, analyse risques annuelle. Sanctions : jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.</p>
-      <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
-      <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
         📋 Mes obligations
       </button>
     </div>

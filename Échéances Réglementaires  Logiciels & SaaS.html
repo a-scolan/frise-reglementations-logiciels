@@ -326,6 +326,16 @@
     border-right: 8px solid transparent;
     border-top: 8px solid #e74c3c;
   }
+ .current-date-marker.bottom-marker {
+    top: auto !important;
+    bottom: 20px;
+  }
+ .current-date-marker.bottom-marker::after {
+    bottom: auto;
+    top: -8px;
+    border-top: none;
+    border-bottom: 8px solid #e74c3c;
+  }
 
   /* Bouton retour à aujourd'hui */
  .back-to-today {
@@ -739,6 +749,15 @@
    }
    .current-date-marker::after {
      left: 35px;
+     transform: none;
+   }
+   .current-date-marker.bottom-marker {
+     left: -11px;
+     transform: none;
+     width: 85px;
+   }
+   .current-date-marker.bottom-marker::after {
+     left: 34px;
      transform: none;
    }
    .back-to-today {
@@ -2077,9 +2096,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Trouver le conteneur le plus proche de la date actuelle
   let closestContainer = null;
+  let closestPast = null;
   let closestFuture = null;
+  let minPastDiff = Infinity;
   let minFutureDiff = Infinity;
-  let hasFutureEvent = false;
   
   containers.forEach(container => {
     const dateBadge = container.querySelector('.date-badge');
@@ -2088,9 +2108,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (eventDate) {
         const diff = eventDate - today;
         
-        if (diff > 0) {
+        if (diff <= 0) {
+          // Événement passé ou actuel
+          const absDiff = Math.abs(diff);
+          if (absDiff < minPastDiff) {
+            minPastDiff = absDiff;
+            closestPast = container;
+          }
+        } else {
           // Événement futur
-          hasFutureEvent = true;
           if (diff < minFutureDiff) {
             minFutureDiff = diff;
             closestFuture = container;
@@ -2100,32 +2126,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Si au moins un événement futur existe, utiliser le plus proche
-  // Sinon, utiliser le dernier conteneur de la liste (tous sont passés)
-  closestContainer = hasFutureEvent ? closestFuture : containers[containers.length - 1];
+  // Prioriser l'événement futur le plus proche, sinon prendre le passé le plus récent
+  closestContainer = closestFuture || closestPast;
   
   // Placer le marqueur et scroller
   let currentMarker = null;
+  let isAllPast = false;
+  
   if (closestContainer) {
     const marker = document.createElement('div');
     marker.className = 'current-date-marker';
     marker.textContent = 'AUJOURD\'HUI';
+    marker.id = 'todayMarker';
     
-    // Si tous les événements sont passés, placer après le dernier conteneur
-    if (!hasFutureEvent) {
-      marker.style.top = (closestContainer.offsetTop + closestContainer.offsetHeight + 30) + 'px';
+    // Si tous les événements sont passés, placer le marqueur en bas
+    if (!closestFuture && closestPast) {
+      isAllPast = true;
+      marker.classList.add('bottom-marker');
     } else {
       marker.style.top = (closestContainer.offsetTop - 50) + 'px';
     }
-    
-    marker.id = 'todayMarker';
     
     document.querySelector('.timeline').appendChild(marker);
     currentMarker = marker;
     
     // Scroll automatique vers le marqueur avec un délai pour permettre le rendu
     setTimeout(() => {
-      marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (!isAllPast) {
+        marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }, 100);
   }
 
@@ -2236,9 +2265,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (visibleContainers.length === 0) return;
     
     // Trouver le conteneur visible le plus proche de la date actuelle
+    let newClosestPast = null;
     let newClosestFuture = null;
+    let minPastDiff = Infinity;
     let minFutureDiff = Infinity;
-    let hasFuture = false;
     
     visibleContainers.forEach(container => {
       const dateBadge = container.querySelector('.date-badge');
@@ -2247,9 +2277,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (eventDate) {
           const diff = eventDate - today;
           
-          if (diff > 0) {
+          if (diff <= 0) {
+            // Événement passé
+            const absDiff = Math.abs(diff);
+            if (absDiff < minPastDiff) {
+              minPastDiff = absDiff;
+              newClosestPast = container;
+            }
+          } else {
             // Événement futur
-            hasFuture = true;
             if (diff < minFutureDiff) {
               minFutureDiff = diff;
               newClosestFuture = container;
@@ -2259,18 +2295,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Si au moins un événement futur existe, utiliser le plus proche
-    // Sinon, utiliser le dernier conteneur visible (peu importe sa date)
-    const newClosest = hasFuture ? newClosestFuture : visibleContainers[visibleContainers.length - 1];
-    
+    // Prioriser l'événement futur le plus proche
+    const newClosest = newClosestFuture || newClosestPast;
     if (newClosest) {
       closestContainer = newClosest;
       // Attendre que le DOM soit mis à jour avant de repositionner
       setTimeout(() => {
-        // Si tous passés, placer après le dernier conteneur
-        if (!hasFuture) {
-          currentMarker.style.top = (closestContainer.offsetTop + closestContainer.offsetHeight + 30) + 'px';
+        // Si tous les événements visibles sont passés, placer en bas
+        if (!newClosestFuture && newClosestPast) {
+          currentMarker.classList.add('bottom-marker');
+          currentMarker.style.top = '';
         } else {
+          currentMarker.classList.remove('bottom-marker');
           currentMarker.style.top = (closestContainer.offsetTop - 50) + 'px';
         }
       }, 50);
@@ -2347,6 +2383,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialisation
   updateCounts();
+
+  // Repositionner correctement le marqueur après initialisation des filtres
+  setTimeout(() => {
+    if (currentMarker && closestContainer) {
+      currentMarker.style.top = (closestContainer.offsetTop - 50) + 'px';
+    }
+  }, 200);
 
   // === SOMMAIRE FLOTTANT ===
   const tocContainer = document.getElementById('tocContainer');

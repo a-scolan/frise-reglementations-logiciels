@@ -547,48 +547,61 @@
    .current-date-marker { 
      width: 85px; 
      font-size: 0.65rem;
-     left: 23px;
+     left: -11px;
      transform: none;
    }
    .current-date-marker::after {
-     left: 8px;
+     left: 35px;
      transform: none;
    }
    .back-to-today {
-     bottom: 70px;
+     position: fixed;
+     bottom: 80px;
      right: 15px;
      left: 15px;
      padding: 10px 14px;
      font-size: 0.8rem;
      justify-content: center;
+     transition: bottom 0.3s ease;
+     z-index: 999;
    }
    .timeline { margin-top: 200px; }
    .toc-container {
-     width: 100%;
-     right: 0;
+     position: fixed;
+     width: calc(100% - 30px);
+     right: 15px;
+     left: 15px;
      top: auto;
-     bottom: 0;
+     bottom: 20px;
+     max-height: 50px;
+     border-radius: 12px;
+     box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+     transition: max-height 0.3s ease, bottom 0.3s ease;
+     z-index: 998;
+     overflow: hidden;
+     float: none;
+     margin: 0;
+   }
+   .toc-container:not(.collapsed) {
      max-height: 50vh;
-     border-radius: 12px 12px 0 0;
    }
    .toc-container.collapsed {
      max-height: 50px;
-     bottom: 0;
    }
    .toc-container.collapsed .toc-header {
-     border-radius: 12px 12px 0 0;
+     border-radius: 12px;
    }
    .toc-toggle-icon {
-     transform: rotate(90deg);
+     transform: rotate(180deg);
    }
    .toc-container.collapsed .toc-toggle-icon {
-     transform: rotate(-90deg);
+     transform: rotate(0deg);
    }
-   .back-to-today {
-     transition: bottom 0.3s ease;
+   body.toc-open .back-to-today {
+     bottom: calc(50vh + 30px);
    }
-   .toc-open .back-to-today {
-     bottom: calc(50vh + 10px) !important;
+   body.toc-open .toc-container {
+     bottom: 20px;
    }
    
    /* Panneau de filtrage en mobile */
@@ -703,7 +716,7 @@
       <h2>Loi Anti-Fraude TVA (Certification Caisse)</h2>
       <span class="target-tag">Cible : Logiciels de Caisse & Encaissement</span>
       <p>Obligation de certification NF 525 pour tout logiciel de caisse ou système d'encaissement. Conditions : inaltérabilité, sécurisation, conservation et archivage des données. Attestation obligatoire à présenter en cas de contrôle fiscal. Sanctions : amende 7500€ par logiciel non conforme. Concerne points de vente, e-commerce avec caisse intégrée, apps mobiles encaissement.</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000033857954" target="_blank" class="reg-link">📄 Loi n° 2015-1785 (Art. 88)</a>
+      <a href="https://www.legifrance.gouv.fr/eli/loi/2015/12/29/2015-1785/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2015-1785 (Art. 88)</a>
     </div>
   </div>
 
@@ -729,7 +742,7 @@
       <h2>Accessibilité Numérique (RGAA)</h2>
       <span class="target-tag">Cible : Sites publics & grandes entreprises</span>
       <p>Obligation de conformité RGAA (Référentiel Général d'Amélioration de l'Accessibilité) pour les sites web et applications mobiles des organismes publics et entreprises >250M€ CA. Niveau minimum : AA (WCAG 2.1). Déclaration d'accessibilité obligatoire. Schéma pluriannuel de mise en conformité. Sanctions : jusqu'à 20 000€ par site non conforme. Concerné : lecteurs écran, navigation clavier, contraste couleurs, sous-titres vidéo.</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000037518249" target="_blank" class="reg-link">📄 Décret n° 2019-768</a>
+      <a href="https://www.legifrance.gouv.fr/eli/decret/2019/7/24/2019-768/jo/texte" target="_blank" class="reg-link">📄 Décret n° 2019-768</a>
     </div>
   </div>
 
@@ -769,7 +782,7 @@
       <h2>Loi Influenceurs</h2>
       <span class="target-tag">Cible : Réseaux Sociaux, Plateformes</span>
       <p>Obligation technique d'afficher un bouton de signalement des contenus illicites et de traiter prioritairement les notifications des signaleurs de confiance. Encadrement strict de la promotion de certains produits (chirurgie esthétique, paris). Interdiction publicité pour enfants de moins de 16 ans sans consentement parental.</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047778202" target="_blank" class="reg-link">📄 Loi n° 2023-451 (Influenceurs)</a>
+      <a href="https://www.legifrance.gouv.fr/eli/loi/2023/6/9/2023-451/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2023-451 (Influenceurs)</a>
     </div>
   </div>
 
@@ -795,7 +808,7 @@
       <h2>Loi SREN</h2>
       <span class="target-tag">Cible : Cloud, Sites Adultes</span>
       <p>Encadrement des crédits cloud (durée limitée à 12 mois, remboursement obligatoire). Obligation de vérification d'âge stricte pour les sites pornographiques (double anonymat). Blocage DNS possible ordonné par Arcom. Renforcement lutte contre arnaques en ligne et contrefaçons. Obligation hébergeurs : contact France, représentant légal UE.</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049528801" target="_blank" class="reg-link">📄 Loi n° 2024-449 (SREN)</a>
+      <a href="https://www.legifrance.gouv.fr/eli/loi/2024/5/21/2024-449/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2024-449 (SREN)</a>
     </div>
   </div>
 
@@ -873,7 +886,7 @@
       <h2>Facturation Électronique (V1)</h2>
       <span class="target-tag">Cible : Logiciels de Gestion / Compta</span>
       <p>Capacité de <strong>réception</strong> obligatoire pour toutes les entreprises. <strong>Émission</strong> obligatoire pour les Grandes Entreprises et ETI. Formats : Factur-X (hybride PDF/XML) ou UBL. Transmission via plateformes de dématérialisation partenaires (PDP) ou portail public (PPF). e-Reporting des transactions B2C/export simultané. Certification NF 203 recommandée.</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049939922" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
+      <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
     </div>
   </div>
 
@@ -912,7 +925,7 @@
       <h2>Facturation Électronique (V2)</h2>
       <span class="target-tag">Cible : Logiciels pour PME/TPE</span>
       <p>Généralisation : L'émission de factures électroniques structurées devient obligatoire pour les PME et TPE. Fin du papier et PDF simple pour B2B. Tous les logiciels de facturation/compta/ERP/CRM doivent intégrer connexion à une PDP ou au PPF. Archivage électronique 10 ans obligatoire. Contrôles fiscaux automatisés accrus (TVA, détection fraude).</p>
-      <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049939922" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
+      <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
     </div>
   </div>
 
@@ -938,7 +951,7 @@
       <h2>DSP3 / PSR</h2>
       <span class="target-tag">Cible : Fintech, E-commerce</span>
       <p>Vérification obligatoire IBAN/Nom du bénéficiaire pour tous les virements (lutte fraude). Renforcement des APIs Open Banking : accès temps réel, dashboards unifiés, initiation paiement facilitée. Autorisation paiements instantanés paneuropéens. Obligation banques : APIs standardisées gratuites. Nouveau régime agrément PSP simplifié pour petits acteurs.</p>
-      <a href="https://finance.ec.europa.eu/publications/payment-services-directive-review_en" target="_blank" class="reg-link">📄 PSR - Proposition COM/2023</a>
+      <a href="https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/payment-services-directive-psd2_en" target="_blank" class="reg-link">📄 PSR - Proposition COM/2023</a>
     </div>
   </div>
 

@@ -1005,16 +1005,6 @@
   </p>
 </div>
 
-<!-- Avertissement Légal - Non Contractuel -->
-<div style="max-width: 900px; margin: 0 auto 25px; padding: 18px 24px; background: #fff3cd; border-left: 5px solid #f39c12; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-  <p style="margin: 0 0 10px 0; color: #856404; font-size: 0.95rem; line-height: 1.7;">
-    <strong>⚠️ DOCUMENT NON CONTRACTUEL</strong>
-  </p>
-  <p style="margin: 0; color: #856404; font-size: 0.88rem; line-height: 1.6;">
-    Ce document est fourni <strong>à titre purement indicatif et pédagogique</strong>. Il ne saurait se substituer aux textes réglementaires en vigueur ni engager la responsabilité de l'acheteur public ou de toute autre entité quant à l'exhaustivité des obligations légales. Les scores de complexité constituent une <strong>estimation générique</strong> destinée à faciliter la compréhension et le dimensionnement des chantiers de conformité. Ils ne remplacent pas une analyse juridique et technique au cas par cas.
-  </p>
-</div>
-
 <!-- Panneau de filtrage flottant (ancienne légende transformée) -->
 <div class="legend-container" id="legendContainer">
   <button class="legend-toggle-btn" id="legendToggle">🔍 Filtrer par catégorie</button>
@@ -1098,13 +1088,8 @@
         <button class="obligations-modal-close" onclick="closeObligationsModal('modal-complexity-explanation')">×</button>
       </div>
       <div class="obligations-modal-body">
-        <div style="margin-bottom: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #f39c12; border-radius: 6px;">
-          <p style="margin: 0; color: #856404; font-size: 0.9rem; line-height: 1.6;">
-            <strong>📌 Nature Indicative :</strong> Les scores présentés constituent une <strong>estimation générique</strong> à vocation pédagogique. Ils visent à faciliter le dimensionnement des efforts de conformité mais <strong>ne remplacent pas une analyse spécifique</strong> à votre contexte technique, organisationnel et sectoriel.
-          </p>
-        </div>
         <p style="margin-bottom: 20px; color: #495057; line-height: 1.6;">
-          Cette évaluation vous aide à <strong>estimer l'effort nécessaire</strong> pour vous conformer à chaque réglementation selon 5 critères clés :
+          Cette évaluation objective vous aide à <strong>estimer l'effort nécessaire</strong> pour vous conformer à chaque réglementation selon 5 critères clés.
         </p>
 
         <h4>🔧 1. Charge Technique</h4>
@@ -3404,8 +3389,7 @@
 <div class="footer">
   <p><strong>Version Q4 2025</strong> - Dernière mise à jour : Décembre 2025</p>
   <p>Cette frise synthétise les principales réglementations européennes et françaises applicables aux éditeurs de logiciels, SaaS, plateformes et prestataires IT.</p>
-  <p style="background: #fff3cd; padding: 12px; border-radius: 6px; color: #856404; font-weight: 600;">⚠️ DOCUMENT NON CONTRACTUEL - Fourni à titre purement indicatif et pédagogique</p>
-  <p style="font-size: 0.85rem; line-height: 1.5; color: #666;">Ce document ne saurait se substituer aux textes réglementaires en vigueur ni engager la responsabilité de son auteur ou de toute entité utilisatrice quant à l'exhaustivité des obligations légales. Les scores de complexité sont des estimations génériques nécessitant une analyse au cas par cas. <strong>Consulter les textes officiels et un conseil juridique pour toute application contraignante.</strong></p>
+  <p>⚠️ Document à vocation informative - Consulter les textes officiels pour application juridique.</p>
   <p style="margin-top: 15px; font-size: 0.8rem;">Sources : EUR-Lex, Légifrance, CNIL, ANSSI, Commission Européenne</p>
 </div>
 

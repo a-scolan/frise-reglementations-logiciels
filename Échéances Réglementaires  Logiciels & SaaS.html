@@ -152,8 +152,7 @@
  .timeline {
     position: relative;
     max-width: 1200px;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
   }
 
   /* Ligne verticale */
@@ -247,6 +246,20 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    gap: 8px;
+  }
+
+ .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+ .header-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
   }
 
  .date-badge {
@@ -256,6 +269,27 @@
     border-radius: 4px;
     font-size: 0.85rem;
     font-weight: bold;
+  }
+
+ .sanctions-badge {
+    font-size: 0.7rem;
+    padding: 3px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1.5px solid;
+    cursor: help;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    background-color: #fff3e0;
+    color: #e65100;
+    border-color: #ff9800;
+  }
+ .sanctions-badge:hover {
+    background-color: #ffe0b2;
+    border-color: #f57c00;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
   }
 
  .origin-badge {
@@ -370,14 +404,14 @@
   /* --- SOMMAIRE FLOTTANT --- */
  .toc-container {
     position: sticky;
-    top: 120px;
+    top: 160px;
     right: 20px;
     width: 280px;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 240px);
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    z-index: 998;
+    z-index: 1002;
     transition: all 0.3s ease;
     overflow: hidden;
     float: right;
@@ -419,11 +453,7 @@
     gap: 8px;
   }
  .toc-toggle-icon {
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-  }
- .toc-container.collapsed .toc-toggle-icon {
-    transform: rotate(180deg);
+    display: none;
   }
  .toc-content {
     padding: 15px 10px;
@@ -513,6 +543,14 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
+  }
+
+  /* Modale explicative au-dessus des autres */
+ #modal-complexity-explanation {
+    z-index: 2100;
+  }
+ #modal-complexity-explanation.show {
+    background: rgba(0, 0, 0, 0.75);
   }
  @keyframes fadeIn {
     from { opacity: 0; }
@@ -606,6 +644,110 @@
     color: #533f03;
   }
 
+  /* --- TABLEAU COMPLEXITÉ --- */
+ .complexity-section {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+  }
+ .complexity-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+ .complexity-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ .complexity-help-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    position: relative;
+  }
+ .complexity-help-btn:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: scale(1.15) rotate(15deg);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  }
+ .complexity-help-btn:active {
+    transform: scale(1.05);
+  }
+ .complexity-help-btn::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(102, 126, 234, 0.4);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+ @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+ .complexity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+ .complexity-table th {
+    background: #dee2e6;
+    color: #495057;
+    font-weight: 600;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 2px solid #adb5bd;
+  }
+ .complexity-table td {
+    padding: 8px;
+    border-bottom: 1px solid #dee2e6;
+    color: #495057;
+  }
+ .complexity-table tr:last-child td {
+    border-bottom: none;
+  }
+ .complexity-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+  }
+ .complexity-score-1 { color: #28a745; }
+ .complexity-score-2 { color: #ffc107; }
+ .complexity-score-3 { color: #fd7e14; }
+ .complexity-score-4 { color: #dc3545; }
+ .complexity-score-5 { color: #6f42c1; }
+ .complexity-stars {
+    color: inherit;
+    font-size: 0.9rem;
+  }
+
   /* --- APPLICATION DES THÈMES AUX CARTES --- */
  .card-universal { border-left-color: #34495e; }
  .card-universal.date-badge { background-color: #34495e; }
@@ -690,23 +832,34 @@
      width: 100%;
      left: 0;
      right: 0;
+     margin-bottom: 10px;
+     border-radius: 12px;
+     z-index: 997;
    }
    .legend-container.expanded {
      max-height: 500px;
      overflow-y: auto;
+     margin-bottom: 10px;
    }
    .legend-toggle-btn {
      display: block;
      width: 100%;
-     padding: 12px;
+     padding: 12px 18px;
      background: #2c3e50;
      color: white;
      border: none;
      font-weight: bold;
-     font-size: 0.85rem;
+     font-size: 0.9rem;
      cursor: pointer;
-     text-align: center;
+     text-align: left;
+     transition: all 0.2s;
+     user-select: none;
+     border-radius: 12px;
    }
+   .legend-container.expanded .legend-toggle-btn {
+     border-radius: 12px 12px 0 0;
+   }
+   .legend-toggle-btn:hover,
    .legend-toggle-btn:active {
      background: #34495e;
    }
@@ -741,7 +894,9 @@
      margin-left: auto;
      flex-shrink: 0;
    }
-   .timeline { margin-top: 80px; }
+   .timeline { 
+     margin-top: 10px;
+   }
    .current-date-marker { 
      width: 85px; 
      font-size: 0.65rem;
@@ -772,7 +927,6 @@
      transition: bottom 0.3s ease;
      z-index: 999;
    }
-   .timeline { margin-top: 200px; }
    .toc-container {
      position: fixed;
      width: calc(100% - 30px);
@@ -797,6 +951,11 @@
    }
    .toc-container.collapsed .toc-header {
      border-radius: 12px;
+   }
+   .toc-content {
+     max-height: calc(50vh - 50px);
+     overflow-y: auto;
+     -webkit-overflow-scrolling: touch;
    }
    .toc-toggle-icon {
      transform: rotate(180deg);
@@ -839,6 +998,12 @@
 
 <h1>Échéances Réglementaires : Logiciels & SaaS</h1>
 <p class="subtitle">Vue synthétique par type d'acteur concerné (2016 - 2030+) | <strong>Version Q4 2025</strong></p>
+
+<div style="max-width: 800px; margin: 0 auto 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+  <p style="margin: 0; color: white; font-size: 1.05rem; line-height: 1.6; text-align: center;">
+    <strong>🎯 Objectif :</strong> Faciliter et anticiper l'implémentation des réglementations européennes et françaises applicables aux éditeurs de logiciels, SaaS et prestataires IT. <br/>Cette frise permet d'identifier les obligations selon votre profil d'activité et de prioriser vos chantiers de conformité grâce à une évaluation de leur complexité.
+  </p>
+</div>
 
 <!-- Panneau de filtrage flottant (ancienne légende transformée) -->
 <div class="legend-container" id="legendContainer">
@@ -895,16 +1060,82 @@
   <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
-        <span class="date-badge">25 Mai 2018</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">25 Mai 2018</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>RGPD (Règlement Général sur la Protection des Données)</h2>
       <span class="target-tag">Cible : Tout Logiciel / Tout Traitement de Données<span class="esn-info">ESN : DPO obligatoire si traitement grande échelle</span></span>
-      <p>Protection des données personnelles : privacy by design et by default, droit à l'oubli, portabilité des données. Sanctions jusqu'à 20M€ ou 4% du CA mondial annuel. 6 bases légales exclusives : consentement explicite (opt-in révocable), exécution contrat, obligation légale, sauvegarde intérêts vitaux, mission intérêt public, intérêt légitime (balancé avec droits utilisateur). DPO obligatoire si traitement grande échelle ou données sensibles. Registre traitements obligatoire. Notification violations CNIL sous 72h. AIPD obligatoire si risque élevé.</p>
+      <p><strong>Protection données :</strong> Privacy by design/default, droit à l'oubli, portabilité des données.<br>
+      <strong>Six bases légales :</strong> Consentement explicite, contrat, obligation légale, intérêt vital, mission publique, intérêt légitime.<br>
+      <strong>Obligations clés :</strong> Tenir un registre des traitements. Nommer un DPO si traitement à grande échelle. Notifier la CNIL sous 72h en cas de violation. Réaliser une AIPD si risque élevé.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2016/679</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-rgpd')">
         📋 Mes obligations
       </button>
+    </div>
+  </div>
+
+  <!-- Modale Explicative : Critères de Complexité -->
+  <div class="obligations-modal" id="modal-complexity-explanation">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📊 Comprendre l'Évaluation de Complexité</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-complexity-explanation')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <p style="margin-bottom: 20px; color: #495057; line-height: 1.6;">
+          Cette évaluation objective vous aide à <strong>estimer l'effort nécessaire</strong> pour vous conformer à chaque réglementation selon 5 critères clés.
+        </p>
+
+        <h4>🔧 1. Charge Technique</h4>
+        <ul style="margin-bottom: 15px;">
+          <li><strong>⭐ Simple :</strong> Modifications paramétriques (ex: bannière cookie, déclaration)</li>
+          <li><strong>⭐⭐ Moyen :</strong> Développements spécifiques (ex: API, exports structurés)</li>
+          <li><strong>⭐⭐⭐ Élevé :</strong> Refonte architecturale (ex: chiffrement bout-en-bout, SBOM)</li>
+          <li><strong>⭐⭐⭐⭐ Très élevé :</strong> R&D complexe (ex: tests biais IA, supervision humaine)</li>
+        </ul>
+
+        <h4>👥 2. Effort Organisationnel</h4>
+        <ul style="margin-bottom: 15px;">
+          <li><strong>⭐ Simple :</strong> Pas de rôle dédié requis</li>
+          <li><strong>⭐⭐ Moyen :</strong> Responsable à temps partiel</li>
+          <li><strong>⭐⭐⭐ Élevé :</strong> Rôle permanent (ex: DPO, RSSI)</li>
+          <li><strong>⭐⭐⭐⭐ Très élevé :</strong> Responsabilité personnelle des dirigeants</li>
+        </ul>
+
+        <h4>🎯 3. Périmètre d'Impact</h4>
+        <ul style="margin-bottom: 15px;">
+          <li><strong>⭐ Limité :</strong> Composant isolé (ex: module caisse)</li>
+          <li><strong>⭐⭐ Modéré :</strong> Plusieurs composants (ex: authentification, filtrage)</li>
+          <li><strong>⭐⭐⭐ Large :</strong> Transverse à l'application (ex: RGPD sur tous traitements)</li>
+          <li><strong>⭐⭐⭐⭐ Total :</strong> Toute la chaîne de valeur (ex: DORA avec clients)</li>
+        </ul>
+
+        <h4>📋 4. Exigences de Preuves</h4>
+        <ul style="margin-bottom: 15px;">
+          <li><strong>⭐ Déclaratif :</strong> Auto-déclaration simple</li>
+          <li><strong>⭐⭐ Documenté :</strong> Registres et politiques internes</li>
+          <li><strong>⭐⭐⭐ Audité :</strong> Audit périodique (tous les 3 ans)</li>
+          <li><strong>⭐⭐⭐⭐ Certifié :</strong> Certification par organisme tiers obligatoire</li>
+        </ul>
+
+        <h4>⚠️ 5. Risque de Non-Conformité</h4>
+        <ul style="margin-bottom: 15px;">
+          <li><strong>⭐ Faible :</strong> Sanctions <10K€, contrôles rares</li>
+          <li><strong>⭐⭐ Modéré :</strong> 10K-100K€, contrôles ciblés</li>
+          <li><strong>⭐⭐⭐ Élevé :</strong> >100K€ ou % CA, surveillance active</li>
+          <li><strong>⭐⭐⭐⭐ Critique :</strong> Blocage de service + sanctions lourdes</li>
+        </ul>
+
+        <div class="obligations-highlight">
+          <strong>💡 Comment utiliser cette évaluation :</strong> Priorisez vos chantiers de conformité en fonction du score global. Les réglementations ⭐⭐⭐⭐ nécessitent une attention immédiate et des ressources significatives.
+        </div>
+      </div>
     </div>
   </div>
 
@@ -934,6 +1165,39 @@
           <li><strong>Réaliser une AIPD</strong> (Analyse d'Impact sur la Protection des Données) documentée</li>
           <li><strong>Consulter la CNIL</strong> avant mise en œuvre si risque résiduel élevé malgré mesures</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -941,12 +1205,19 @@
   <div class="container left">
     <div class="content card-universal card-esn">
       <div class="header-row">
-        <span class="date-badge">25 Mai 2018</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">25 Mai 2018</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>ePrivacy (Directive Cookie)</h2>
       <span class="target-tag">Cible : Tous Sites Web & Apps<span class="esn-info">ESN : Si site web/app propre ou client</span></span>
-      <p>Consentement explicite requis avant tout cookie non essentiel (marketing, analytics, publicité). Bandeau cookie obligatoire avec refus aussi facile qu'acceptation (même nombre de clics). Interdiction des "cookie walls" abusifs (bloquer l'accès sans consentement). En France, appliqué strictement par la CNIL depuis 2020 (lignes directrices). Durée conservation consentement : 13 mois max. Preuve consentement obligatoire (logs horodatés).</p>
+      <p><strong>Bandeau cookie obligatoire :</strong> Consentement explicite requis avant tout dépôt de cookies non essentiels (marketing, analytics).<br>
+      <strong>Refus facilité :</strong> Même nombre de clics que l'acceptation. Interdiction des cookie walls abusifs.<br>
+      <strong>Conservation :</strong> Durée maximale 13 mois. Obligation de conserver la preuve du consentement (logs horodatés).</p>
       <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32002L0058" target="_blank" class="reg-link">📄 Directive 2002/58/CE</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-eprivacy')">
         📋 Mes obligations
@@ -982,6 +1253,39 @@
           <li>Préférences interface (langue, accessibilité)</li>
           <li>Équilibrage charge serveurs</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Simple</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Simple</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Limité</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -989,12 +1293,20 @@
   <div class="container right">
     <div class="content card-regulated">
       <div class="header-row">
-        <span class="date-badge">1 Jan 2020</span>
-        <span class="origin-badge origin-fr">France</span>
+        <div class="header-left">
+          <span class="date-badge">1 Jan 2020</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France</span>
+        </div>
       </div>
       <h2>Loi Anti-Fraude TVA (Certification Caisse)</h2>
       <span class="target-tag">Cible : Logiciels de Caisse & Encaissement</span>
-      <p>Obligation de certification NF 525 pour tout logiciel de caisse ou système d'encaissement. Conditions : inaltérabilité, sécurisation, conservation et archivage des données. Attestation obligatoire à présenter en cas de contrôle fiscal. Sanctions : amende 7500€ par logiciel non conforme. Concerne points de vente, e-commerce avec caisse intégrée, apps mobiles encaissement.</p>
+      <p><strong>Certification NF 525 obligatoire :</strong> Tous logiciels de caisse et systèmes d'encaissement.<br>
+      <strong>Exigences techniques :</strong> Inaltérabilité des données, sécurisation, conservation et archivage conformes.<br>
+      <strong>Attestation :</strong> Document à présenter lors de tout contrôle fiscal.<br>
+      <strong>Concernés :</strong> Points de vente physiques, e-commerce avec module caisse, applications mobiles d'encaissement.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2015/12/29/2015-1785/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2015-1785 (Art. 88)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-antifraude')">
         📋 Mes obligations
@@ -1034,6 +1346,39 @@
           <li><strong>Conserver l'attestation</strong> de conformité fournie par l'éditeur</li>
           <li><strong>Présenter l'attestation</strong> en cas de contrôle fiscal</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Limité</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Certifié</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1041,12 +1386,20 @@
   <div class="container left">
     <div class="content card-b2c card-esn">
       <div class="header-row">
-        <span class="date-badge">12 Juil 2020</span>
-        <span class="origin-badge origin-eu">Europe (Arrêt)</span>
+        <div class="header-left">
+          <span class="date-badge">12 Juil 2020</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe (Arrêt)</span>
+        </div>
       </div>
       <h2>Schrems II (Transferts UE-USA)</h2>
       <span class="target-tag">Cible : SaaS utilisant hébergeurs US<span class="esn-info">ESN : Si utilisation AWS/Azure/GCP - TIA obligatoire</span></span>
-      <p>Invalidation du Privacy Shield. Transferts de données hors UE nécessitent clauses contractuelles types (CCT) et analyse d'impact obligatoire (TIA - Transfer Impact Assessment). Risque accru avec hébergeurs soumis au CLOUD Act (AWS, Azure, GCP). Obligation d'évaluer les lois du pays tiers (surveillance gouvernementale). Mesures supplémentaires requises : chiffrement bout-en-bout, clés gestion UE, pseudonymisation. Solutions émergentes : Data Clean Rooms, Confidential Computing (enclaves sécurisées). Alternative : hébergement 100% UE souverain.</p>
+      <p><strong>Privacy Shield invalidé :</strong> Les transferts hors UE nécessitent des Clauses Contractuelles Types avec une évaluation TIA (Transfer Impact Assessment).<br>
+      <strong>Risque CLOUD Act :</strong> Hébergeurs américains (AWS, Azure, GCP) soumis aux lois de surveillance gouvernementale US.<br>
+      <strong>Mesures supplémentaires requises :</strong> Chiffrement bout-en-bout, clés gérées en UE, pseudonymisation.<br>
+      <strong>Solutions alternatives :</strong> Data Clean Rooms, Confidential Computing ou hébergement 100% UE souverain.</p>
       <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-schrems')">
         📋 Mes obligations
@@ -1081,6 +1434,42 @@
           <li>Confidential Computing (enclaves TEE, attestation distance)</li>
           <li>Alternative : hébergement 100% UE souverain (OVHcloud, Scaleway, Outscale...)</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 20M€ ou 4% CA (cumul possible avec RGPD).
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1088,12 +1477,19 @@
   <div class="container right">
     <div class="content card-universal">
       <div class="header-row">
-        <span class="date-badge">24 Nov 2020</span>
-        <span class="origin-badge origin-fr">France</span>
+        <div class="header-left">
+          <span class="date-badge">24 Nov 2020</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France</span>
+        </div>
       </div>
       <h2>Accessibilité Numérique (RGAA)</h2>
       <span class="target-tag">Cible : Sites publics & grandes entreprises</span>
-      <p>Obligation de conformité RGAA (Référentiel Général d'Amélioration de l'Accessibilité) pour les sites web et applications mobiles des organismes publics et entreprises >250M€ CA. Niveau minimum : AA (WCAG 2.1). Déclaration d'accessibilité obligatoire. Schéma pluriannuel de mise en conformité. Sanctions : jusqu'à 20 000€ par site non conforme. Concerné : lecteurs écran, navigation clavier, contraste couleurs, sous-titres vidéo.</p>
+      <p><strong>Conformité RGAA obligatoire :</strong> Organismes publics et entreprises de plus de 250M€ de CA. Niveau AA minimum (WCAG 2.1).<br>
+      <strong>Obligations :</strong> Publier une déclaration d'accessibilité sur chaque site et application. Établir un schéma pluriannuel de mise en conformité.<br>
+      <strong>Critères essentiels :</strong> Compatibilité lecteurs d'écran, navigation au clavier, contrastes de couleurs, sous-titres pour les vidéos.</p>
       <a href="https://www.legifrance.gouv.fr/eli/decret/2019/7/24/2019-768/jo/texte" target="_blank" class="reg-link">📄 Décret n° 2019-768</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-rgaa')">
         📋 Mes obligations
@@ -1130,6 +1526,39 @@
           <li>Contraste 4.5:1 minimum</li>
           <li>Sous-titres vidéos, alt images</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1142,7 +1571,9 @@
       </div>
       <h2>Loi AGEC (Indice de Réparabilité)</h2>
       <span class="target-tag">Cible : OS, Logiciels embarqués</span>
-      <p>Le calcul de la réparabilité des équipements inclut désormais la durée de disponibilité des mises à jour logicielles. Impact sur smartphones, tablettes, ordinateurs portables. Obligation d'affichage en magasin et en ligne (note sur 10).</p>
+      <p><strong>Indice de réparabilité (note sur 10) :</strong> Intègre la durée du support logiciel (mises à jour OS, firmware, correctifs sécurité).<br>
+      <strong>Équipements concernés :</strong> Smartphones, tablettes, ordinateurs portables.<br>
+      <strong>Affichage obligatoire :</strong> En magasin physique et sur toutes les fiches produits en ligne.</p>
       <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000041553759" target="_blank" class="reg-link">📄 Loi n° 2020-105 (AGEC)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-agec')">
         📋 Mes obligations
@@ -1181,6 +1612,39 @@
           <li><strong>Respecter l'engagement</strong> : fournir mises à jour sécurité + correctifs critiques</li>
           <li><strong>Informer en cas d'arrêt</strong> du support (fin de vie produit)</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Simple</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Simple</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Limité</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Déclaratif</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-1">⭐ Faible</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1193,7 +1657,10 @@
       </div>
       <h2>Directive Copyright (Upload Filters)</h2>
       <span class="target-tag">Cible : Plateformes UGC, Réseaux Sociaux</span>
-      <p>Obligation de filtrage automatique des contenus protégés par droits d'auteur uploadés par utilisateurs (Article 17). Filtres anti-contrefaçon obligatoires pour plateformes >5M users. Accords de licence préalables avec ayants-droit requis. Procédure contestation utilisateur obligatoire. Concerne YouTube, TikTok, Dailymotion, plateformes partage vidéo/musique. Exemptions : startups <3 ans, <10M€ CA.</p>
+      <p><strong>Filtrage automatique (Article 17) :</strong> Obligation de filtrer les contenus protégés uploadés par les utilisateurs. Plateformes >5M utilisateurs.<br>
+      <strong>Obligations associées :</strong> Négocier des accords de licence avec les ayants droit. Mettre en place une procédure de contestation pour les utilisateurs.<br>
+      <strong>Plateformes concernées :</strong> YouTube, TikTok, Dailymotion et toutes plateformes de partage vidéo/musique.<br>
+      <strong>Exemption startup :</strong> Entreprises de <3 ans ET <10M€ CA.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2019/790/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/790 (DSM)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-copyright')">
         📋 Mes obligations
@@ -1209,7 +1676,10 @@
       </div>
       <h2>Garantie Légale de Conformité Numérique</h2>
       <span class="target-tag">Cible : Editeurs B2C, Jeux, Apps</span>
-      <p>Obligation de fournir les mises à jour nécessaires au maintien de la conformité pendant 2 ans minimum pour les produits et services numériques vendus aux consommateurs. Transposition de la directive européenne sur les contenus et services numériques. Le consommateur peut demander réparation, remplacement ou remboursement en cas de défaut.</p>
+      <p><strong>Mises à jour obligatoires :</strong> Pendant 2 ans minimum pour tous produits et services numériques B2C.<br>
+      <strong>Garanties exigées :</strong> Maintien de la conformité, sécurité (correctifs de vulnérabilités), respect des fonctionnalités annoncées.<br>
+      <strong>Recours du consommateur :</strong> Droit à la réparation (correctif logiciel), au remplacement ou au remboursement.<br>
+      <strong>Produits concernés :</strong> Applications mobiles, logiciels PC/Mac, jeux vidéo, services SaaS B2C.</p>
       <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000043884445" target="_blank" class="reg-link">📄 Ordonnance n° 2021-1247</a>
       <a href="https://eur-lex.europa.eu/eli/dir/2019/770/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/770</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-conformite')">
@@ -1251,6 +1721,39 @@
           <li>Sauf si durée plus longue annoncée contractuellement</li>
           <li>Pour abonnements : pendant toute la durée + 2 ans après résiliation si achat unique</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr>
+              <th>Critère</th>
+              <th>Évaluation</th>
+            </tr>
+            <tr>
+              <td>🔧 Charge Technique</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>👥 Effort Organisationnel</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td>
+            </tr>
+            <tr>
+              <td>🎯 Périmètre d'Impact</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td>
+            </tr>
+            <tr>
+              <td>📋 Exigences de Preuves</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td>
+            </tr>
+            <tr>
+              <td>⚠️ Risque Non-Conformité</td>
+              <td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1263,7 +1766,9 @@
       </div>
       <h2>Loi Influenceurs</h2>
       <span class="target-tag">Cible : Réseaux Sociaux, Plateformes</span>
-      <p>Obligation technique d'afficher un bouton de signalement des contenus illicites et de traiter prioritairement les notifications des signaleurs de confiance. Encadrement strict de la promotion de certains produits (chirurgie esthétique, paris). Interdiction publicité pour enfants de moins de 16 ans sans consentement parental.</p>
+      <p><strong>Système de signalement :</strong> Bouton de signalement des contenus illicites obligatoire. Traitement prioritaire des signaleurs de confiance.<br>
+      <strong>Promotions encadrées :</strong> Restrictions sur chirurgie esthétique et paris sportifs.<br>
+      <strong>Protection des mineurs :</strong> Interdiction de la publicité ciblant les enfants de moins de 16 ans sans consentement parental.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2023/6/9/2023-451/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2023-451 (Influenceurs)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-influenceurs')">
         📋 Mes obligations
@@ -1279,7 +1784,10 @@
       </div>
       <h2>eIDAS 2.0 (Identité Numérique)</h2>
       <span class="target-tag">Cible : Tout Service en Ligne, SSO, Auth</span>
-      <p>Création du Portefeuille Européen d'Identité Numérique (EUDI Wallet) accessible à tous les citoyens UE. Obligation pour services publics d'accepter l'authentification via wallet UE. Services privés fortement encouragés (adoption volontaire). Permet stockage identité, permis, diplômes, prescriptions médicales. Signature électronique qualifiée intégrée. Impact majeur sur SSO/OAuth : interopérabilité paneuropéenne obligatoire.</p>
+      <p><strong>Wallet Européen d'Identité (EUDI) :</strong> Accessible à tous les citoyens UE. Stockage identité, permis, diplômes, prescriptions médicales.<br>
+      <strong>Services publics :</strong> Obligation d'accepter l'authentification via wallet UE.<br>
+      <strong>Services privés :</strong> Adoption volontaire fortement encouragée. Signature électronique qualifiée intégrée.<br>
+      <strong>Impact SSO/OAuth :</strong> Interopérabilité paneuropéenne obligatoire.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1183 (eIDAS 2)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-eidas')">
         📋 Mes obligations
@@ -1290,12 +1798,20 @@
   <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
-        <span class="date-badge">17 Fév 2024</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">17 Fév 2024</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>Digital Services Act (DSA)</h2>
       <span class="target-tag">Cible : Marketplaces, Hébergeurs</span>
-      <p>Système de "Notice & Action" obligatoire (signalement + retrait contenus illicites). Traçabilité des vendeurs pro (KYBC) obligatoire pour les places de marché. Très grandes plateformes (>45M users UE) : audit annuel, analyse risques systémiques, transparence algorithmes. Point de contact unique UE obligatoire.</p>
+      <p><strong>Mécanisme "Notice & Action" obligatoire :</strong> Système de signalement et retrait des contenus illicites.<br>
+      <strong>Marketplaces :</strong> Traçabilité complète des vendeurs professionnels via KYBC (Know Your Business Customer).<br>
+      <strong>Très grandes plateformes (>45M utilisateurs UE) :</strong> Audit indépendant annuel, analyse des risques systémiques, transparence des algorithmes de recommandation.<br>
+      <strong>Point de contact UE :</strong> Obligatoire pour toutes les plateformes opérant dans l'UE.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2065/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2065 (DSA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dsa')">
         📋 Mes obligations
@@ -1306,12 +1822,20 @@
   <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
-        <span class="date-badge">2 Mars 2024</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">2 Mars 2024</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>DMA (Digital Markets Act)</h2>
       <span class="target-tag">Cible : Gatekeepers (Apple, Google, Meta...)</span>
-      <p>Obligation d'interopérabilité pour les "contrôleurs d'accès" (>45M users UE mensuels, >75M€ CA UE). Messageries instantanées doivent s'ouvrir (WhatsApp, iMessage). App Stores : autorisation side-loading, stores tiers, moteurs paiement alternatifs. Interdiction auto-préférence (favoriser ses propres services dans classements). Accès aux données plateforme pour tiers. Portabilité données en temps réel. Sanctions : jusqu'à 10% CA mondial, 20% en récidive.</p>
+      <p><strong>Gatekeepers identifiés (>45M utilisateurs UE, >75M€ CA) :</strong> Obligation d'interopérabilité pour les messageries (WhatsApp, iMessage).<br>
+      <strong>App Stores :</strong> Autoriser le side-loading, les stores tiers et les moteurs de paiement alternatifs.<br>
+      <strong>Interdictions :</strong> Auto-préférence dans les classements et résultats de recherche.<br>
+      <strong>Obligations de partage :</strong> Accès aux données de la plateforme pour les tiers. Portabilité des données en temps réel.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/1925/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/1925 (DMA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dma')">
         📋 Mes obligations
@@ -1322,12 +1846,19 @@
   <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
-        <span class="date-badge">22 Mai 2024</span>
-        <span class="origin-badge origin-fr">France</span>
+        <div class="header-left">
+          <span class="date-badge">22 Mai 2024</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale (blocage DNS Arcom possible)">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France</span>
+        </div>
       </div>
       <h2>Loi SREN</h2>
       <span class="target-tag">Cible : Cloud, Sites Adultes</span>
-      <p>Encadrement des crédits cloud (durée limitée à 12 mois, remboursement obligatoire). Obligation de vérification d'âge stricte pour les sites pornographiques (double anonymat). Blocage DNS possible ordonné par Arcom. Renforcement lutte contre arnaques en ligne et contrefaçons. Obligation hébergeurs : contact France, représentant légal UE.</p>
+      <p><strong>Fournisseurs cloud :</strong> Crédits limités à 12 mois maximum. Obligation de remboursement des crédits non utilisés.<br>
+      <strong>Sites contenus adultes :</strong> Vérification stricte de l'âge avec double anonymat garanti. Solutions certifiées (FranceConnect+ et tiers agréés).<br>
+      <strong>Hébergeurs :</strong> Désignation d'un représentant légal dans l'UE et d'un contact en France obligatoires.</p>
       <a href="https://www.legifrance.gouv.fr/eli/loi/2024/5/21/2024-449/jo/texte" target="_blank" class="reg-link">📄 Loi n° 2024-449 (SREN)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-sren')">
         📋 Mes obligations
@@ -1338,12 +1869,20 @@
   <div class="container left">
     <div class="content card-b2b card-esn">
       <div class="header-row">
-        <span class="date-badge">18 Oct 2024</span>
-        <span class="origin-badge origin-fr">France (Transpo UE)</span>
+        <div class="header-left">
+          <span class="date-badge">18 Oct 2024</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France (Transpo UE)</span>
+        </div>
       </div>
       <h2>NIS 2 (Cybersécurité Renforcée)</h2>
       <span class="target-tag">Cible : SaaS B2B >50 salariés, ESN<span class="esn-info">ESN : >50 sal. Important / >250 sal. ou >50M€ Essentiel</span></span>
-      <p>Transposition française effective. Obligation d'auto-recensement ANSSI pour entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.). Notification incidents majeurs sous 24h. Mesures cybersécurité obligatoires : MFA, chiffrement, sauvegardes, gestion correctifs, analyse risques annuelle. Sanctions : jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.</p>
+      <p><strong>Auto-recensement obligatoire :</strong> Entités essentielles (>250 sal. ou >50M€ CA) et importantes (>50 sal.) doivent se recenser auprès de l'ANSSI.<br>
+      <strong>Notification des incidents :</strong> Déclaration sous 24 heures pour les incidents de sécurité majeurs.<br>
+      <strong>Mesures techniques obligatoires :</strong> Authentification multi-facteurs (MFA), chiffrement, sauvegardes sécurisées, gestion des correctifs, analyse annuelle des risques.<br>
+      <strong>Responsabilité des dirigeants :</strong> Les dirigeants sont personnellement responsables de la cybersécurité.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
         📋 Mes obligations
@@ -1354,12 +1893,20 @@
   <div class="container right">
     <div class="content card-regulated card-esn">
       <div class="header-row">
-        <span class="date-badge">17 Jan 2025</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">17 Jan 2025</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>DORA (Entrée en vigueur)</h2>
       <span class="target-tag">Cible : Fintech, SaaS Bancaire<span class="esn-info">ESN : Si prestataire TIC pour secteur financier</span></span>
-      <p>Contrats de résilience informatique obligatoires avec les clients financiers. Surveillance directe des prestataires TIC critiques par l'UE (ESA). Tests de résilience obligatoires (TLPT - Threat-Led Penetration Testing tous les 3 ans). Notification incidents sous 4h (initial) puis rapports détaillés. Registre des risques TIC. Due diligence fournisseurs renforcée. En France : qualification SecNumCloud ANSSI ou équivalent fortement recommandée pour hébergeurs de données financières sensibles.</p>
+      <p><strong>Contrats de résilience obligatoires :</strong> Tous les prestataires TIC devant clients du secteur financier. Surveillance directe par les ESA (autorités européennes) pour les prestataires TIC critiques.<br>
+      <strong>Tests de résilience :</strong> TLPT (Threat-Led Penetration Testing) tous les 3 ans. Notification des incidents sous 4 heures.<br>
+      <strong>Obligations complémentaires :</strong> Registre des risques TIC tenu à jour. Due diligence renforcée sur les fournisseurs.<br>
+      <strong>France :</strong> La qualification SecNumCloud ANSSI est fortement recommandée pour les données financières.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2022/2554 (DORA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dora')">
         📋 Mes obligations
@@ -1370,12 +1917,18 @@
   <div class="container left">
     <div class="content card-universal card-esn">
       <div class="header-row">
-        <span class="date-badge">2 Fév 2025</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">2 Fév 2025</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>AI Act (Interdictions)</h2>
       <span class="target-tag">Cible : Tous Développeurs IA<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
-      <p>Interdiction de mise sur le marché d'IA aux pratiques inacceptables (notation sociale, police prédictive, reconnaissance émotionnelle au travail, manipulation comportementale). IA à haut risque (recrutement, crédit, justice) : évaluation conformité obligatoire, supervision humaine. IA générative (GPAI - General Purpose AI) : transparence (watermarking, mention "généré par IA"), documentation technique, résumé données entraînement. Modèles à risque systémique (>10^25 FLOPS) : tests adversaires obligatoires. Sanctions jusqu'à 35M€ ou 7% CA.</p>
+      <p><strong>Pratiques interdites immédiatement :</strong> Notation sociale généralisée, police prédictive, reconnaissance des émotions sur le lieu de travail, manipulation comportementale.<br>
+      <strong>Remarque :</strong> Les autres obligations concernant l'IA (systèmes génératifs, haut risque) s'appliquent progressivement selon les échéances suivantes.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-aiact')">
         📋 Mes obligations
@@ -1386,12 +1939,19 @@
   <div class="container right">
     <div class="content card-iot">
       <div class="header-row">
-        <span class="date-badge">12 Sept 2025</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">12 Sept 2025</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>Data Act (Accès IoT)</h2>
       <span class="target-tag">Cible : SaaS IoT, Industrie</span>
-      <p>Obligation de fournir aux utilisateurs l'accès aux données brutes générées par leurs objets connectés. Droit de partager ces données avec des tiers (réparateurs, services après-vente). API standardisées obligatoires. Interdiction des clauses contractuelles bloquant l'accès aux données. Délai de mise à disposition : sans retard injustifié.</p>
+      <p><strong>Accès obligatoire aux données IoT :</strong> Les fabricants doivent fournir les données brutes aux utilisateurs. Droit de partage avec des tiers (réparateurs, SAV).<br>
+      <strong>Exigences techniques :</strong> Mise en place d'APIs standardisées. Délai de mise à disposition sans retard injustifié.<br>
+      <strong>Clauses contractuelles interdites :</strong> Interdiction de bloquer l'accès aux données par contrat.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2023/2854 (Data Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dataact-iot')">
         📋 Mes obligations
@@ -1400,16 +1960,70 @@
   </div>
 
   <div class="container left">
+    <div class="content card-universal card-esn">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">2 Août 2025</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>AI Act (Modèles GPAI)</h2>
+      <span class="target-tag">Cible : Éditeurs IA Générative<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
+      <p><strong>Modèles d'IA générative :</strong> Documentation technique complète, résumé des données d'entraînement (respect du copyright), watermarking obligatoire, mention "contenu généré par IA".<br>
+      <strong>Documentation utilisateur :</strong> Instructions d'usage et limitations clairement indiquées.<br>
+      <strong>Modèles à risque systémique (>10²⁵ FLOPS) :</strong> Évaluations adversaires, tests de robustesse, notification obligatoire des incidents graves.</p>
+      <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-aiact-gpai')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container right">
     <div class="content card-iot">
       <div class="header-row">
-        <span class="date-badge">Juil 2026</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">Juil 2026</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>ESPR (Passeport Numérique)</h2>
       <span class="target-tag">Cible : ERP, PLM, Supply Chain</span>
-      <p>Mise en place du registre pour le Passeport Numérique Produit (DPP). Impact fort sur les logiciels de gestion de production (Textile/Batteries). Traçabilité complète obligatoire : composition, réparabilité, empreinte carbone, recyclabilité. QR code ou RFID sur produits. Les logiciels doivent intégrer capacité de génération et stockage DPP.</p>
+      <p><strong>Passeport Numérique Produit (DPP) :</strong> Registre numérique obligatoire accessible par QR code ou RFID sur les produits.<br>
+      <strong>Informations requises :</strong> Composition, réparabilité, empreinte carbone, capacité de recyclage.<br>
+      <strong>Logiciels concernés :</strong> Systèmes ERP, PLM et supply chain devront intégrer la génération et le stockage des DPP.<br>
+      <strong>Secteurs prioritaires :</strong> Textile et batteries dès 2026.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1781/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1781 (ESPR)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-espr')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container left">
+    <div class="content card-universal card-esn">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">2 Août 2026</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>AI Act (Systèmes Haut Risque)</h2>
+      <span class="target-tag">Cible : IA Recrutement, Crédit, Justice<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
+      <p><strong>Systèmes IA à haut risque :</strong> Recrutement (tri automatique de CV), scoring de crédit, justice prédictive, surveillance biométrique, gestion des infrastructures critiques.<br>
+      <strong>Avant mise sur le marché :</strong> Évaluation de conformité, tests de détection des biais, supervision humaine obligatoire (human-in-the-loop).<br>
+      <strong>Obligations permanentes :</strong> Gestion des risques, gouvernance des données, déclarations UE de conformité.</p>
+      <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-aiact-highrisk')">
         📋 Mes obligations
       </button>
     </div>
@@ -1418,12 +2032,20 @@
   <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
-        <span class="date-badge">1 Sept 2026</span>
-        <span class="origin-badge origin-fr">France</span>
+        <div class="header-left">
+          <span class="date-badge">1 Sept 2026</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France</span>
+        </div>
       </div>
       <h2>Facturation Électronique (V1)</h2>
       <span class="target-tag">Cible : Logiciels de Gestion / Compta</span>
-      <p>Capacité de <strong>réception</strong> obligatoire pour toutes les entreprises. <strong>Émission</strong> obligatoire pour les Grandes Entreprises et ETI. Formats : Factur-X (hybride PDF/XML) ou UBL. Transmission via plateformes de dématérialisation partenaires (PDP) ou portail public (PPF). e-Reporting des transactions B2C/export simultané. Certification NF 203 recommandée.</p>
+      <p><strong>Réception obligatoire pour tous :</strong> Toutes les entreprises doivent pouvoir recevoir des factures électroniques.<br>
+      <strong>Émission obligatoire :</strong> Grandes Entreprises et ETI uniquement (PME/TPE : septembre 2027).<br>
+      <strong>Formats acceptés :</strong> Factur-X (PDF/XML hybride) ou UBL pur. Transmission via PDP (Plateforme De Dématérialisation Partenaire) ou PPF (Portail Public de Facturation).<br>
+      <strong>e-Reporting :</strong> Transmission simultanée des transactions B2C et exports.</p>
       <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-facture-v1')">
         📋 Mes obligations
@@ -1434,12 +2056,19 @@
   <div class="container left">
     <div class="content card-universal card-esn">
       <div class="header-row">
-        <span class="date-badge">Sept 2026</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">Sept 2026</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>Cyber Resilience Act (Reporting)</h2>
       <span class="target-tag">Cible : Tout Editeur Logiciel<span class="esn-info">ESN : Si édition logiciels commerciaux</span></span>
-      <p>Obligation de signaler les vulnérabilités activement exploitées à l'ENISA et au CSIRT national sous 24 heures. Vulnérabilités non exploitées : notification sous 72h après découverte. Publication coordonnée (CVD) recommandée. Base EUDB centralisée. Premiers éditeurs concernés : logiciels avec connexion réseau ou traitement de données sensibles.</p>
+      <p><strong>Notification des vulnérabilités :</strong> Vulnérabilités activement exploitées (24 heures), vulnérabilités non exploitées (72 heures). Signalement obligatoire à l'ENISA et au CSIRT national.<br>
+      <strong>CVD recommandée :</strong> Publication coordonnée des vulnérabilités (Coordinated Vulnerability Disclosure). Base EUDB centralisée.<br>
+      <strong>Logiciels concernés :</strong> Tous logiciels avec connexion réseau ou traitant des données sensibles.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-cra-reporting')">
         📋 Mes obligations
@@ -1450,12 +2079,20 @@
   <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
-        <span class="date-badge">12 Jan 2027</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">12 Jan 2027</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>Data Act (Cloud Switching)</h2>
       <span class="target-tag">Cible : Fournisseurs Cloud / IaaS / PaaS</span>
-      <p>Interdiction totale de facturer des frais de sortie (Egress fees) ou de changement de fournisseur. Délai maximal de migration : 30 jours (données) + 30 jours (assistance technique). Export des données dans format structuré et machine-readable obligatoire. Clauses contractuelles abusives interdites (pénalités dissuasives, verrouillage technique). Concerne IaaS, PaaS, SaaS avec stockage important.</p>
+      <p><strong>Frais de sortie interdits :</strong> Interdiction totale des egress fees et des pénalités pour changement de fournisseur cloud.<br>
+      <strong>Délais de migration garantis :</strong> 30 jours pour le transfert des données + 30 jours d'assistance technique.<br>
+      <strong>Format d'export obligatoire :</strong> Données dans un format structuré lisible par machine.<br>
+      <strong>Services concernés :</strong> IaaS, PaaS, SaaS avec stockage de données conséquent.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2023/2854 (Data Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-dataact-cloud')">
         📋 Mes obligations
@@ -1464,14 +2101,44 @@
   </div>
 
   <div class="container left">
+    <div class="content card-universal card-esn">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">2 Août 2027</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale (graduées selon gravité)">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>AI Act (Application Totale)</h2>
+      <span class="target-tag">Cible : Tous Systèmes IA<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
+      <p><strong>Fin de la période transitoire :</strong> Application complète de l'AI Act, y compris pour les systèmes déjà déployés avant la réglementation.<br>
+      <strong>Systèmes existants à haut risque :</strong> Mise en conformité obligatoire avec effet rétroactif.<br>
+      <strong>Infrastructure complète :</strong> Registre européen des systèmes IA opérationnel, organismes notifiés certifiés, surveillance post-marché active.</p>
+      <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-aiact-full')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
-        <span class="date-badge">1 Sept 2027</span>
-        <span class="origin-badge origin-fr">France</span>
+        <div class="header-left">
+          <span class="date-badge">1 Sept 2027</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-fr">France</span>
+        </div>
       </div>
       <h2>Facturation Électronique (V2)</h2>
       <span class="target-tag">Cible : Logiciels pour PME/TPE</span>
-      <p>Généralisation : L'émission de factures électroniques structurées devient obligatoire pour les PME et TPE. Fin du papier et PDF simple pour B2B. Tous les logiciels de facturation/compta/ERP/CRM doivent intégrer connexion à une PDP ou au PPF. Archivage électronique 10 ans obligatoire. Contrôles fiscaux automatisés accrus (TVA, détection fraude).</p>
+      <p><strong>Généralisation PME/TPE :</strong> Émission de factures structurées obligatoire pour toutes les entreprises. Fin du papier et du PDF simple pour le B2B.<br>
+      <strong>Intégration logiciels :</strong> Tous logiciels de facturation, comptabilité, ERP et CRM doivent intégrer une connexion PDP ou PPF.<br>
+      <strong>Archivage :</strong> Archivage électronique pendant 10 ans obligatoire. Contrôles fiscaux automatisés (TVA, détection fraude).</p>
       <a href="https://www.legifrance.gouv.fr/eli/ordonnance/2024/6/5/2024-640/jo/texte" target="_blank" class="reg-link">📄 Ordonnance n° 2024-640</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-facture-v2')">
         📋 Mes obligations
@@ -1479,17 +2146,50 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-universal card-esn">
       <div class="header-row">
-        <span class="date-badge">Déc 2027</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">Déc 2027</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>Cyber Resilience Act (Total)</h2>
       <span class="target-tag">Cible : Tout Logiciel Commercial<span class="esn-info">ESN : Marquage CE + SBOM si édition logiciel</span></span>
-      <p>Marquage CE obligatoire. Security by Design, livraison de SBOM (liste composants) et support de sécurité garanti 5 ans minimum. Produits "critiques" : Classe I (OS, antivirus, VPN, gestionnaires mots de passe) et Classe II (systèmes industriels critiques, firewalls) nécessitent certification tierce obligatoire. Documentation technique complète : analyse risques, tests sécurité, instructions utilisateurs. Logiciels open-source commercialisés inclus. Sanctions : jusqu'à 15M€ ou 2.5% CA. Exemptions : SaaS pur sans composant téléchargé/installé côté client.</p>
+      <p><strong>Marquage CE obligatoire :</strong> Tous logiciels commerciaux doivent respecter les principes Security by Design. Livraison d'un SBOM (Software Bill of Materials). Support sécurité minimum 5 ans.<br>
+      <strong>Produits critiques (Classe I/II) :</strong> OS, antivirus, VPN, firewalls, systèmes industriels - certification par organisme tiers obligatoire.<br>
+      <strong>Documentation requise :</strong> Analyse de risques, rapports de tests sécurité, instructions d'utilisation sécurisée. Open-source commercialisé inclus.<br>
+      <strong>Exemption :</strong> SaaS pur sans composant client installé.<br>
+      <strong>⚠️ Rétroactivité :</strong> S'applique également aux produits déjà sur le marché.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-cra-total')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container right">
+    <div class="content card-regulated">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">2027 (Est.)</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>DSP3 / PSR (Payment Services Regulation)</h2>
+      <span class="target-tag">Cible : Fintech, E-commerce, PSP</span>
+      <p><strong>Vérification anti-fraude :</strong> Obligation de vérifier la correspondance IBAN/Nom du bénéficiaire pour tous les virements.<br>
+      <strong>Open Banking renforcé :</strong> APIs en temps réel obligatoires, dashboards unifiés, initiation de paiement facilitée. Paiements instantanés paneuropéens.<br>
+      <strong>Obligations des banques :</strong> Mise à disposition d'APIs standardisées gratuitement. Agrément PSP simplifié pour les nouveaux acteurs.<br>
+      <strong>Extra-territorialité :</strong> Concerne également les fournisseurs SaaS étrangers avec clients en France.</p>
+      <a href="https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/payment-services-directive-psd2_en" target="_blank" class="reg-link">📄 PSR - Proposition COM/2023</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-dsp3')">
         📋 Mes obligations
       </button>
     </div>
@@ -1498,28 +2198,20 @@
   <div class="container left">
     <div class="content card-regulated">
       <div class="header-row">
-        <span class="date-badge">2027 (Est.)</span>
-        <span class="origin-badge origin-eu">Europe</span>
-      </div>
-      <h2>DSP3 / PSR (Payment Services Regulation)</h2>
-      <span class="target-tag">Cible : Fintech, E-commerce, PSP</span>
-      <p>Vérification obligatoire IBAN/Nom du bénéficiaire pour tous les virements (lutte fraude). Renforcement APIs Open Banking : accès temps réel, dashboards unifiés, initiation paiement facilitée. Autorisation paiements instantanés paneuropéens obligatoires. Obligation banques : APIs standardisées gratuites. Nouveau régime agrément PSP simplifié. SaaS étrangers avec clients FR concernés.</p>
-      <a href="https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/payment-services-directive-psd2_en" target="_blank" class="reg-link">📄 PSR - Proposition COM/2023</a>
-      <button class="obligations-btn" onclick="openObligationsModal('modal-dsp3')">
-        📋 Mes obligations
-      </button>
-    </div>
-  </div>
-
-  <div class="container right">
-    <div class="content card-regulated">
-      <div class="header-row">
-        <span class="date-badge">2028 (Est.)</span>
-        <span class="origin-badge origin-eu">Europe</span>
+        <div class="header-left">
+          <span class="date-badge">2028 (Est.)</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
       </div>
       <h2>EHDS (Espace Européen Données Santé)</h2>
       <span class="target-tag">Cible : Logiciels Santé (DPI, Imagerie)</span>
-      <p>Obligation d'interopérabilité européenne pour dossiers patients (résumé patient, e-prescription) selon format EEHRxF. Accès transfrontalier aux données santé pour soins. Consentement patient centralisé. Espace européen données santé pour recherche (usage secondaire). Logiciels DPI, imagerie, labo concernés. Certification produits santé numériques renforcée. Pilotes nationaux dès 2026.</p>
+      <p><strong>Interopérabilité obligatoire :</strong> Dossiers patients au format EEHRxF (résumé de santé, e-prescription). Accès transfrontalier aux données de santé entre pays UE.<br>
+      <strong>Gestion du consentement :</strong> Consentement patient centralisé pour les usages de soins et de recherche.<br>
+      <strong>Logiciels concernés :</strong> Dossiers Patient Informatisés (DPI), imagerie médicale, laboratoires. Certification renforcée des produits de santé numérique.<br>
+      <strong>Calendrier :</strong> Projets pilotes nationaux dès 2026.</p>
       <a href="https://health.ec.europa.eu/publications/proposal-regulation-european-health-data-space_en" target="_blank" class="reg-link">📄 EHDS - Proposition COM/2022</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-ehds')">
         📋 Mes obligations
@@ -1545,6 +2237,21 @@
         <div class="obligations-highlight">
           <strong>⚠️ Exemption :</strong> Startups <3 ans ET <10M€ CA exemptées temporairement.
         </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1564,6 +2271,21 @@
           <li><strong>Blocage publicité</strong> produits interdits (chirurgie esthétique, paris sportifs)</li>
           <li><strong>Vérification âge</strong> pour publicité ciblant -16 ans</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-1">⭐ Simple</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-1">⭐ Simple</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-1">⭐ Faible</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1587,6 +2309,21 @@
           <li><strong>Interopérabilité OAuth/OpenID</strong> avec wallet UE</li>
           <li>Permet authentification unifiée citoyens UE</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-1">⭐ Faible</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1609,6 +2346,21 @@
         </ul>
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions :</strong> Jusqu'à 10% CA mondial, 20% récidive.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -1638,6 +2390,24 @@
           <li><strong>Analyse risques systémiques</strong> (désinformation, manipulation...)</li>
           <li><strong>Transparence algorithmes</strong> recommandation</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 6% CA mondial annuel. Suspension service possible en cas de manquement grave répété.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1650,18 +2420,39 @@
         <button class="obligations-modal-close" onclick="closeObligationsModal('modal-sren')">×</button>
       </div>
       <div class="obligations-modal-body">
-        <h4>☁️ Pour Fournisseurs Cloud</h4>
+        <h4>☁️ Pour Fournisseurs Cloud IaaS/PaaS/SaaS</h4>
         <ul>
-          <li><strong>Crédits cloud</strong> : durée max 12 mois, remboursement non utilisé obligatoire</li>
-          <li><strong>Représentant légal UE</strong> et contact France</li>
-        </ul>
-        <h4>🔞 Pour Sites Adultes</h4>
-        <ul>
-          <li><strong>Vérification âge stricte</strong> avec double anonymat (pas de traçabilité)</li>
-          <li>Solutions certifiées (FranceConnect+, tiers certificateurs)</li>
+          <li><strong>Crédits cloud</strong> : validité limitée à 12 mois maximum. Expiration sans remboursement.</li>
+          <li><strong>Représentant légal UE</strong> obligatoire pour répondre à la justice française</li>
+          <li><strong>Frais de sortie</strong> : suppression ou plafonnement au coût réel (transfert données)</li>
+          <li><strong>Interopérabilité</strong> : obligation de compatibilité technique pour faciliter migration clients</li>
+          <li><strong>Portabilité données</strong> : export format structuré dans délai raisonnable</li>
         </ul>
         <div class="obligations-highlight">
-          <strong>⚠️ Sanctions :</strong> Blocage DNS administratif possible par Arcom sans juge.
+          <strong>🎯 Impact majeur :</strong> Fin des frais d'egress abusifs. Transparence contractuelle obligatoire sur conditions de sortie.
+        </div>
+        <h4>🔞 Pour Sites Contenus Adultes</h4>
+        <ul>
+          <li><strong>Vérification âge stricte</strong> avec double anonymat (pas de traçabilité utilisateur)</li>
+          <li>Solutions certifiées : FranceConnect+, tiers certificateurs agréés</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Blocage DNS administratif possible par Arcom sans décision judiciaire préalable.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-1">⭐ Limité</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -1691,6 +2482,24 @@
           <li><strong>Surveillance directe ESA</strong> (autorités européennes)</li>
           <li>Audits réguliers imposés</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 2% CA ou suspension d'activité.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1727,6 +2536,172 @@
           <li><strong>Résumé données entraînement</strong> publié</li>
           <li>Si >10^25 FLOPS : tests adversaires obligatoires</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-1">⭐ Simple</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-1">⭐ Simple</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-1">⭐ Déclaratif</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal AI Act GPAI -->
+  <div class="obligations-modal" id="modal-aiact-gpai">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - AI Act Modèles GPAI (Depuis 2 Août 2025)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-aiact-gpai')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>🤖 Pour Tous Modèles IA Générative (GPAI)</h4>
+        <ul>
+          <li><strong>Documentation technique</strong> complète (architecture, données entraînement)</li>
+          <li><strong>Résumé données entraînement</strong> publié (sources, respect copyright)</li>
+          <li><strong>Politique d'usage</strong> documentée (limitations, cas d'usage interdits)</li>
+          <li><strong>Watermarking</strong> contenus générés (détectable techniquement)</li>
+          <li><strong>Mention "généré par IA"</strong> sur tous outputs</li>
+          <li><strong>Instructions utilisateurs</strong> claires</li>
+        </ul>
+        <h4>⚠️ Si Modèle à Risque Systémique (>10^25 FLOPS)</h4>
+        <ul>
+          <li><strong>Évaluations adversaires</strong> obligatoires (red teaming)</li>
+          <li><strong>Tests robustesse</strong> contre manipulations</li>
+          <li><strong>Suivi risques systémiques</strong> (désinformation, cybersécurité)</li>
+          <li><strong>Notification incidents graves</strong> aux autorités</li>
+          <li><strong>Cybersécurité renforcée</strong> (protections modèle)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 15M€ ou 3% CA mondial.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal AI Act High Risk -->
+  <div class="obligations-modal" id="modal-aiact-highrisk">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - AI Act Systèmes Haut Risque (Depuis 2 Août 2026)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-aiact-highrisk')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>⚠️ Systèmes Concernés</h4>
+        <ul>
+          <li><strong>Recrutement :</strong> Tri CV, évaluation candidats, analyse vidéo entretien</li>
+          <li><strong>Crédit :</strong> Scoring, décision prêt, évaluation solvabilité</li>
+          <li><strong>Justice :</strong> Évaluation récidive, aide décision juges</li>
+          <li><strong>Biométrie :</strong> Identification à distance, catégorisation personnes</li>
+          <li><strong>Infrastructures critiques :</strong> Eau, énergie, transports</li>
+          <li><strong>Éducation :</strong> Évaluation apprentissage, admission</li>
+        </ul>
+        <h4>✅ Obligations Avant Mise sur Marché</h4>
+        <ul>
+          <li><strong>Évaluation conformité</strong> documentée</li>
+          <li><strong>Gestion des risques</strong> (analyse + mitigation)</li>
+          <li><strong>Gouvernance données</strong> (qualité, représentativité, biais)</li>
+          <li><strong>Tests robustesse</strong> et détection biais</li>
+          <li><strong>Documentation technique</strong> complète</li>
+          <li><strong>Traçabilité</strong> (logs décisions, audits)</li>
+          <li><strong>Supervision humaine</strong> effective ("human-in-the-loop")</li>
+          <li><strong>Transparence</strong> utilisateurs (information IA utilisée)</li>
+          <li><strong>Déclaration UE conformité</strong> + marquage CE</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 15M€ ou 3% CA mondial.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Certifié</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal AI Act Full Application -->
+  <div class="obligations-modal" id="modal-aiact-full">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - AI Act Application Totale (Depuis 2 Août 2027)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-aiact-full')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>🎯 Fin Période Transitoire</h4>
+        <ul>
+          <li><strong>Systèmes existants :</strong> Mise en conformité obligatoire (même si déployés avant 2027)</li>
+          <li><strong>Registre UE :</strong> Enregistrement tous systèmes haut risque</li>
+          <li><strong>Organismes notifiés :</strong> Certifications tierces opérationnelles</li>
+          <li><strong>Surveillance marché :</strong> Autorités nationales actives</li>
+        </ul>
+        <h4>✅ Conformité Complète Systèmes Existants</h4>
+        <ul>
+          <li><strong>Réévaluation conformité</strong> si mis sur marché avant Août 2026</li>
+          <li><strong>Documentation technique</strong> à jour (architecture, données, tests)</li>
+          <li><strong>Tests biais</strong> sur données de production réelles</li>
+          <li><strong>Supervision humaine</strong> effective en place</li>
+          <li><strong>Traçabilité décisions</strong> implémentée</li>
+          <li><strong>Surveillance post-commercialisation</strong> active (monitoring incidents)</li>
+        </ul>
+        <h4>📊 Obligations Continues</h4>
+        <ul>
+          <li><strong>Reporting incidents</strong> graves (15 jours)</li>
+          <li><strong>Mises à jour sécurité</strong> et corrections biais</li>
+          <li><strong>Audits réguliers</strong> conformité</li>
+          <li><strong>Coopération autorités</strong> (inspections, documentation)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions maximales :</strong> 35M€ ou 7% CA (interdictions), 15M€ ou 3% CA (obligations haut risque).
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Certifié</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1757,6 +2732,24 @@
           <li>Télémétrie véhicules connectés</li>
           <li>Historiques usage appareils domestiques</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 10M€ ou 2% CA. Amendes progressives en cas de refus d'accès aux données.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1792,6 +2785,21 @@
           <li>Services numériques (>50 salariés)</li>
           <li>Santé, énergie, transports, finance (essentiels)</li>
         </ul>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1819,6 +2827,24 @@
         </ul>
         <div class="obligations-highlight">
           <strong>📊 Impact :</strong> Logiciels de gestion production doivent capturer et stocker données durabilité dès conception.
+        </div>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 4% CA. Interdiction mise sur marché sans DPP.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -1853,6 +2879,24 @@
           <li><strong>Génération Factur-X/UBL</strong></li>
           <li><strong>Archivage 10 ans</strong> conforme</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Amendes fiscales en cas de non-conformité (montants à préciser).
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1883,6 +2927,24 @@
           <li>Correctif disponible ou workaround</li>
           <li>Exploitation constatée (IoC)</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 15M€ ou 2.5% CA. Retrait marché possible.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1912,6 +2974,25 @@
           <li>Formats standards (JSON, CSV, SQL...)</li>
           <li>Assistance migration gratuite (30j)</li>
         </ul>
+
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 10M€ ou 2% CA mondial.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1946,6 +3027,24 @@
           <li>Contrôles fiscaux automatisés accrus</li>
           <li>Détection fraude temps réel</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Amendes fiscales en cas de non-conformité. Contrôles renforcés.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1979,11 +3078,30 @@
         <div class="obligations-highlight">
           <strong>✅ Exemption :</strong> SaaS pur sans composant téléchargé/installé côté client.
         </div>
-        <h4>⚠️ Sanctions</h4>
+        <h4>📅 Application Temporelle (Rétroactivité)</h4>
         <ul>
-          <li>Jusqu'à 15M€ ou 2.5% CA</li>
-          <li>Retrait marché possible</li>
+          <li><strong>Produit vendu avant décembre 2027 :</strong> Non soumis au CRA (sauf obligation contractuelle existante)</li>
+          <li><strong>Nouvelle unité d'un produit ancien vendue après décembre 2027 :</strong> Soumise au CRA (marquage CE obligatoire)</li>
+          <li><strong>Mise à jour majeure après décembre 2027 :</strong> Déclenche la conformité comme un nouveau produit</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 15M€ ou 2.5% CA. Retrait marché possible.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Certifié</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -2010,6 +3128,24 @@
         </ul>
         <div class="obligations-highlight">
           <strong>🌍 Impact :</strong> SaaS étrangers avec clients FR concernés par vérification IBAN/Nom.
+        </div>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> En cours de définition (proposition législative 2023).
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-2">⭐⭐ Documenté</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -2045,6 +3181,24 @@
           <li>Accès données pseudonymisées pour recherche</li>
           <li>Consentement opt-in requis</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> En cours de définition (proposition législative 2022). Conformité RGPD appliquée.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Certifié</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -2151,12 +3305,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.timeline').appendChild(marker);
     currentMarker = marker;
     
-    // Scroll automatique vers le marqueur avec un délai pour permettre le rendu
-    setTimeout(() => {
-      if (!isAllPast) {
-        marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 100);
+    // Scroll automatique désactivé (utilisateur peut cliquer sur bouton "Aujourd'hui")
+    // setTimeout(() => {
+    //   if (!isAllPast) {
+    //     marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //   }
+    // }, 100);
   }
 
   // Fonction pour repositionner le marqueur selon les offsets actuels
@@ -2502,6 +3656,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Exposer les fonctions globalement pour les boutons
   window.openObligationsModal = openObligationsModal;
   window.closeObligationsModal = closeObligationsModal;
+
+  // === GESTION DE LA MODALE EXPLICATIVE COMPLEXITÉ ===
+  window.openComplexityExplanation = function() {
+    const modal = document.getElementById('modal-complexity-explanation');
+    if (modal) {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+  };
 });
 </script>
 

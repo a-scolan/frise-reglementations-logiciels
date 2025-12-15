@@ -401,6 +401,35 @@
     transform: translateY(0);
   }
 
+  /* Bouton Imprimer */
+ .print-button {
+    position: fixed;
+    bottom: 30px;
+    right: 200px;
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ .print-button:hover {
+    background: #1f6391;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(41, 128, 185, 0.4);
+  }
+ .print-button:active {
+    transform: translateY(0);
+  }
+
   /* --- SOMMAIRE FLOTTANT --- */
  .toc-container {
     position: sticky;
@@ -927,6 +956,16 @@
      transition: bottom 0.3s ease;
      z-index: 999;
    }
+   .print-button {
+     position: fixed;
+     bottom: 130px;
+     right: 15px;
+     left: 15px;
+     padding: 10px 14px;
+     font-size: 0.8rem;
+     justify-content: center;
+     z-index: 999;
+   }
    .toc-container {
      position: fixed;
      width: calc(100% - 30px);
@@ -966,6 +1005,9 @@
    body.toc-open .back-to-today {
      bottom: calc(50vh + 30px);
    }
+   body.toc-open .print-button {
+     bottom: calc(50vh + 30px);
+   }
    body.toc-open .toc-container {
      bottom: 20px;
    }
@@ -991,6 +1033,98 @@
    .filter-panel-title {
      font-size: 0.9rem;
    }
+  }
+
+  /* --- STYLES D'IMPRESSION --- */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+      font-size: 11pt;
+    }
+    
+    /* Masquer les éléments interactifs */
+    .legend-container,
+    .back-to-today,
+    .print-button,
+    .toc-container,
+    .complexity-help-btn,
+    .obligations-modal-close,
+    .current-date-marker {
+      display: none !important;
+    }
+    
+    /* Timeline simplifiée */
+    .timeline {
+      margin-top: 20px;
+    }
+    
+    .timeline::after {
+      background: #333;
+    }
+    
+    /* Cartes en pleine largeur */
+    .container {
+      page-break-inside: avoid;
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: none;
+      border: 1px solid #ddd;
+    }
+    
+    .container.left,
+    .container.right {
+      left: 0 !important;
+    }
+    
+    .container::after {
+      display: none;
+    }
+    
+    /* Masquer les cartes filtrées */
+    .container.hide-for-print,
+    .container[style*="display: none"] {
+      display: none !important;
+    }
+    
+    /* Footer sur chaque page */
+    .footer {
+      page-break-before: avoid;
+      margin-top: 30px;
+      border-top: 2px solid #333;
+      padding-top: 15px;
+    }
+    
+    /* Annexes des modales */
+    .print-annexes {
+      page-break-before: always;
+    }
+    
+    .print-annex {
+      page-break-inside: avoid;
+      margin-bottom: 30px;
+      border: 1px solid #333;
+      padding: 15px;
+    }
+    
+    .print-annex-title {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+    }
+    
+    .print-annex-content {
+      font-size: 10pt;
+      line-height: 1.4;
+    }
+    
+    .complexity-table {
+      page-break-inside: avoid;
+    }
   }
 </style>
 </head>
@@ -1050,6 +1184,11 @@
 <!-- Bouton retour à aujourd'hui -->
 <button class="back-to-today" id="backToToday">
   📅 Aujourd'hui
+</button>
+
+<!-- Bouton Imprimer -->
+<button class="print-button" id="printButton">
+  🖨️ Imprimer
 </button>
 
 <!-- Sommaire flottant -->
@@ -3866,6 +4005,79 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.style.overflow = 'hidden';
     }
   };
+
+  // === GESTION DE L'IMPRESSION ===
+  const printButton = document.getElementById('printButton');
+  if (printButton) {
+    printButton.addEventListener('click', function() {
+      // Récupérer toutes les cartes visibles (non filtrées)
+      const visibleCards = Array.from(document.querySelectorAll('.container')).filter(card => {
+        return card.style.display !== 'none';
+      });
+
+      // Créer une section d'annexes
+      let annexesHTML = '<div class="print-annexes" style="margin-top: 50px;"><h1 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #333; padding-bottom: 10px;">ANNEXES - Détails des Réglementations</h1>';
+
+      visibleCards.forEach((card, index) => {
+        // Extraire le titre de la réglementation
+        const titleElement = card.querySelector('h2');
+        if (!titleElement) return;
+        
+        const title = titleElement.textContent.trim();
+        
+        // Trouver la modale correspondante
+        const modalId = card.querySelector('[onclick*="openObligationsModal"]')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        
+        if (modalId) {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            const modalBody = modal.querySelector('.obligations-modal-body');
+            if (modalBody) {
+              annexesHTML += `
+                <div class="print-annex" style="margin-bottom: 30px; border: 2px solid #333; padding: 20px; border-radius: 8px;">
+                  <h2 class="print-annex-title" style="font-size: 16pt; margin-bottom: 15px; color: #2c3e50;">${index + 1}. ${title}</h2>
+                  <div class="print-annex-content">${modalBody.innerHTML}</div>
+                </div>
+              `;
+            }
+          }
+        }
+      });
+
+      annexesHTML += '</div>';
+
+      // Insérer les annexes temporairement dans le DOM
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = annexesHTML;
+      tempDiv.style.display = 'none';
+      tempDiv.classList.add('temp-print-content');
+      document.body.appendChild(tempDiv);
+
+      // Marquer les cartes non visibles pour ne pas les imprimer
+      const allCards = document.querySelectorAll('.container');
+      allCards.forEach(card => {
+        if (card.style.display === 'none') {
+          card.classList.add('hide-for-print');
+        }
+      });
+
+      // Afficher les annexes pour l'impression
+      tempDiv.style.display = 'block';
+
+      // Lancer l'impression
+      setTimeout(() => {
+        window.print();
+        
+        // Nettoyer après l'impression
+        setTimeout(() => {
+          tempDiv.remove();
+          allCards.forEach(card => {
+            card.classList.remove('hide-for-print');
+          });
+        }, 100);
+      }, 500);
+    });
+  }
 });
 </script>
 

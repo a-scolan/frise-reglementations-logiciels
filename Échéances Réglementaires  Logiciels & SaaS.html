@@ -1294,7 +1294,7 @@
     <div class="content card-regulated">
       <div class="header-row">
         <div class="header-left">
-          <span class="date-badge">1 Jan 2020</span>
+          <span class="date-badge">1 Jan 2018</span>
         </div>
         <div class="header-right">
           <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
@@ -1399,7 +1399,7 @@
       <p><strong>Privacy Shield invalidé :</strong> Les transferts hors UE nécessitent des Clauses Contractuelles Types avec une évaluation TIA (Transfer Impact Assessment).<br>
       <strong>Risque CLOUD Act :</strong> Hébergeurs américains (AWS, Azure, GCP) soumis aux lois de surveillance gouvernementale US.<br>
       <strong>Mesures supplémentaires requises :</strong> Chiffrement bout-en-bout, clés gérées en UE, pseudonymisation.<br>
-      <strong>Solutions alternatives :</strong> Data Clean Rooms, Confidential Computing ou hébergement 100% UE souverain.</p>
+      <strong>Solutions alternatives :</strong> Confidential Computing ou hébergement 100% UE souverain (seule garantie totale).</p>
       <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-schrems')">
         📋 Mes obligations
@@ -1428,12 +1428,14 @@
         </div>
         <h4>🔐 Mesures Techniques Supplémentaires</h4>
         <ul>
-          <li>Chiffrement bout-en-bout avec clés gérées uniquement en UE</li>
+          <li>Chiffrement bout-en-bout avec clés gérées uniquement en UE (BYOK - Bring Your Own Key)</li>
           <li>Pseudonymisation ou anonymisation des données transférées</li>
-          <li>Data Clean Rooms (traitement en environnement sécurisé sans accès direct)</li>
           <li>Confidential Computing (enclaves TEE, attestation distance)</li>
-          <li>Alternative : hébergement 100% UE souverain (OVHcloud, Scaleway, Outscale...)</li>
+          <li>Alternative recommandée : hébergement 100% UE souverain (capital européen immunisé - OVHcloud, Scaleway, Outscale...)</li>
         </ul>
+        <div class="obligations-highlight">
+          <strong>⚠️ CLOUD Act :</strong> Même avec CCT et chiffrement, un hébergeur US reste légalement soumis au CLOUD Act. Une filiale européenne d'une société-mère US (ex: AWS Europe) reste exposée. La seule garantie totale est l'hébergement chez un prestataire européen à capital européen.
+        </div>
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions :</strong> Jusqu'à 20M€ ou 4% CA (cumul possible avec RGPD).
         </div>
@@ -1688,6 +1690,29 @@
     </div>
   </div>
 
+  <div class="container right">
+    <div class="content card-b2c card-esn">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">28 Juin 2025</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>Accessibilité Européenne (EAA)</h2>
+      <span class="target-tag">Cible : Tout E-commerce & Service Bancaire B2C</span>
+      <p><strong>Extension de l'obligation :</strong> L'accessibilité (WCAG) ne concerne plus seulement le public/grands comptes, mais <strong>tous les services de commerce électronique</strong>, services bancaires, transports et livres numériques.<br>
+      <strong>Exemption :</strong> Uniquement les micro-entreprises (<10 salariés, <2M€ CA).<br>
+      <strong>Impact :</strong> Audit et mise en conformité obligatoires avant juin 2025.</p>
+      <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" target="_blank" class="reg-link">📄 Directive (UE) 2019/882</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-eaa')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
   <!-- Modal Garantie Conformité -->
   <div class="obligations-modal" id="modal-conformite">
     <div class="obligations-modal-content">
@@ -1758,7 +1783,49 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="obligations-modal" id="modal-eaa">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - European Accessibility Act (Juin 2025)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-eaa')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Qui est concerné ? (Changement Majeur)</h4>
+        <ul>
+          <li><strong>E-commerce :</strong> Tous les sites de vente en ligne (B2C)</li>
+          <li><strong>Banques & Fintech :</strong> Services bancaires aux consommateurs</li>
+          <li><strong>Transports :</strong> Billetterie et info voyageurs (Air, Bus, Train)</li>
+          <li><strong>Livres numériques :</strong> Ebooks et liseuses</li>
+          <li><strong>Terminaux :</strong> Bornes de paiement, distributeurs billets</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🚨 Différence avec RGAA :</strong> S'applique au secteur privé sans seuil de CA élevé (seules les micro-entreprises sont exemptées).
+        </div>
+        <h4>♿ Obligations Techniques</h4>
+        <ul>
+          <li>Respect des normes <strong>EN 301 549</strong> (équivalent WCAG 2.1 AA)</li>
+          <li>Navigation clavier, compatibilité lecteurs d'écran</li>
+          <li>Information accessible sur le fonctionnement du service</li>
+        </ul>
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">9 Juin 2023</span>
@@ -1776,7 +1843,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">20 Sept 2023</span>
@@ -1786,7 +1853,7 @@
       <span class="target-tag">Cible : Tout Service en Ligne, SSO, Auth</span>
       <p><strong>Wallet Européen d'Identité (EUDI) :</strong> Accessible à tous les citoyens UE. Stockage identité, permis, diplômes, prescriptions médicales.<br>
       <strong>Services publics :</strong> Obligation d'accepter l'authentification via wallet UE.<br>
-      <strong>Services privés :</strong> Adoption volontaire fortement encouragée. Signature électronique qualifiée intégrée.<br>
+      <strong>Services privés :</strong> Adoption volontaire fortement encouragée (sauf VLOPs désignées DSA : obligation). Signature électronique qualifiée intégrée.<br>
       <strong>Impact SSO/OAuth :</strong> Interopérabilité paneuropéenne obligatoire.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1183 (eIDAS 2)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-eidas')">
@@ -1795,7 +1862,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
         <div class="header-left">
@@ -1819,7 +1886,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <div class="header-left">
@@ -1843,7 +1910,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <div class="header-left">
@@ -1866,7 +1933,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -1874,7 +1941,7 @@
         </div>
         <div class="header-right">
           <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
-          <span class="origin-badge origin-fr">France (Transpo UE)</span>
+          <span class="origin-badge origin-eu">UE (Transpo FR en cours)</span>
         </div>
       </div>
       <h2>NIS 2 (Cybersécurité Renforcée)</h2>
@@ -1890,7 +1957,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-regulated card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -1914,7 +1981,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -1936,7 +2003,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-iot">
       <div class="header-row">
         <div class="header-left">
@@ -1959,7 +2026,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -1972,8 +2039,8 @@
       </div>
       <h2>AI Act (Modèles GPAI)</h2>
       <span class="target-tag">Cible : Éditeurs IA Générative<span class="esn-info">ESN : Si développement solutions IA pour clients</span></span>
-      <p><strong>Modèles d'IA générative :</strong> Documentation technique complète, résumé des données d'entraînement (respect du copyright), watermarking obligatoire, mention "contenu généré par IA".<br>
-      <strong>Documentation utilisateur :</strong> Instructions d'usage et limitations clairement indiquées.<br>
+      <p><strong>Modèles d'IA générative :</strong> Documentation technique complète, résumé des données d'entraînement (respect du copyright).<br>
+      <strong>Transparence :</strong> Marquage technique (si A/V) et mention visible "généré par IA" (si texte).<br>
       <strong>Modèles à risque systémique (>10²⁵ FLOPS) :</strong> Évaluations adversaires, tests de robustesse, notification obligatoire des incidents graves.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/1689 (AI Act)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-aiact-gpai')">
@@ -1982,7 +2049,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-iot">
       <div class="header-row">
         <div class="header-left">
@@ -2006,7 +2073,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2029,7 +2096,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <div class="header-left">
@@ -2053,7 +2120,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2076,7 +2143,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <div class="header-left">
@@ -2100,7 +2167,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2123,7 +2190,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <div class="header-left">
@@ -2146,7 +2213,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-universal card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2171,7 +2238,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-regulated">
       <div class="header-row">
         <div class="header-left">
@@ -2195,7 +2262,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-regulated">
       <div class="header-row">
         <div class="header-left">
@@ -2268,7 +2335,7 @@
         <ul>
           <li><strong>Bouton signalement</strong> contenus illicites visible</li>
           <li><strong>Traitement prioritaire</strong> signalements de confiance</li>
-          <li><strong>Blocage publicité</strong> produits interdits (chirurgie esthétique, paris sportifs)</li>
+          <li><strong>Blocage publicité</strong> produits interdits (chirurgie esthétique, paris sportifs, sans consentement parental pour -16 ans)</li>
           <li><strong>Vérification âge</strong> pour publicité ciblant -16 ans</li>
         </ul>
 
@@ -2305,7 +2372,7 @@
         </ul>
         <h4>💡 Pour Services Privés (Recommandé)</h4>
         <ul>
-          <li><strong>Adoption volontaire</strong> fortement encouragée</li>
+          <li><strong>Adoption volontaire</strong> fortement encouragée (sauf VLOPs - Very Large Online Platforms désignées par le DSA : obligation d'accepter le portefeuille)</li>
           <li><strong>Interopérabilité OAuth/OpenID</strong> avec wallet UE</li>
           <li>Permet authentification unifiée citoyens UE</li>
         </ul>
@@ -2422,7 +2489,7 @@
       <div class="obligations-modal-body">
         <h4>☁️ Pour Fournisseurs Cloud IaaS/PaaS/SaaS</h4>
         <ul>
-          <li><strong>Crédits cloud</strong> : validité limitée à 12 mois maximum. Expiration sans remboursement.</li>
+          <li><strong>Crédits cloud</strong> : durée de validité des offres de crédits limitée à 12 mois maximum pour éviter l'enfermement propriétaire (lock-in). Expiration sans remboursement.</li>
           <li><strong>Représentant légal UE</strong> obligatoire pour répondre à la justice française</li>
           <li><strong>Frais de sortie</strong> : suppression ou plafonnement au coût réel (transfert données)</li>
           <li><strong>Interopérabilité</strong> : obligation de compatibilité technique pour faciliter migration clients</li>
@@ -2568,8 +2635,8 @@
           <li><strong>Documentation technique</strong> complète (architecture, données entraînement)</li>
           <li><strong>Résumé données entraînement</strong> publié (sources, respect copyright)</li>
           <li><strong>Politique d'usage</strong> documentée (limitations, cas d'usage interdits)</li>
-          <li><strong>Watermarking</strong> contenus générés (détectable techniquement)</li>
-          <li><strong>Mention "généré par IA"</strong> sur tous outputs</li>
+          <li><strong>Marquage technique (A/V/Images)</strong> : watermarking détectable techniquement</li>
+          <li><strong>Transparence (Texte)</strong> : mention "généré par IA" obligatoire sur tous outputs</li>
           <li><strong>Instructions utilisateurs</strong> claires</li>
         </ul>
         <h4>⚠️ Si Modèle à Risque Systémique (>10^25 FLOPS)</h4>
@@ -2716,11 +2783,11 @@
       <div class="obligations-modal-body">
         <h4>✅ Pour Fabricants/Éditeurs IoT</h4>
         <ul>
-          <li><strong>Fournir accès données brutes</strong> générées par objets connectés aux utilisateurs</li>
+          <li><strong>Fournir accès données brutes</strong> générées par objets connectés aux utilisateurs et tiers autorisés par l'utilisateur</li>
           <li><strong>API standardisées</strong> pour export données</li>
-          <li><strong>Autoriser partage tiers</strong> (réparateurs, SAV, services tiers)</li>
+          <li><strong>Autoriser partage tiers</strong> : l'utilisateur peut forcer le fabricant à transmettre les données à un concurrent (réparateurs, SAV, services tiers)</li>
           <li><strong>Délai mise à disposition</strong> : sans retard injustifié (temps réel ou quasi)</li>
-          <li><strong>Interdiction clauses bloquantes</strong> dans CGV (accès exclusif éditeur)</li>
+          <li><strong>Interdiction clauses bloquantes</strong> dans CGV (accès exclusif éditeur), sauf protection Secret des Affaires sous conditions strictes</li>
         </ul>
         <div class="obligations-highlight">
           <strong>🎯 Objectif :</strong> Droit de réparation et liberté choix services pour utilisateurs finaux.
@@ -3077,6 +3144,7 @@
         </ul>
         <div class="obligations-highlight">
           <strong>✅ Exemption :</strong> SaaS pur sans composant téléchargé/installé côté client.
+          <br><strong>⚠️ Attention :</strong> Si le SaaS fait partie intégrante d'un produit (app compagnon objet connecté) ou traite des données critiques, l'exemption peut ne pas s'appliquer.
         </div>
         <h4>📅 Application Temporelle (Rétroactivité)</h4>
         <ul>

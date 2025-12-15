@@ -1037,9 +1037,18 @@
 
   /* --- STYLES D'IMPRESSION --- */
   @media print {
+    /* Suppression des en-têtes et pieds de page automatiques du navigateur */
+    @page {
+      margin-left: 0.5in;
+      margin-right: 0.5in;
+      margin-top: 0;
+      margin-bottom: 0;
+      size: A4;
+    }
+    
     body {
       background: white;
-      padding: 0;
+      padding: 0.5in 0;
       font-size: 11pt;
     }
     
@@ -1050,32 +1059,52 @@
     .toc-container,
     .complexity-help-btn,
     .obligations-modal-close,
-    .current-date-marker {
+    .current-date-marker,
+    .content button,
+    button[onclick*="openObligationsModal"],
+    button[onclick*="openComplexityExplanation"] {
+      display: none !important;
+    }
+    
+    /* Masquer le disclaimer interactif (on utilise celui pour impression) */
+    body > div[style*="background: #fff3cd"]:not(.print-disclaimer) {
       display: none !important;
     }
     
     /* Timeline simplifiée */
     .timeline {
       margin-top: 20px;
+      position: relative;
+      display: block;
     }
     
     .timeline::after {
-      background: #333;
+      display: none;
     }
     
     /* Cartes en pleine largeur */
     .container {
       page-break-inside: avoid;
-      width: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
       padding: 15px;
-      margin: 10px 0;
+      margin: 15px 0 !important;
       box-shadow: none;
-      border: 1px solid #ddd;
+      border: 1px solid #333;
+      position: relative !important;
+      left: 0 !important;
+      right: auto !important;
+      transform: none !important;
+    }
+    
+    .container::before {
+      display: none;
     }
     
     .container.left,
     .container.right {
       left: 0 !important;
+      right: auto !important;
     }
     
     .container::after {
@@ -1088,12 +1117,35 @@
       display: none !important;
     }
     
-    /* Footer sur chaque page */
+    /* Masquer le footer original (il sera ajouté avant le détail) */
+    body > .footer {
+      display: none !important;
+    }
+    
+    /* Footer dans section détail - densifié */
+    .print-annexes .footer,
     .footer {
       page-break-before: avoid;
-      margin-top: 30px;
+      margin-top: 20px;
       border-top: 2px solid #333;
-      padding-top: 15px;
+      padding-top: 10px;
+    }
+    
+    .footer p {
+      margin: 3px 0 !important;
+      padding: 0 !important;
+      font-size: 8pt !important;
+      line-height: 1.3 !important;
+    }
+    
+    .footer div[style*="background: #fff3cd"] {
+      padding: 8px 12px !important;
+      margin: 6px 0 !important;
+    }
+    
+    .footer div[style*="background: #fff3cd"] p {
+      font-size: 7.5pt !important;
+      line-height: 1.2 !important;
     }
     
     /* Annexes des modales */
@@ -1125,6 +1177,108 @@
     .complexity-table {
       page-break-inside: avoid;
     }
+    
+    /* Mention des filtres actifs */
+    .print-filters-info {
+      display: block !important;
+      background: #f8f9fa;
+      border: 2px solid #2980b9;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      page-break-after: avoid;
+    }
+    
+    .print-filters-title {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    
+    .print-filters-list {
+      font-size: 9pt;
+      line-height: 1.4;
+    }
+    
+    /* Disclaimer non contractuel en impression */
+    .print-disclaimer {
+      display: block !important;
+      background: #fff3cd;
+      border: 2px solid #f39c12;
+      border-left: 5px solid #f39c12;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      page-break-after: avoid;
+    }
+    
+    .print-disclaimer p {
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.3 !important;
+    }
+    
+    /* Guide complexité - page dédiée densifiée */
+    .print-complexity-guide {
+      display: block !important;
+      page-break-before: always;
+      page-break-after: always;
+      margin: 0;
+      padding: 20px 15px;
+    }
+    
+    .print-complexity-guide h2 {
+      font-size: 14pt !important;
+      margin: 0 0 12px 0 !important;
+      padding-bottom: 6px !important;
+    }
+    
+    .print-complexity-guide h4 {
+      font-size: 11pt !important;
+      margin: 8px 0 4px 0 !important;
+    }
+    
+    .print-complexity-guide ul {
+      margin: 4px 0 8px 0 !important;
+      padding-left: 20px !important;
+    }
+    
+    .print-complexity-guide li {
+      margin-bottom: 2px !important;
+      line-height: 1.3 !important;
+    }
+    
+    .print-complexity-guide p {
+      margin: 4px 0 !important;
+      line-height: 1.3 !important;
+    }
+    
+    .print-complexity-guide .obligations-highlight {
+      padding: 8px 12px !important;
+      margin: 8px 0 !important;
+    }
+    
+    /* Masquer le guide normalement caché en mode interactif */
+    .hidden-guide {
+      display: block !important;
+    }
+    
+    /* Timeline commence après le guide */
+    .timeline {
+      page-break-before: auto;
+    }
+    
+    /* Annexes sans pages blanches excessives */
+    .print-annexes {
+      page-break-before: always;
+      margin-top: 0;
+      padding-top: 20px;
+    }
+    
+    .print-annexes h1 {
+      margin-top: 0;
+      padding-top: 0;
+    }
   }
 </style>
 </head>
@@ -1134,12 +1288,47 @@
 <p class="subtitle">Vue synthétique par type d'acteur concerné (2016 - 2030+) | <strong>Version Q4 2025</strong></p>
 
 <div style="max-width: 800px; margin: 0 auto 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
-  <p style="margin: 0; color: white; font-size: 1.05rem; line-height: 1.6; text-align: center;">
+  <p style="margin: 0 0 15px 0; color: white; font-size: 1.05rem; line-height: 1.6; text-align: center;">
     <strong>🎯 Objectif :</strong> Faciliter et anticiper l'implémentation des réglementations européennes et françaises applicables aux éditeurs de logiciels, SaaS et prestataires IT. <br/>Cette frise permet d'identifier les obligations selon votre profil d'activité et de prioriser vos chantiers de conformité grâce à une évaluation de leur complexité.
+  </p>
+  <div style="text-align: center; margin-top: 15px;">
+    <button onclick="openComplexityExplanation()" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: all 0.3s;">
+      📊 Guide de Lecture - Évaluation de Complexité
+    </button>
+  </div>
+</div>
+
+<!-- Filtres actifs - visible uniquement en impression (AVANT le guide) -->
+<div class="print-filters-info" style="display: none; max-width: 900px; margin: 0 auto 15px;">
+  <div class="print-filters-title" style="font-size: 13pt; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">
+    📊 Filtres Actifs - Catégories Concernées
+  </div>
+  <div id="print-filters-content" class="print-filters-list" style="font-size: 11pt; color: #495057; line-height: 1.6;">
+    <!-- Sera rempli dynamiquement -->
+  </div>
+</div>
+
+<!-- Disclaimer pour impression - visible uniquement en impression (AVANT le guide) -->
+<div class="print-disclaimer" style="display: none; max-width: 900px; margin: 0 auto 20px; padding: 15px 20px; border-radius: 8px;">
+  <p style="margin: 0 0 8px 0; color: #856404; font-size: 0.9rem; line-height: 1.5; font-weight: bold;">
+    ⚠️ DOCUMENT NON CONTRACTUEL
+  </p>
+  <p style="margin: 0; color: #856404; font-size: 0.85rem; line-height: 1.4;">
+    Ce document est fourni <strong>à titre purement indicatif et pédagogique</strong>. Il ne saurait se substituer aux textes réglementaires en vigueur ni engager la responsabilité de l'acheteur public ou de toute autre entité quant à l'exhaustivité des obligations légales. Les scores de complexité constituent une <strong>estimation générique</strong> destinée à faciliter la compréhension et le dimensionnement des chantiers de conformité. Ils ne remplacent pas une analyse juridique et technique au cas par cas.
   </p>
 </div>
 
-<!-- Avertissement Légal - Non Contractuel -->
+<!-- Guide de lecture caché (visible uniquement en impression APRÈS filtres et disclaimer) -->
+<div class="hidden-guide print-complexity-guide" style="display: none; max-width: 900px; margin: 20px auto; border: 3px solid #667eea; padding: 15px 20px; border-radius: 8px; background: #f8f9fa;">
+  <h2 style="text-align: center; margin: 0 0 15px 0; color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 8px; font-size: 16pt;">
+    📊 Guide de Lecture - Évaluation de Complexité
+  </h2>
+  <div id="complexity-guide-content" style="font-size: 10pt; line-height: 1.4;">
+    <!-- Sera rempli dynamiquement depuis la modale -->
+  </div>
+</div>
+
+<!-- Avertissement Légal - Non Contractuel (visible en mode interactif) -->
 <div style="max-width: 900px; margin: 0 auto 25px; padding: 18px 24px; background: #fff3cd; border-left: 5px solid #f39c12; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
   <p style="margin: 0 0 10px 0; color: #856404; font-size: 0.95rem; line-height: 1.7;">
     <strong>⚠️ DOCUMENT NON CONTRACTUEL</strong>
@@ -2497,7 +2686,7 @@
       <strong>Produits critiques (Classe I/II) :</strong> OS, antivirus, VPN, firewalls, systèmes industriels - certification par organisme tiers obligatoire.<br>
       <strong>Documentation requise :</strong> Analyse de risques, rapports de tests sécurité, instructions d'utilisation sécurisée. Open-source commercialisé inclus.<br>
       <strong>Exemption :</strong> SaaS pur sans composant client installé.<br>
-      <strong>⚠️ Rétroactivité :</strong> S'applique également aux produits déjà sur le marché.</p>
+      <strong>⚠️ Rétroactivité :</strong> Peut également s'appliquer aux produits déjà sur le marché.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2024/2847 (CRA)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-cra-total')">
         📋 Mes obligations
@@ -3253,6 +3442,9 @@
         <div class="obligations-highlight">
           <strong>🎯 Concernés dès 2026 :</strong> Logiciels avec connexion réseau ou traitement données sensibles.
         </div>
+        <div class="obligations-highlight" style="background: #fff3cd; border-left-color: #f39c12;">
+          <strong>⚠️ Retroactivité :</strong> S'applique aux produits <strong>en production active</strong>, y compris ceux commercialisés avant sept. 2026. Le reporting concerne tous logiciels maintenus.
+        </div>
         <h4>📋 Informations à Fournir</h4>
         <ul>
           <li>Description technique vulnérabilité (CVE)</li>
@@ -3411,14 +3603,16 @@
         </ul>
         <div class="obligations-highlight">
           <strong>✅ Exemption :</strong> SaaS pur sans composant téléchargé/installé côté client.
-          <br><strong>⚠️ Attention :</strong> Si le SaaS fait partie intégrante d'un produit (app compagnon objet connecté) ou traite des données critiques, l'exemption peut ne pas s'appliquer.
         </div>
-        <h4>📅 Application Temporelle (Rétroactivité)</h4>
+        <h4>📅 Application Temporelle</h4>
         <ul>
-          <li><strong>Produit vendu avant décembre 2027 :</strong> Non soumis au CRA (sauf obligation contractuelle existante)</li>
-          <li><strong>Nouvelle unité d'un produit ancien vendue après décembre 2027 :</strong> Soumise au CRA (marquage CE obligatoire)</li>
-          <li><strong>Mise à jour majeure après décembre 2027 :</strong> Déclenche la conformité comme un nouveau produit</li>
+          <li><strong>Produit vendu avant déc. 2027 :</strong> Non soumis (conformité à la date de première commercialisation)</li>
+          <li><strong>Nouvelle unité vendue après déc. 2027 :</strong> Soumise au CRA (même si produit conçu avant)</li>
+          <li><strong>Mise à jour substantielle post-2027 :</strong> Peut déclencher conformité</li>
         </ul>
+        <div class="obligations-highlight" style="background: #fff3cd; border-left-color: #f39c12;">
+          <strong>⚠️ Rétroactivité :</strong> Attention aux ventes de nouvelles unités/licences après déc. 2027, mises à jour substantielles, ou remises sur le marché. <strong>Anticiper la conformité pour tout produit commercialisé en 2027-2028.</strong>
+        </div>
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions :</strong> Jusqu'à 15M€ ou 2.5% CA. Retrait marché possible.
         </div>
@@ -3546,7 +3740,7 @@
   <div style="background: #fff3cd; padding: 16px; border-radius: 8px; border-left: 5px solid #f39c12; margin: 15px 0;">
     <p style="margin: 0 0 10px 0; color: #856404; font-weight: 700; font-size: 0.95rem;">⚠️ DOCUMENT NON CONTRACTUEL</p>
     <p style="margin: 0; font-size: 0.88rem; line-height: 1.6; color: #856404;">
-      Ce document est fourni <strong>à titre purement indicatif et pédagogique</strong>. Il ne saurait se substituer aux textes réglementaires en vigueur ni engager la responsabilité de son auteur ou de toute entité utilisatrice quant à l'exhaustivité des obligations légales. Les scores de complexité sont des <strong>estimations génériques</strong> nécessitant une analyse au cas par cas. <strong>Consulter les textes officiels et un conseil juridique pour toute application contraignante.</strong>
+      Ce document est fourni <strong>à titre purement indicatif et pédagogique</strong>. Il ne saurait se substituer aux textes réglementaires en vigueur ni engager la responsabilité de son auteur ou de toute entité utilisatrice quant à l'exhaustivité des obligations légales. Les scores de complexité sont des <strong>estimations génériques</strong> nécessitant une analyse au cas par cas.<br/><strong>Consulter les textes officiels et un conseil juridique.</strong>
     </p>
   </div>
   <p style="margin-top: 15px; font-size: 0.8rem;">Sources : EUR-Lex, Légifrance, CNIL, ANSSI, Commission Européenne</p>
@@ -3555,6 +3749,16 @@
 <script>
 // Calcul de la position du marqueur de date actuelle
 document.addEventListener('DOMContentLoaded', function() {
+  // === REMPLIR LE GUIDE CACHÉ POUR L'IMPRESSION ===
+  const complexityModal = document.getElementById('modal-complexity-explanation');
+  const hiddenGuideContent = document.getElementById('complexity-guide-content');
+  if (complexityModal && hiddenGuideContent) {
+    const modalBody = complexityModal.querySelector('.obligations-modal-body');
+    if (modalBody) {
+      hiddenGuideContent.innerHTML = modalBody.innerHTML;
+    }
+  }
+
   const today = new Date();
   const containers = document.querySelectorAll('.container');
   
@@ -4006,19 +4210,62 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
+  // Remplir le guide caché avec le contenu de la modale au chargement
+  const complexityGuideContent = document.getElementById('complexity-guide-content');
+  if (complexityGuideContent) {
+    const modalElement = document.getElementById('modal-complexity-explanation');
+    if (modalElement) {
+      const modalBody = modalElement.querySelector('.obligations-modal-body');
+      if (modalBody) {
+        complexityGuideContent.innerHTML = modalBody.innerHTML;
+      }
+    }
+  }
+
   // === GESTION DE L'IMPRESSION ===
   const printButton = document.getElementById('printButton');
   if (printButton) {
     printButton.addEventListener('click', function() {
       // Récupérer toutes les cartes visibles (non filtrées)
-      const visibleCards = Array.from(document.querySelectorAll('.container')).filter(card => {
-        return card.style.display !== 'none';
+      const allContainers = document.querySelectorAll('.container');
+      const visibleCards = Array.from(allContainers).filter(card => {
+        const style = window.getComputedStyle(card);
+        return style.display !== 'none';
       });
 
-      // Créer une section d'annexes
-      let annexesHTML = '<div class="print-annexes" style="margin-top: 50px;"><h1 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #333; padding-bottom: 10px;">ANNEXES - Détails des Réglementations</h1>';
+      const totalCards = allContainers.length;
+      const visibleCount = visibleCards.length;
 
-      visibleCards.forEach((card, index) => {
+      // Identifier les catégories actives (filtres appliqués)
+      const activeCategories = Array.from(document.querySelectorAll('.legend-item.active')).map(item => {
+        const text = item.textContent || item.innerText;
+        const match = text.match(/^(.+?)(\d+)$/);
+        if (match) {
+          const label = match[1].trim();
+          const count = match[2];
+          return `${label} (${count} élément${count > 1 ? 's' : ''})`;
+        }
+        return text.trim();
+      });
+
+      // Remplir le contenu des filtres dans l'élément déjà présent
+      const printFiltersContent = document.getElementById('print-filters-content');
+      if (printFiltersContent) {
+        printFiltersContent.innerHTML = `
+          ${activeCategories.length > 0 
+            ? '<strong>Ce document concerne les acteurs suivants :</strong><br/>' + activeCategories.map(cat => '• ' + cat).join('<br/>') 
+            : '<strong>Toutes les catégories sont affichées</strong> (aucun filtre actif)'}
+          <div style="margin-top: 10px; font-size: 9pt; color: #6c757d; font-style: italic;">
+            ${visibleCount} réglementation(s) affichée(s) sur un total de ${totalCards}
+          </div>
+        `;
+      }
+
+      // Créer une section détails - UNIQUEMENT pour les cartes visibles
+      let annexesHTML = '<div class="print-annexes"><h1 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #333; padding-bottom: 10px;">DÉTAIL DES RÉGLEMENTATIONS</h1>';
+
+      let annexeCounter = 0;
+      visibleCards.forEach((card) => {
         // Extraire le titre de la réglementation
         const titleElement = card.querySelector('h2');
         if (!titleElement) return;
@@ -4026,16 +4273,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = titleElement.textContent.trim();
         
         // Trouver la modale correspondante
-        const modalId = card.querySelector('[onclick*="openObligationsModal"]')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        const modalButton = card.querySelector('[onclick*="openObligationsModal"]');
+        if (!modalButton) return;
+        
+        const onclickAttr = modalButton.getAttribute('onclick');
+        const modalIdMatch = onclickAttr ? onclickAttr.match(/'([^']+)'/) : null;
+        const modalId = modalIdMatch ? modalIdMatch[1] : null;
         
         if (modalId) {
           const modal = document.getElementById(modalId);
           if (modal) {
             const modalBody = modal.querySelector('.obligations-modal-body');
             if (modalBody) {
+              annexeCounter++;
               annexesHTML += `
-                <div class="print-annex" style="margin-bottom: 30px; border: 2px solid #333; padding: 20px; border-radius: 8px;">
-                  <h2 class="print-annex-title" style="font-size: 16pt; margin-bottom: 15px; color: #2c3e50;">${index + 1}. ${title}</h2>
+                <div class="print-annex" style="margin-bottom: 30px; border: 2px solid #333; padding: 20px; border-radius: 8px; page-break-inside: avoid;">
+                  <h2 class="print-annex-title" style="font-size: 16pt; margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 8px;">${annexeCounter}. ${title}</h2>
                   <div class="print-annex-content">${modalBody.innerHTML}</div>
                 </div>
               `;
@@ -4046,7 +4299,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
       annexesHTML += '</div>';
 
-      // Insérer les annexes temporairement dans le DOM
+      // Ajouter le footer avec disclaimers juridiques AVANT la section détail
+      const footerElement = document.querySelector('.footer');
+      let footerHTML = '';
+      if (footerElement) {
+        footerHTML = `
+          <div class="footer" style="page-break-before: avoid; margin: 30px auto 40px; max-width: 900px; border-top: 3px solid #333; padding-top: 20px;">
+            ${footerElement.innerHTML}
+          </div>
+        `;
+      }
+
+      // Insérer le footer avant la section détail
+      const tempFooter = document.createElement('div');
+      tempFooter.innerHTML = footerHTML;
+      tempFooter.style.display = 'none';
+      tempFooter.classList.add('temp-print-footer');
+      document.body.appendChild(tempFooter);
+
+      // Insérer les détails temporairement dans le DOM
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = annexesHTML;
       tempDiv.style.display = 'none';
@@ -4056,13 +4327,15 @@ document.addEventListener('DOMContentLoaded', function() {
       // Marquer les cartes non visibles pour ne pas les imprimer
       const allCards = document.querySelectorAll('.container');
       allCards.forEach(card => {
-        if (card.style.display === 'none') {
+        const style = window.getComputedStyle(card);
+        if (style.display === 'none') {
           card.classList.add('hide-for-print');
         }
       });
 
-      // Afficher les annexes pour l'impression
+      // Afficher les éléments temporaires pour l'impression
       tempDiv.style.display = 'block';
+      tempFooter.style.display = 'block';
 
       // Lancer l'impression
       setTimeout(() => {
@@ -4071,6 +4344,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Nettoyer après l'impression
         setTimeout(() => {
           tempDiv.remove();
+          tempFooter.remove();
           allCards.forEach(card => {
             card.classList.remove('hide-for-print');
           });

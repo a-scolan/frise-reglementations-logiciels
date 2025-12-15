@@ -1412,6 +1412,7 @@
       <strong>Six bases légales :</strong> Consentement explicite, contrat, obligation légale, intérêt vital, mission publique, intérêt légitime.<br>
       <strong>Obligations clés :</strong> Tenir un registre des traitements. Nommer un DPO si traitement à grande échelle. Notifier la CNIL sous 72h en cas de violation. Réaliser une AIPD si risque élevé.</p>
       <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2016/679</a>
+      <a href="https://www.cnil.fr/fr/outil-pia-analyse-dimpact-sur-la-protection-des-donnees" target="_blank" class="reg-link">🛠️ Outil PIA (CNIL)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-rgpd')">
         📋 Mes obligations
       </button>
@@ -1737,47 +1738,60 @@
           <span class="origin-badge origin-eu">Europe (Arrêt)</span>
         </div>
       </div>
-      <h2>Schrems II (Transferts UE-USA)</h2>
-      <span class="target-tag">Cible : SaaS utilisant hébergeurs US<span class="esn-info">ESN : Si utilisation AWS/Azure/GCP - TIA obligatoire</span></span>
-      <p><strong>Privacy Shield invalidé :</strong> Les transferts hors UE nécessitent des Clauses Contractuelles Types avec une évaluation TIA (Transfer Impact Assessment).<br>
-      <strong>Risque CLOUD Act :</strong> Hébergeurs américains (AWS, Azure, GCP) soumis aux lois de surveillance gouvernementale US.<br>
-      <strong>Mesures supplémentaires requises :</strong> Chiffrement bout-en-bout, clés gérées en UE, pseudonymisation.<br>
-      <strong>Solutions alternatives :</strong> Confidential Computing ou hébergement 100% UE souverain (seule garantie totale).</p>
-      <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18</a>
+      <h2>Transferts Hors UE (Data Privacy Framework)</h2>
+      <span class="target-tag">Cible : SaaS utilisant Cloud US (AWS, Azure, GCP...)</span>
+      <p>
+        <strong>Nouveau cadre DPF (2023) :</strong> Les transferts vers les sociétés US certifiées "Data Privacy Framework" sont autorisés sans formalité supplémentaire (équivalence adéquate).<br>
+        <strong>Si non certifié DPF :</strong> Maintien des CCT (Clauses Contractuelles Types) + TIA (Transfer Impact Assessment) obligatoire.<br>
+        <strong>Action prioritaire :</strong> Vérifier la certification DPF de vos sous-traitants US sur <a href="https://www.dataprivacyframework.gov/list" target="_blank" style="color: inherit; text-decoration: underline;">le registre officiel</a>.<br>
+        <strong>⚠️ Limites DPF :</strong> Le CLOUD Act reste applicable (accès gouvernemental US possible). Pour une immunité totale : hébergement UE souverain (capital européen).
+      </p>
+      <a href="https://curia.europa.eu/juris/document/document.jsf?docid=228677" target="_blank" class="reg-link">📄 Arrêt C-311/18 (Schrems II)</a>
+      <a href="https://www.dataprivacyframework.gov/" target="_blank" class="reg-link">🛠️ Data Privacy Framework</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-schrems')">
         📋 Mes obligations
       </button>
     </div>
   </div>
 
-  <!-- Modal Schrems II -->
+  <!-- Modal Schrems II / DPF -->
   <div class="obligations-modal" id="modal-schrems">
     <div class="obligations-modal-content">
       <div class="obligations-modal-header">
-        <h3>📋 Mes obligations - Schrems II / Transferts Hors UE</h3>
+        <h3>📋 Mes obligations - Transferts Hors UE (Data Privacy Framework)</h3>
         <button class="obligations-modal-close" onclick="closeObligationsModal('modal-schrems')">×</button>
       </div>
       <div class="obligations-modal-body">
-        <h4>✅ Si Transfert Données Hors UE</h4>
+        <h4>✅ Si Sous-Traitant US Certifié DPF (Data Privacy Framework)</h4>
+        <ul>
+          <li><strong>Vérifier la certification active</strong> sur le <a href="https://www.dataprivacyframework.gov/list" target="_blank">registre officiel DPF</a> (AWS, Azure, GCP, Google Workspace, Salesforce... sont certifiés)</li>
+          <li><strong>Documenter la certification</strong> dans votre registre des traitements RGPD</li>
+          <li><strong>Informer les utilisateurs</strong> du transfert vers les États-Unis dans la politique de confidentialité</li>
+          <li><strong>Aucune TIA ni CCT supplémentaire requise</strong> (décision d'adéquation UE-USA en vigueur depuis juillet 2023)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>✅ DPF actif :</strong> Le Data Privacy Framework remplace le Privacy Shield invalidé en 2020. Il offre une base légale simplifiée pour les transferts vers les sociétés US certifiées.
+        </div>
+        <h4>⚠️ Si Sous-Traitant NON Certifié DPF (ou pays hors UE/USA)</h4>
         <ul>
           <li><strong>Réaliser une TIA</strong> (Transfer Impact Assessment) : évaluer les lois du pays destinataire (surveillance, accès gouvernemental)</li>
           <li><strong>Signer des CCT</strong> (Clauses Contractuelles Types) avec le sous-traitant/partenaire</li>
           <li><strong>Documenter les garanties</strong> supplémentaires mises en place (chiffrement, gestion clés UE, pseudonymisation)</li>
           <li><strong>Informer les utilisateurs</strong> des transferts dans la politique de confidentialité</li>
-          <li><strong>Prévoir des alternatives UE</strong> si risque trop élevé (Cloud Act, FISA 702...)</li>
+          <li><strong>Prévoir des alternatives UE</strong> si risque trop élevé (lois de surveillance intrusive)</li>
         </ul>
         <div class="obligations-highlight">
-          <strong>⚠️ Risque :</strong> Hébergeurs US (AWS, Azure, GCP) soumis au CLOUD Act. Privacy Shield invalide depuis 2020.
+          <strong>⚠️ Risque résiduel DPF :</strong> Même certifié DPF, un hébergeur US reste soumis au CLOUD Act (accès gouvernemental US). Le DPF ne supprime pas ce risque, il l'encadre juridiquement.
         </div>
-        <h4>🔐 Mesures Techniques Supplémentaires</h4>
+        <h4>🔐 Mesures Techniques Supplémentaires (Optionnelles mais Recommandées)</h4>
         <ul>
-          <li>Chiffrement bout-en-bout avec clés gérées uniquement en UE (BYOK - Bring Your Own Key)</li>
-          <li>Pseudonymisation ou anonymisation des données transférées</li>
-          <li>Confidential Computing (enclaves TEE, attestation distance)</li>
-          <li>Alternative recommandée : hébergement 100% UE souverain (capital européen immunisé - OVHcloud, Scaleway, Outscale...)</li>
+          <li><strong>Chiffrement bout-en-bout</strong> avec clés gérées uniquement en UE (BYOK - Bring Your Own Key, Customer Managed Keys)</li>
+          <li><strong>Pseudonymisation ou anonymisation</strong> des données sensibles avant transfert</li>
+          <li><strong>Confidential Computing</strong> (enclaves TEE, attestation distance) pour isoler les données en traitement</li>
+          <li><strong>Alternative maximale :</strong> Hébergement 100% UE souverain (capital européen immunisé au CLOUD Act - OVHcloud, Scaleway, Outscale...)</li>
         </ul>
         <div class="obligations-highlight">
-          <strong>⚠️ CLOUD Act :</strong> Même avec CCT et chiffrement, un hébergeur US reste légalement soumis au CLOUD Act. Une filiale européenne d'une société-mère US (ex: AWS Europe) reste exposée. La seule garantie totale est l'hébergement chez un prestataire européen à capital européen.
+          <strong>⚠️ CLOUD Act persistant :</strong> Le DPF n'annule pas le CLOUD Act. Les autorités US peuvent toujours exiger l'accès aux données hébergées par une société US, même certifiée DPF. Une filiale européenne d'une société-mère US (ex: AWS Europe, Microsoft Ireland) reste exposée. <strong>La seule immunité totale : capital européen non contrôlé par entité US.</strong>
         </div>
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions :</strong> Jusqu'à 20M€ ou 4% CA (cumul possible avec RGPD).
@@ -1836,6 +1850,7 @@
       <strong>Obligations :</strong> Publier une déclaration d'accessibilité sur chaque site et application. Établir un schéma pluriannuel de mise en conformité.<br>
       <strong>Critères essentiels :</strong> Compatibilité lecteurs d'écran, navigation au clavier, contrastes de couleurs, sous-titres pour les vidéos.</p>
       <a href="https://www.legifrance.gouv.fr/eli/decret/2019/7/24/2019-768/jo/texte" target="_blank" class="reg-link">📄 Décret n° 2019-768</a>
+      <a href="https://ara.numerique.gouv.fr/" target="_blank" class="reg-link">🛠️ Audit ARA (Gouv)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-rgaa')">
         📋 Mes obligations
       </button>
@@ -2407,6 +2422,7 @@
       <strong>Mesures techniques obligatoires :</strong> Authentification multi-facteurs (MFA), chiffrement, sauvegardes sécurisées, gestion des correctifs, analyse annuelle des risques.<br>
       <strong>Responsabilité des dirigeants :</strong> Les dirigeants sont personnellement responsables de la cybersécurité.</p>
       <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
+      <a href="https://mon-service-securise.ssi.gouv.fr/" target="_blank" class="reg-link">🛠️ MonServiceSécurisé (ANSSI)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
         📋 Mes obligations
       </button>

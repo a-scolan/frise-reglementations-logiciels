@@ -393,12 +393,20 @@
     border-bottom: 8px solid #e74c3c;
   }
 
-  /* Bouton retour à aujourd'hui */
- .back-to-today {
+  /* Conteneur des boutons d'action */
+ .action-buttons-container {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: #e74c3c;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+    align-items: center;
+    transition: bottom 0.3s ease;
+  }
+
+  /* Styles communs pour tous les boutons */
+ .action-buttons-container button {
     color: white;
     border: none;
     padding: 12px 20px;
@@ -406,12 +414,26 @@
     cursor: pointer;
     font-weight: bold;
     font-size: 0.85rem;
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
+  }
+
+  .action-buttons-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .action-buttons-container button:active {
+    transform: translateY(0);
+  }
+
+  /* Bouton retour à aujourd'hui */
+ .back-to-today {
+    background: #e74c3c;
   }
  .back-to-today:hover {
     background: #c0392b;
@@ -426,7 +448,7 @@
  .print-button {
     position: fixed;
     bottom: 30px;
-    right: 200px;
+    right: 180px;
     background: #2980b9;
     color: white;
     border: none;
@@ -448,6 +470,35 @@
     box-shadow: 0 6px 20px rgba(41, 128, 185, 0.4);
   }
  .print-button:active {
+    transform: translateY(0);
+  }
+
+  /* Bouton Copier Échéances */
+ .copy-deadlines-button {
+    position: fixed;
+    bottom: 30px;
+    right: 320px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ .copy-deadlines-button:hover {
+    background: #1e8449;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+  }
+ .copy-deadlines-button:active {
     transform: translateY(0);
   }
 
@@ -841,7 +892,7 @@
  .footer {
     text-align: center;
     padding: 40px 20px;
-    margin-top: 60px;
+    margin-top: 40px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -966,27 +1017,41 @@
      left: 34px;
      transform: none;
    }
-   .back-to-today {
+   .action-buttons-container {
      position: fixed;
      bottom: 80px;
      right: 15px;
      left: 15px;
+     flex-direction: column;
+     align-items: stretch;
+     gap: 8px;
+     z-index: 999;
+   }
+
+   .action-buttons-container button {
+     width: 100%;
      padding: 10px 14px;
      font-size: 0.8rem;
      justify-content: center;
-     transition: bottom 0.3s ease;
-     z-index: 999;
+     display: flex;
+     flex-shrink: 0;
    }
+
    .print-button {
-     position: fixed;
-     bottom: 130px;
-     right: 15px;
-     left: 15px;
-     padding: 10px 14px;
-     font-size: 0.8rem;
-     justify-content: center;
-     z-index: 999;
+     position: static !important;
+     background: #2980b9;
    }
+
+   .copy-deadlines-button {
+     position: static !important;
+     background: #27ae60;
+   }
+
+   .back-to-today {
+     position: static !important;
+     background: #e74c3c;
+   }
+
    .toc-container {
      position: fixed;
      width: calc(100% - 30px);
@@ -1002,6 +1067,9 @@
      overflow: hidden;
      float: none;
      margin: 0;
+   }
+   body.toc-open .action-buttons-container {
+     bottom: calc(50vh + 30px);
    }
    .toc-container:not(.collapsed) {
      max-height: 50vh;
@@ -1077,6 +1145,7 @@
     .legend-container,
     .back-to-today,
     .print-button,
+    .copy-deadlines-button,
     .toc-container,
     .complexity-help-btn,
     .obligations-modal-close,
@@ -1391,15 +1460,23 @@
   </div>
 </div>
 
-<!-- Bouton retour à aujourd'hui -->
-<button class="back-to-today" id="backToToday">
-  📅 Aujourd'hui
-</button>
+<!-- Conteneur des boutons d'action -->
+<div class="action-buttons-container">
+  <!-- Bouton Copier Prochaines Échéances -->
+  <button class="copy-deadlines-button" id="copyDeadlinesButton">
+    📅 Copier prochaines échéances
+  </button>
 
-<!-- Bouton Imprimer -->
-<button class="print-button" id="printButton">
-  🖨️ Imprimer
-</button>
+  <!-- Bouton Imprimer -->
+  <button class="print-button" id="printButton">
+    🖨️ Imprimer
+  </button>
+
+  <!-- Bouton retour à aujourd'hui -->
+  <button class="back-to-today" id="backToToday">
+    📅 Aujourd'hui
+  </button>
+</div>
 
 <!-- Sommaire flottant -->
 <div class="toc-container collapsed" id="tocContainer">
@@ -1530,6 +1607,13 @@
           <li><strong>Réaliser une AIPD</strong> (Analyse d'Impact sur la Protection des Données) documentée</li>
           <li><strong>Consulter la CNIL</strong> avant mise en œuvre si risque résiduel élevé malgré mesures</li>
         </ul>
+        
+        <div class="obligations-highlight" style="background: #e8f4f8; border-left-color: #2980b9;">
+          <strong>📚 Ressource pratique :</strong> 
+          <a href="https://www.cnil.fr/fr/guide-rgpd-du-developpeur" target="_blank" style="color: #2980b9; text-decoration: underline; font-weight: bold;">
+            Guide RGPD du Développeur (CNIL)
+          </a> - Fiches pratiques, code examples, checklist conformité.
+        </div>
 
         <div class="complexity-section">
           <div class="complexity-header">
@@ -1580,7 +1664,8 @@
       </div>
       <h2>ePrivacy (Directive Cookie)</h2>
       <span class="target-tag">Cible : Tous Sites Web & Apps<span class="esn-info">ESN : Si site web/app propre ou client</span></span>
-      <p><strong>Bandeau cookie obligatoire :</strong> Consentement explicite requis avant tout dépôt de cookies non essentiels (marketing, analytics).<br>
+      <p><strong>Directive 2002/58/CE modifiée (2009).</strong> Application renforcée avec RGPD depuis 25 Mai 2018.<br>
+      <strong>Bandeau cookie obligatoire :</strong> Consentement explicite requis avant tout dépôt de cookies non essentiels (marketing, analytics).<br>
       <strong>Refus facilité :</strong> Même nombre de clics que l'acceptation. Interdiction des cookie walls abusifs.<br>
       <strong>Conservation :</strong> Durée maximale 13 mois. Obligation de conserver la preuve du consentement (logs horodatés).</p>
       <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32002L0058" target="_blank" class="reg-link">📄 Directive 2002/58/CE</a>
@@ -1649,6 +1734,66 @@
               <td>⚠️ Risque Non-Conformité</td>
               <td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td>
             </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal EUCC -->
+  <div class="obligations-modal" id="modal-eucc">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - EU Cybersecurity Act (EUCC)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-eucc')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Certification Volontaire (mais Valorisante)</h4>
+        <ul>
+          <li><strong>Schémas EUCC disponibles</strong> : certifications cybersécurité européennes harmonisées</li>
+          <li><strong>Niveaux de certification</strong> :
+            <ul style="margin-top: 8px;">
+              <li>• <strong>Assurance</strong> : auto-évaluation (faible risque)</li>
+              <li>• <strong>Basic</strong> : évaluation légère (risque modéré)</li>
+              <li>• <strong>Substantial</strong> : évaluation approfondie (risque élevé)</li>
+              <li>• <strong>High</strong> : évaluation très stricte (risque critique)</li>
+            </ul>
+          </li>
+          <li><strong>Reconnaissance UE</strong> : certificat valable dans tous les États membres</li>
+          <li><strong>Durée validité</strong> : généralement 3-5 ans selon niveau</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>💡 Avantages :</strong> Accès marchés publics facilité, différenciation commerciale, confiance clients accrue.
+        </div>
+        <h4>🔗 Lien avec CRA (2027)</h4>
+        <ul>
+          <li>Le <strong>Cyber Resilience Act</strong> rendra obligatoire certaines certifications EUCC pour produits critiques (Classe I/II)</li>
+          <li>EUCC reste volontaire pour autres produits mais fortement recommandé</li>
+        </ul>
+        <h4>📋 Produits Certifiables</h4>
+        <ul>
+          <li>Logiciels de sécurité (antivirus, firewall, VPN)</li>
+          <li>Systèmes d'exploitation</li>
+          <li>Équipements réseau (routeurs, switches)</li>
+          <li>Services cloud (IaaS, PaaS)</li>
+          <li>Cartes à puce, HSM (Hardware Security Modules)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🇫🇷 France :</strong> ANSSI propose également la qualification <a href="https://cyber.gouv.fr/qualification" target="_blank" style="color: inherit; text-decoration: underline;">SecNumCloud</a> pour services cloud.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-2">⭐⭐ Modéré</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-1">⭐ Faible</span></td></tr>
           </table>
         </div>
       </div>
@@ -1858,6 +2003,30 @@
     <div class="content card-universal">
       <div class="header-row">
         <div class="header-left">
+          <span class="date-badge">27 Juin 2019</span>
+        </div>
+        <div class="header-right">
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>EU Cybersecurity Act (EUCC)</h2>
+      <span class="target-tag">Cible : Fabricants Produits TIC, Éditeurs Logiciels</span>
+      <p><strong>Cadre européen certification cybersécurité :</strong> Schémas EUCC (European Common Criteria) pour produits, services et processus TIC.<br>
+      <strong>Certifications volontaires :</strong> Assurance, Basic, Substantial, High selon niveau de risque.<br>
+      <strong>Base juridique :</strong> Fondation pour les certifications cybersécurité produits TIC (complémentaire au CRA).<br>
+      <strong>Avantages :</strong> Certification reconnue dans toute l'UE, valorisation commerciale, facilite l'accès aux marchés publics.<br>
+      <strong>Lien avec CRA :</strong> Le CRA (2027) rendra obligatoire certaines certifications pour produits critiques.</p>
+      <a href="https://eur-lex.europa.eu/eli/reg/2019/881/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2019/881</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-eucc')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container right">
+    <div class="content card-universal">
+      <div class="header-row">
+        <div class="header-left">
           <span class="date-badge">24 Nov 2020</span>
         </div>
         <div class="header-right">
@@ -1907,6 +2076,13 @@
           <li>Contraste 4.5:1 minimum</li>
           <li>Sous-titres vidéos, alt images</li>
         </ul>
+        
+        <div class="obligations-highlight" style="background: #e8f4f8; border-left-color: #2980b9;">
+          <strong>📚 Ressource pratique :</strong> 
+          <a href="https://accessibilite.numerique.gouv.fr/" target="_blank" style="color: #2980b9; text-decoration: underline; font-weight: bold;">
+            Guide RGAA (DINUM)
+          </a> - Critères, tests, exemples code, outils d'audit.
+        </div>
 
         <div class="complexity-section">
           <div class="complexity-header">
@@ -1944,7 +2120,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-iot">
       <div class="header-row">
         <span class="date-badge">1 Jan 2021</span>
@@ -2030,7 +2206,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">7 Sept 2021</span>
@@ -2049,7 +2225,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">1 Jan 2022</span>
@@ -2069,7 +2245,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <div class="header-left">
@@ -2092,7 +2268,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2c card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2300,7 +2476,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <span class="date-badge">9 Juin 2023</span>
@@ -2318,7 +2494,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-universal">
       <div class="header-row">
         <span class="date-badge">20 Sept 2023</span>
@@ -2337,7 +2513,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b">
       <div class="header-row">
         <span class="date-badge">1 Jan 2024</span>
@@ -2354,7 +2530,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2c">
       <div class="header-row">
         <div class="header-left">
@@ -2378,7 +2554,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2c">
       <div class="header-row">
         <div class="header-left">
@@ -2402,7 +2578,7 @@
     </div>
   </div>
 
-  <div class="container right">
+  <div class="container left">
     <div class="content card-b2b">
       <div class="header-row">
         <div class="header-left">
@@ -2425,7 +2601,7 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-b2b card-esn">
       <div class="header-row">
         <div class="header-left">
@@ -2445,6 +2621,31 @@
       <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2555 (NIS 2)</a>
       <a href="https://mon-service-securise.ssi.gouv.fr/" target="_blank" class="reg-link">🛠️ MonServiceSécurisé (ANSSI)</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-nis2')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container left">
+    <div class="content card-b2b card-regulated">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">18 Oct 2024</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>CER (Résilience Entités Critiques)</h2>
+      <span class="target-tag">Cible : Opérateurs Infrastructures Critiques, Data Centers</span>
+      <p><strong>Directive complémentaire à NIS2 :</strong> Obligations de résilience pour entités identifiées comme critiques.<br>
+      <strong>Entités concernées :</strong> Opérateurs infrastructures critiques (énergie, eau, transports), data centers hébergeant services essentiels.<br>
+      <strong>Plan de résilience obligatoire :</strong> Analyse risques physiques et cyber, mesures protection, tests réguliers, formation personnel.<br>
+      <strong>Notification incidents :</strong> Déclaration obligatoire incidents affectant continuité services essentiels.<br>
+      <strong>Coopération autorités :</strong> Partage d'informations sur menaces et bonnes pratiques.</p>
+      <a href="https://eur-lex.europa.eu/eli/dir/2022/2557/oj" target="_blank" class="reg-link">📄 Directive (UE) 2022/2557</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-cer')">
         📋 Mes obligations
       </button>
     </div>
@@ -2732,6 +2933,31 @@
   </div>
 
   <div class="container right">
+    <div class="content card-b2b card-esn">
+      <div class="header-row">
+        <div class="header-left">
+          <span class="date-badge">2027-2029</span>
+        </div>
+        <div class="header-right">
+          <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
+          <span class="origin-badge origin-eu">Europe</span>
+        </div>
+      </div>
+      <h2>CSDDD / Devoir de Vigilance</h2>
+      <span class="target-tag">Cible : Grandes Entreprises (+1000 employés, >450M€ CA)<span class="esn-info">ESN : Vigilance sous-traitants IT, droits travailleurs, empreinte carbone supply chain</span></span>
+      <p><strong>Due Diligence obligatoire :</strong> Cartographie des impacts négatifs potentiels de la chaîne de valeur (fournisseurs, sous-traitants, partenaires). Évaluation droits humains, environnement, gouvernance.<br>
+      <strong>Plan d'action requis :</strong> Mesures préventives et correctives pour risques identifiés. Intégration dans stratégie d'entreprise.<br>
+      <strong>Supply Chain IT :</strong> Audit fournisseurs cloud, sous-traitants développement, conditions de travail prestataires offshore.<br>
+      <strong>Empreinte carbone :</strong> Mesure et réduction des émissions indirectes (Scope 3) incluant infrastructure numérique.<br>
+      <strong>Application progressive :</strong> 2027 pour >5000 employés (>1,5Mds€ CA), 2028 pour >3000 employés (>900M€), 2029 pour >1000 employés (>450M€).</p>
+      <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024L1760" target="_blank" class="reg-link">📄 Directive (UE) 2024/1760 (CSDDD)</a>
+      <button class="obligations-btn" onclick="openObligationsModal('modal-csddd')">
+        📋 Mes obligations
+      </button>
+    </div>
+  </div>
+
+  <div class="container left">
     <div class="content card-regulated">
       <div class="header-row">
         <div class="header-left">
@@ -2755,11 +2981,11 @@
     </div>
   </div>
 
-  <div class="container left">
+  <div class="container right">
     <div class="content card-regulated">
       <div class="header-row">
         <div class="header-left">
-          <span class="date-badge">2028 (Est.)</span>
+          <span class="date-badge">2027-2029</span>
         </div>
         <div class="header-right">
           <span class="sanctions-badge" title="Voir détails des sanctions dans la modale">⚠️ Sanctions</span>
@@ -2768,11 +2994,12 @@
       </div>
       <h2>EHDS (Espace Européen Données Santé)</h2>
       <span class="target-tag">Cible : Logiciels Santé (DPI, Imagerie)</span>
-      <p><strong>Interopérabilité obligatoire :</strong> Dossiers patients au format EEHRxF (résumé de santé, e-prescription). Accès transfrontalier aux données de santé entre pays UE.<br>
+      <p><strong>Règlement adopté (UE) 2025/327.</strong> Déploiement progressif 2027-2029.<br>
+      <strong>Interopérabilité obligatoire :</strong> Dossiers patients au format EEHRxF (résumé de santé, e-prescription). Accès transfrontalier aux données de santé entre pays UE.<br>
       <strong>Gestion du consentement :</strong> Consentement patient centralisé pour les usages de soins et de recherche.<br>
       <strong>Logiciels concernés :</strong> Dossiers Patient Informatisés (DPI), imagerie médicale, laboratoires. Certification renforcée des produits de santé numérique.<br>
       <strong>Calendrier :</strong> Projets pilotes nationaux dès 2026.</p>
-      <a href="https://health.ec.europa.eu/publications/proposal-regulation-european-health-data-space_en" target="_blank" class="reg-link">📄 EHDS - Proposition COM/2022</a>
+      <a href="https://eur-lex.europa.eu/eli/reg/2025/327/oj" target="_blank" class="reg-link">📄 Règlement (UE) 2025/327</a>
       <button class="obligations-btn" onclick="openObligationsModal('modal-ehds')">
         📋 Mes obligations
       </button>
@@ -3035,7 +3262,8 @@
           <li><strong>Due diligence fournisseurs</strong> sous-traitants</li>
         </ul>
         <div class="obligations-highlight">
-          <strong>🇫🇷 France :</strong> SecNumCloud ANSSI fortement recommandé pour hébergement données financières sensibles.
+          <strong>🇫🇷 France - SecNumCloud ANSSI :</strong> Qualification SecNumCloud (ex. SecNumCloud 3.2) fortement recommandée pour hébergement données financières sensibles (comptes, transactions, KYC). Exigée par ACPR pour prestataires cloud critiques. Critères : chiffrement, traçabilité, réversibilité données, PCA/PRA robustes, souveraineté (données en UE, droit français). 
+          <a href="https://cyber.gouv.fr/produits-certifies/secnumcloud" target="_blank" style="color: #2F80ED; text-decoration: underline;">Liste prestataires qualifiés ANSSI</a>
         </div>
         <h4>🎯 Si Prestataire TIC Critique</h4>
         <ul>
@@ -3228,6 +3456,42 @@
           <li><strong>Organismes notifiés :</strong> Certifications tierces opérationnelles</li>
           <li><strong>Surveillance marché :</strong> Autorités nationales actives</li>
         </ul>
+        
+        <h4>🚨 Exemples Concrets Systèmes Haut Risque</h4>
+        <p><strong>RH / Recrutement :</strong></p>
+        <ul>
+          <li>• Tri automatique CV (filtrage par IA)</li>
+          <li>• Notation candidats (scoring prédictif employabilité)</li>
+          <li>• Surveillance performance salariés (analyse productivité, détection comportements)</li>
+          <li>• Décision promotion/licenciement assistée IA</li>
+        </ul>
+        <p><strong>Finance :</strong></p>
+        <ul>
+          <li>• Scoring crédit (prêt immobilier, crédit consommation)</li>
+          <li>• Évaluation solvabilité entreprises</li>
+          <li>• Détection fraude (si impact décisionnel direct sur compte client)</li>
+        </ul>
+        <p><strong>Services Publics :</strong></p>
+        <ul>
+          <li>• Attribution aides sociales automatique</li>
+          <li>• Priorisation dossiers administratifs</li>
+          <li>• Décisions automatiques CAF, Pôle Emploi</li>
+        </ul>
+        <p><strong>Sécurité / Contrôle :</strong></p>
+        <ul>
+          <li>• Reconnaissance faciale (lieux publics, contrôle accès)</li>
+          <li>• Analyse comportementale surveillance (détection menaces)</li>
+          <li>• Détection émotions (sauf médical/sécurité)</li>
+        </ul>
+        <p><strong>Éducation :</strong></p>
+        <ul>
+          <li>• Notation automatique épreuves importantes</li>
+          <li>• Admission établissements (Parcoursup-like)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>💡 Non haut risque :</strong> Chatbots support client (si pas d'impact juridique/financier), recommandations produits e-commerce, analyse statistique interne anonymisée.
+        </div>
+        
         <h4>✅ Conformité Complète Systèmes Existants</h4>
         <ul>
           <li><strong>Réévaluation conformité</strong> si mis sur marché avant Août 2026</li>
@@ -3246,6 +3510,13 @@
         </ul>
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions maximales :</strong> 35M€ ou 7% CA (interdictions), 15M€ ou 3% CA (obligations haut risque).
+        </div>
+        
+        <div class="obligations-highlight" style="background: #e8f4f8; border-left-color: #2980b9;">
+          <strong>📚 Ressource pratique :</strong> 
+          <a href="https://artificialintelligenceact.eu/" target="_blank" style="color: #2980b9; text-decoration: underline; font-weight: bold;">
+            AI Act Navigator
+          </a> - Classification systèmes, self-assessment, documentation templates.
         </div>
 
         <div class="complexity-section">
@@ -3292,6 +3563,31 @@
           <li>Télémétrie véhicules connectés</li>
           <li>Historiques usage appareils domestiques</li>
         </ul>
+        
+        <h4>💡 Cas d'Usage Concrets</h4>
+        <p><strong>Industrie :</strong></p>
+        <ul>
+          <li>• Propriétaire machine industrielle peut exiger du fabricant les données capteurs pour optimiser maintenance (même si contrat initial prévoyait exclusivité fabricant)</li>
+          <li>• Entreprise peut transmettre données capteurs à réparateur tiers indépendant</li>
+        </ul>
+        <p><strong>Véhicules Connectés :</strong></p>
+        <ul>
+          <li>• Conducteur peut accéder données télémétrie (consommation carburant, diagnostics moteur) et les partager avec garage indépendant pour réparation</li>
+          <li>• Flottes d'entreprise peuvent exiger données télématiques pour optimiser logistique (même si constructeur propose son propre service payant)</li>
+        </ul>
+        <p><strong>Domotique / Smart Home :</strong></p>
+        <ul>
+          <li>• Propriétaire thermostat connecté peut exporter historique températures vers service concurrent d'optimisation énergétique</li>
+          <li>• Utilisateur peut accéder données caméra surveillance sans abonnement cloud fabricant</li>
+        </ul>
+        <p><strong>Agriculture :</strong></p>
+        <ul>
+          <li>• Agriculteur peut récupérer données capteurs tracteurs connectés pour analyse par agronome indépendant</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>⚙️ Implémentation :</strong> Nécessite développement APIs RESTful sécurisées (OAuth2), export formats standardisés (JSON, CSV), documentation technique publique.
+        </div>
+        
         <div class="obligations-highlight">
           <strong>⚠️ Sanctions :</strong> Jusqu'à 10M€ ou 2% CA. Amendes progressives en cas de refus d'accès aux données.
         </div>
@@ -3340,11 +3636,38 @@
           <strong>⚠️ Sanctions :</strong> Jusqu'à 10M€ ou 2% CA. Responsabilité personnelle dirigeants possible.
         </div>
         <h4>🎯 Secteurs Concernés</h4>
+        <p><strong>Annexe I - Entités Essentielles (surveillance stricte) :</strong></p>
         <ul>
-          <li>SaaS B2B, ESN, Cloud providers</li>
-          <li>Services numériques (>50 salariés)</li>
-          <li>Santé, énergie, transports, finance (essentiels)</li>
+          <li>🔌 <strong>Énergie</strong> : Électricité, pétrole, gaz, hydrogène, chauffage urbain</li>
+          <li>🚆 <strong>Transports</strong> : Aérien, ferroviaire, maritime, routier</li>
+          <li>🏦 <strong>Secteur bancaire</strong> : Établissements crédit</li>
+          <li>💹 <strong>Infrastructures marchés financiers</strong> : Opérateurs marchés, dépositaires centraux</li>
+          <li>🏥 <strong>Santé</strong> : Prestataires soins, laboratoires référence EU, recherche médicaments</li>
+          <li>💧 <strong>Eau potable</strong> : Production, distribution</li>
+          <li>🌐 <strong>Infrastructures numériques</strong> : Points échange internet (IXP), DNS, TLD, registres noms domaine, fournisseurs cloud, data centers, CDN, services confiance, réseaux publics télécom</li>
+          <li>🏛️ <strong>Administration publique centrale</strong></li>
+          <li>🌌 <strong>Espace</strong> : Opérateurs infrastructures sol soutenant services spatiaux</li>
         </ul>
+        <p><strong>Annexe II - Entités Importantes (surveillance allégée) :</strong></p>
+        <ul>
+          <li>📮 <strong>Services postaux</strong></li>
+          <li>♻️ <strong>Gestion déchets</strong></li>
+          <li>🧪 <strong>Produits chimiques</strong> : Fabrication, distribution</li>
+          <li>🍕 <strong>Production, transformation, distribution denrées alimentaires</strong></li>
+          <li>🏭 <strong>Fabrication</strong> : Dispositifs médicaux, ordinateurs/électronique/optique, équipements électriques, machines/équipements, véhicules automobiles</li>
+          <li>💻 <strong>Fournisseurs numériques</strong> : Places marché en ligne, moteurs recherche, plateformes réseaux sociaux</li>
+          <li>🔬 <strong>Recherche</strong> : Organismes recherche</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>💻 SaaS / ESN :</strong> Si >50 salariés ET services B2B critiques (ERP, RH, compta, gestion supply chain pour clients essentiels) → Annexe II minimum.
+        </div>
+        
+        <div class="obligations-highlight" style="background: #e8f4f8; border-left-color: #2980b9;">
+          <strong>📚 Ressource pratique :</strong> 
+          <a href="https://cyber.gouv.fr/publications/directive-nis-2-guide-pratique" target="_blank" style="color: #2980b9; text-decoration: underline; font-weight: bold;">
+            Guide NIS 2 (ANSSI)
+          </a> - Auto-recensement, mesures techniques, obligations par secteur.
+        </div>
 
         <div class="complexity-section">
           <div class="complexity-header">
@@ -3355,6 +3678,67 @@
             <tr><th>Critère</th><th>Évaluation</th></tr>
             <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
             <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal CER -->
+  <div class="obligations-modal" id="modal-cer">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - CER / Résilience Entités Critiques</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-cer')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Pour Entités Critiques Identifiées</h4>
+        <ul>
+          <li><strong>Identification entités critiques</strong> : Auto-déclaration si opérateur infrastructure critique ou désignation par autorité</li>
+          <li><strong>Plan de résilience obligatoire</strong> : Document stratégique analysant risques physiques et cyber</li>
+          <li><strong>Mesures de protection</strong> :
+            <ul style="margin-top: 8px;">
+              <li>• Protections physiques (accès, surveillance, redondance)</li>
+              <li>• Cybersécurité (conforme NIS2)</li>
+              <li>• Plans continuité d'activité et reprise</li>
+            </ul>
+          </li>
+          <li><strong>Tests réguliers</strong> : Exercices de crise, tests PCA/PRA</li>
+          <li><strong>Formation personnel</strong> : Sensibilisation résilience et sécurité</li>
+          <li><strong>Notification incidents</strong> : Déclaration immédiate incidents majeurs affectant services essentiels</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>🔗 Complémentarité NIS2 :</strong> CER couvre aspects physiques, NIS2 se concentre sur cyber. Les deux s'appliquent aux entités critiques.
+        </div>
+        <h4>🏢 Secteurs Concernés</h4>
+        <ul>
+          <li>Énergie (électricité, gaz, pétrole)</li>
+          <li>Transports (aérien, ferroviaire, maritime)</li>
+          <li>Banque et infrastructures marchés financiers</li>
+          <li>Santé (hôpitaux, production pharmaceutique)</li>
+          <li>Eau potable et eaux usées</li>
+          <li>Infrastructures numériques (data centers critiques, DNS, cloud essentiels)</li>
+          <li>Administration publique (fonctions critiques)</li>
+        </ul>
+        <div class="obligations-highlight">
+          <strong>💻 Data Centers :</strong> Si hébergement services essentiels (santé, finance, énergie...), obligation plan résilience avec redondance physique.
+        </div>
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 5M€. Suspension activité possible si non-conformité grave.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
             <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Large</span></td></tr>
             <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
             <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Élevé</span></td></tr>
@@ -3478,6 +3862,9 @@
         </ul>
         <div class="obligations-highlight">
           <strong>🎯 Concernés dès 2026 :</strong> Logiciels avec connexion réseau ou traitement données sensibles.
+        </div>
+        <div class="obligations-highlight" style="background: #fff3cd; border-left-color: #f39c12;">
+          <strong>⚠️ Rétroactivité :</strong> S'applique aux produits <strong>en maintenance active</strong>, y compris ceux commercialisés avant sept. 2026. Le reporting concerne tous logiciels maintenus.
         </div>
         <div class="obligations-highlight" style="background: #fff3cd; border-left-color: #f39c12;">
           <strong>⚠️ Retroactivité :</strong> S'applique aux produits <strong>en production active</strong>, y compris ceux commercialisés avant sept. 2026. Le reporting concerne tous logiciels maintenus.
@@ -3672,6 +4059,73 @@
     </div>
   </div>
 
+  <!-- Modal CSDDD -->
+  <div class="obligations-modal" id="modal-csddd">
+    <div class="obligations-modal-content">
+      <div class="obligations-modal-header">
+        <h3>📋 Mes obligations - CSDDD / Devoir de Vigilance (2027-2029)</h3>
+        <button class="obligations-modal-close" onclick="closeObligationsModal('modal-csddd')">×</button>
+      </div>
+      <div class="obligations-modal-body">
+        <h4>✅ Obligations Principales</h4>
+        <ul>
+          <li><strong>Cartographie des risques</strong> : Identifier impacts négatifs dans toute la chaîne de valeur (fournisseurs directs + indirects)</li>
+          <li><strong>Évaluation due diligence</strong> :
+            <ul style="margin-top: 8px;">
+              <li>• Droits humains (conditions travail, travail forcé, travail enfants)</li>
+              <li>• Environnement (pollution, biodiversité, changement climatique)</li>
+              <li>• Bonne gouvernance (corruption, transparence)</li>
+            </ul>
+          </li>
+          <li><strong>Plan d'action contraignant</strong> : Mesures préventives et correctives pour chaque risque identifié</li>
+          <li><strong>Intégration stratégique</strong> : Politique de due diligence adoptée par direction et intégrée dans gouvernance d'entreprise</li>
+          <li><strong>Engagement parties prenantes</strong> : Consultation syndicats, ONG, communautés affectées</li>
+          <li><strong>Mécanisme de plainte</strong> : Canal permettant aux victimes de signaler impacts négatifs</li>
+          <li><strong>Surveillance continue</strong> : Réévaluation régulière, audits fournisseurs, adaptation plan d'action</li>
+        </ul>
+        
+        <h4>💻 Spécificités Secteur Numérique / ESN</h4>
+        <ul>
+          <li><strong>Supply chain IT</strong> : Audit fournisseurs cloud (AWS, Azure, GCP...), data centers, fabricants hardware</li>
+          <li><strong>Sous-traitance offshore</strong> : Vérification conditions de travail équipes offshore (Inde, Maghreb, Europe de l'Est...)</li>
+          <li><strong>Empreinte carbone Scope 3</strong> : Mesure et plan réduction émissions indirectes (infrastructure cloud, serveurs, terminaux utilisateurs)</li>
+          <li><strong>Droits travailleurs tech</strong> : Conditions travail développeurs, freelances, équipes support externalisées</li>
+          <li><strong>Extraction ressources</strong> : Traçabilité métaux rares (cobalt, lithium) dans hardware vendu/utilisé</li>
+        </ul>
+        
+        <div class="obligations-highlight">
+          <strong>📅 Calendrier progressif :</strong><br>
+          • <strong>2027 :</strong> >5000 employés ET >1,5Mds€ CA<br>
+          • <strong>2028 :</strong> >3000 employés ET >900M€ CA<br>
+          • <strong>2029 :</strong> >1000 employés ET >450M€ CA
+        </div>
+        
+        <div class="obligations-highlight">
+          <strong>🔗 Lien avec CSRD :</strong> Convergence avec reporting extra-financier. Données CSRD alimentent due diligence CSDDD.
+        </div>
+        
+        <div class="obligations-highlight">
+          <strong>⚠️ Sanctions :</strong> Jusqu'à 5% du CA mondial. Responsabilité civile pour dommages évitables. Exclusion marchés publics possible.
+        </div>
+
+        <div class="complexity-section">
+          <div class="complexity-header">
+            <div class="complexity-title">📊 Complexité d'Implémentation</div>
+            <button class="complexity-help-btn" onclick="openComplexityExplanation()" title="Comment lire cette évaluation ?">?</button>
+          </div>
+          <table class="complexity-table">
+            <tr><th>Critère</th><th>Évaluation</th></tr>
+            <tr><td>🔧 Charge Technique</td><td><span class="complexity-score complexity-score-2">⭐⭐ Moyen</span></td></tr>
+            <tr><td>👥 Effort Organisationnel</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Très élevé</span></td></tr>
+            <tr><td>🎯 Périmètre d'Impact</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Total</span></td></tr>
+            <tr><td>📋 Exigences de Preuves</td><td><span class="complexity-score complexity-score-3">⭐⭐⭐ Audité</span></td></tr>
+            <tr><td>⚠️ Risque Non-Conformité</td><td><span class="complexity-score complexity-score-4">⭐⭐⭐⭐ Critique</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal DSP3 / PSR -->
   <div class="obligations-modal" id="modal-dsp3">
     <div class="obligations-modal-content">
@@ -3769,6 +4223,61 @@
     </div>
   </div>
 
+</div>
+
+<!-- Section Ressources Utiles -->
+<div style="max-width: 1400px; margin: 40px auto 40px auto; padding: 30px 20px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+  <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px; font-size: 1.8rem;">📚 Ressources Utiles pour la Conformité</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+    <!-- Colonne 1 : Autorités Françaises -->
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="color: #2980b9; margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid #2980b9; padding-bottom: 8px;">🇫🇷 Autorités Françaises</h3>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><a href="https://www.cnil.fr/" target="_blank" style="color: #2980b9; text-decoration: none; font-weight: 500;">CNIL</a> - Protection données</li>
+        <li><a href="https://cyber.gouv.fr/" target="_blank" style="color: #2980b9; text-decoration: none; font-weight: 500;">ANSSI</a> - Cybersécurité</li>
+        <li><a href="https://www.arcep.fr/" target="_blank" style="color: #2980b9; text-decoration: none; font-weight: 500;">ARCEP</a> - Télécom & numérique</li>
+        <li><a href="https://www.economie.gouv.fr/dgccrf" target="_blank" style="color: #2980b9; text-decoration: none; font-weight: 500;">DGCCRF</a> - Concurrence & fraude</li>
+      </ul>
+    </div>
+
+    <!-- Colonne 2 : Commission Européenne -->
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="color: #27ae60; margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid #27ae60; padding-bottom: 8px;">🇪🇺 Commission Européenne</h3>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><a href="https://eur-lex.europa.eu/" target="_blank" style="color: #27ae60; text-decoration: none; font-weight: 500;">EUR-Lex</a> - Droit européen</li>
+        <li><a href="https://digital-strategy.ec.europa.eu/" target="_blank" style="color: #27ae60; text-decoration: none; font-weight: 500;">Digital Strategy</a> - Stratégie numérique</li>
+        <li><a href="https://ec.europa.eu/info/law/law-topic/data-protection_fr" target="_blank" style="color: #27ae60; text-decoration: none; font-weight: 500;">GDPR Hub</a> - RGPD</li>
+        <li><a href="https://www.enisa.europa.eu/" target="_blank" style="color: #27ae60; text-decoration: none; font-weight: 500;">ENISA</a> - Cybersécurité EU</li>
+      </ul>
+    </div>
+
+    <!-- Colonne 3 : Outils Pratiques -->
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="color: #e74c3c; margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid #e74c3c; padding-bottom: 8px;">🛠️ Outils Pratiques</h3>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><a href="https://artificialintelligenceact.eu/" target="_blank" style="color: #e74c3c; text-decoration: none; font-weight: 500;">AI Act Navigator</a> - Classification IA</li>
+        <li><a href="https://accessibilite.numerique.gouv.fr/" target="_blank" style="color: #e74c3c; text-decoration: none; font-weight: 500;">RGAA</a> - Accessibilité</li>
+        <li><a href="https://cyber.gouv.fr/produits-certifies/secnumcloud" target="_blank" style="color: #e74c3c; text-decoration: none; font-weight: 500;">SecNumCloud</a> - Hébergeurs qualifiés</li>
+        <li><a href="https://www.cnil.fr/fr/pia-privacy-impact-assessment" target="_blank" style="color: #e74c3c; text-decoration: none; font-weight: 500;">PIA Tool</a> - Analyse d'impact RGPD</li>
+      </ul>
+    </div>
+
+    <!-- Colonne 4 : Guides Techniques -->
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="color: #8e44ad; margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid #8e44ad; padding-bottom: 8px;">📖 Guides Techniques</h3>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><a href="https://www.cnil.fr/fr/guide-rgpd-du-developpeur" target="_blank" style="color: #8e44ad; text-decoration: none; font-weight: 500;">Guide Développeur RGPD</a> (CNIL)</li>
+        <li><a href="https://cyber.gouv.fr/publications/directive-nis-2-guide-pratique" target="_blank" style="color: #8e44ad; text-decoration: none; font-weight: 500;">Guide NIS 2</a> (ANSSI)</li>
+        <li><a href="https://www.legifrance.gouv.fr/" target="_blank" style="color: #8e44ad; text-decoration: none; font-weight: 500;">Légifrance</a> - Droit français</li>
+        <li><a href="https://www.ssi.gouv.fr/" target="_blank" style="color: #8e44ad; text-decoration: none; font-weight: 500;">Référentiels ANSSI</a> - Bonnes pratiques cyber</li>
+      </ul>
+    </div>
+  </div>
+  
+  <p style="text-align: center; margin-top: 25px; font-size: 0.9rem; color: #555; font-style: italic;">
+    💡 Ces ressources sont régulièrement mises à jour par les autorités compétentes. Consultez-les pour des informations officielles et à jour.
+  </p>
 </div>
 
 <div class="footer">
@@ -4191,11 +4700,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Régénérer le sommaire initial
   generateTOC();
 
-  // Mettre à jour le sommaire lors du filtrage
+  // Mettre à jour le sommaire et la position du marqueur lors du filtrage
   const originalApplyFilters = applyFilters;
   applyFilters = function() {
     originalApplyFilters();
     generateTOC();
+    updateMarkerPosition();
   };
 
   // === GESTION DES POPUPS OBLIGATIONS ===
@@ -4389,8 +4899,182 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 500);
     });
   }
+
+  // === GESTION COPIE PROCHAINES ÉCHÉANCES ===
+  const copyDeadlinesButton = document.getElementById('copyDeadlinesButton');
+  if (copyDeadlinesButton) {
+    copyDeadlinesButton.addEventListener('click', function() {
+      // Date de référence : 28 janvier 2026 (début de l'horizon à copier)
+      const referenceDate = new Date('2026-01-28');
+      
+      // Fonction de parsing de date améliorée
+      function parseDate(text) {
+        const months = {
+          'Jan': 0, 'Fév': 1, 'Févr': 1, 'Mars': 2, 'Avr': 3, 'Avril': 3, 'Mai': 4, 
+          'Juin': 5, 'Juil': 6, 'Juillet': 6, 'Août': 7, 'Sept': 8, 'Septembre': 8, 
+          'Oct': 9, 'Octobre': 9, 'Nov': 10, 'Novembre': 10, 'Déc': 11, 'Décembre': 11
+        };
+        
+        // Cas 1: Plage "YYYY-YYYY" (ex: "2027-2029") - traiter en priorité
+        const rangeMatch = text.match(/^(\d{4})-(\d{4})$/);
+        if (rangeMatch) {
+          return new Date(parseInt(rangeMatch[1]), 0, 1);
+        }
+        
+        // Cas 2: "Jour Mois Année" (ex: "18 Oct 2024", "2 Août 2027")
+        const fullDateMatch = text.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/);
+        if (fullDateMatch) {
+          const day = parseInt(fullDateMatch[1]);
+          const monthName = fullDateMatch[2];
+          const year = parseInt(fullDateMatch[3]);
+          const month = months[monthName];
+          if (month !== undefined) {
+            return new Date(year, month, day);
+          }
+        }
+        
+        // Cas 3: "Mois Année" (ex: "Déc 2027", "Sept 2027")
+        const monthYearMatch = text.match(/^(\w+)\s+(\d{4})$/);
+        if (monthYearMatch) {
+          const monthName = monthYearMatch[1];
+          const year = parseInt(monthYearMatch[2]);
+          const month = months[monthName];
+          if (month !== undefined) {
+            return new Date(year, month, 1);
+          }
+        }
+        
+        // Cas 4: "Année (Est.)" ou juste "Année"
+        const yearMatch = text.match(/(\d{4})/);
+        if (yearMatch) {
+          return new Date(parseInt(yearMatch[1]), 6, 1); // Mi-année (juillet) pour année seule
+        }
+        
+        return null;
+      }
+      
+      // Récupérer TOUTES les cartes dans l'ordre du DOM (qui est chronologique)
+      const allContainers = document.querySelectorAll('.container');
+      
+      // Collecter les échéances futures avec leurs dates
+      const deadlines = [];
+      allContainers.forEach(card => {
+        // Vérifier si la carte est visible (non filtrée)
+        const style = window.getComputedStyle(card);
+        if (style.display === 'none') return;
+        
+        const dateBadge = card.querySelector('.date-badge');
+        const titleElement = card.querySelector('h2');
+        
+        if (!dateBadge || !titleElement) return;
+        
+        const dateText = dateBadge.textContent.trim();
+        const title = titleElement.textContent.trim();
+        
+        const sortDate = parseDate(dateText);
+        
+        // Filtrer uniquement dates >= 28 Jan 2026
+        if (sortDate && sortDate >= referenceDate) {
+          deadlines.push({
+            date: dateText,
+            sortDate: sortDate,
+            title: title
+          });
+        }
+      });
+      
+      // Les deadlines sont déjà dans l'ordre chronologique car parcourues dans l'ordre du DOM
+      // Pas besoin de trier à nouveau
+      
+      // Générer texte Markdown
+      let markdownText = '## Prochaines Échéances Réglementaires (à partir du 28/01/2026)\n\n';
+      if (deadlines.length === 0) {
+        markdownText += '_Aucune échéance future détectée dans les catégories sélectionnées._\n';
+      } else {
+        deadlines.forEach(deadline => {
+          markdownText += `- **${deadline.date}** : ${deadline.title}\n`;
+        });
+      }
+      markdownText += `\n_Généré le ${new Date().toLocaleDateString('fr-FR')}_\n`;
+      
+      // Copier dans le presse-papiers
+      navigator.clipboard.writeText(markdownText).then(() => {
+        // Feedback visuel succès
+        const originalText = copyDeadlinesButton.innerHTML;
+        copyDeadlinesButton.innerHTML = '✅ Copié !';
+        copyDeadlinesButton.style.background = '#1e8449';
+        
+        setTimeout(() => {
+          copyDeadlinesButton.innerHTML = originalText;
+          copyDeadlinesButton.style.background = '#27ae60';
+        }, 2000);
+      }).catch(err => {
+        // Feedback visuel erreur
+        const originalText = copyDeadlinesButton.innerHTML;
+        copyDeadlinesButton.innerHTML = '❌ Erreur';
+        copyDeadlinesButton.style.background = '#c0392b';
+        
+        setTimeout(() => {
+          copyDeadlinesButton.innerHTML = originalText;
+          copyDeadlinesButton.style.background = '#27ae60';
+        }, 2000);
+        
+        console.error('Erreur copie presse-papiers:', err);
+      });
+    });
+  }
 });
 </script>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  TODO : FONCTIONNALITÉ À DÉVELOPPER - Questionnaires Guidés d'Applicabilité
+═══════════════════════════════════════════════════════════════════════════
+
+📋 OBJECTIF :
+Créer un assistant interactif permettant aux utilisateurs de déterminer 
+précisément quelles réglementations s'appliquent à leur organisation via 
+un questionnaire guidé (type "assistant conversationnel").
+
+🎯 FONCTIONNALITÉS ENVISAGÉES :
+
+1. PARCOURS QUESTIONNAIRE
+   - Questions successives sur : secteur d'activité, taille entreprise, 
+     type de clients (B2B/B2C), technologies utilisées (IA, IoT, cloud...),
+     traitement données personnelles, infrastructures critiques
+   - Navigation conditionnelle (réponses précédentes conditionnent questions suivantes)
+   - Barre de progression visuelle
+
+2. RÉSULTAT PERSONNALISÉ
+   - Génération d'une liste de réglementations applicables à l'organisation
+   - Priorisation par échéance (urgence)
+   - Score de pertinence pour chaque réglementation (% applicabilité)
+   - Export résultats en PDF ou Markdown
+
+3. RECOMMANDATIONS CONTEXTUELLES
+   - Conseils d'actions prioritaires basés sur profil détecté
+   - Suggestions de ressources spécifiques (guides ANSSI, CNIL...)
+   - Liens directs vers modals correspondants dans la timeline
+
+4. SAUVEGARDE / REPRISE
+   - LocalStorage navigateur pour sauvegarder réponses
+   - Permettre reprise questionnaire ultérieurement
+   - Option "recalculer" après modification profil entreprise
+
+🛠️ IMPLÉMENTATION TECHNIQUE SUGGÉRÉE :
+
+- HTML/CSS/JS pur (cohérence avec fichier actuel autonome)
+- Structure JSON des questions (facilite maintenance)
+- Algorithme de scoring basé sur règles métier
+- Modal dédié ou page séparée avec lien dans header ?
+- Mobile-first design (questionnaire adapté petits écrans)
+
+📅 PRIORISATION :
+Non critique pour V1. Fonctionnalité "nice-to-have" pour V2/V3.
+Actuellement, utilisateurs peuvent filtrer manuellement via catégories existantes.
+
+═══════════════════════════════════════════════════════════════════════════
+-->
 
 </body>
 </html>

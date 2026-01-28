@@ -1,0 +1,25 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+*~
+
+# Logs
+*.log
+
+# Dossiers temporaires
+temp/
+tmp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (si ajout futur)
+node_modules/
